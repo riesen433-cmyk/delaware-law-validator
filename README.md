@@ -31,7 +31,22 @@ The tool should not be used to say that a contract is legally sufficient, commer
 
 Delaware Administrative Code 不打进主数据包。它通过官方站点建立轻量索引，并在需要某一条 regulation 正文时才按需抓取官方 PDF、抽取文字、缓存 30 天。
 
-## Build data pack
+## Quick Start
+
+Download the pre-built data pack from GitHub Releases and extract to the `data/` directory:
+
+```bash
+curl -LO https://github.com/riesen433-cmyk/delaware-law-validator/releases/download/v0.1.0/delaware-law-data-v0.1.0.zip
+unzip delaware-law-data-v0.1.0.zip -d data/
+```
+
+Then verify it works:
+
+```bash
+python3 -m delaware_law_skill.cli lookup "6 Del. C. § 17-407"
+```
+
+## Build data pack (from local sources)
 
 ```bash
 python3 -m delaware_law_skill.cli build --source "/Users/riesenhuang/Desktop/zxpro/特拉华法律汇总/md"
@@ -140,3 +155,8 @@ Delaware source layering:
 - Laws of Delaware: session laws
 - Bills & Resolutions: pending bills only, not current law
 - Delaware Register of Regulations: regulatory update checking only, not mixed into current Administrative Code unless final/effective status is separately verified
+
+## Contributors
+
+- [Riesen Huang](https://github.com/riesen433-cmyk)
+- [Claude Code](https://github.com/anthropics/claude-code)
