@@ -18,13 +18,13 @@ The tool can say things like:
 
 The tool should not be used to say that a contract is legally sufficient, commercially appropriate, enforceable, or complete. It verifies legal materials; it does not make the final legal judgment.
 
-第一版覆盖：
+覆盖：
 
 - Delaware Constitution
 - Delaware Code Title 1-31
 - Selected Delaware Court Rules
 
-第一版不覆盖：
+不覆盖：
 
 - opinions / cases
 - Westlaw、Lexis、Bloomberg Law 等付费法律数据库
