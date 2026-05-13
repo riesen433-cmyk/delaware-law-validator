@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delaware Law Validator</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: #f5f5f5; color: #1a1a1a; line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column;
+}
+header {
+  background: #fff; border-bottom: 1px solid #e0e0e0; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
+}
+header h1 { font-size: 20px; font-weight: 600; color: #1a1a1a; }
+header .badge { font-size: 12px; background: #e8f0fe; color: #1a73e8; padding: 4px 10px; border-radius: 12px; font-weight: 500; }
+main { flex: 1; padding: 24px; max-width: 1100px; margin: 0 auto; width: 100%; }
+.tabs { display: flex; gap: 2px; margin-bottom: 24px; background: #e0e0e0; border-radius: 8px; padding: 3px; }
+.tab-btn { flex: 1; padding: 10px 16px; border: none; background: transparent; font-size: 14px; font-weight: 500; cursor: pointer; border-radius: 6px; color: #666; transition: all .15s; }
+.tab-btn.active { background: #fff; color: #1a1a1a; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+.tab-btn:hover:not(.active) { color: #333; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+.card { background: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,.06); margin-bottom: 16px; }
+.card h2 { font-size: 16px; font-weight: 600; margin-bottom: 12px; color: #333; }
+label { display: block; font-size: 13px; font-weight: 500; color: #555; margin-bottom: 4px; }
+textarea, input[type="text"], input[type="url"], select { width: 100%; padding: 10px 12px; border: 1px solid #d0d0d0; border-radius: 6px; font-size: 14px; font-family: inherit; resize: vertical; transition: border-color .15s; }
+textarea:focus, input:focus { outline: none; border-color: #1a73e8; box-shadow: 0 0 0 3px rgba(26,115,232,.12); }
+textarea { min-height: 100px; }
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border: none; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all .15s; }
+.btn-primary { background: #1a73e8; color: #fff; }
+.btn-primary:hover { background: #1557b0; }
+.btn-primary:disabled { opacity: .5; cursor: not-allowed; }
+.btn-secondary { background: #f0f0f0; color: #333; }
+.btn-secondary:hover { background: #e0e0e0; }
+.row { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; }
+.row > * { flex: 1; min-width: 150px; }
+
+.upload-zone { border: 2px dashed #c0c0c0; border-radius: 8px; padding: 48px 24px; text-align: center; cursor: pointer; transition: all .15s; }
+.upload-zone:hover, .upload-zone.dragover { border-color: #1a73e8; background: #f8faff; }
+.upload-zone p { font-size: 14px; color: #888; margin-top: 8px; }
+.upload-zone .icon { font-size: 36px; }
+.file-info { margin-top: 12px; font-size: 13px; color: #555; padding: 8px 12px; background: #f8f8f8; border-radius: 6px; display: none; }
+
+.result-group { margin-bottom: 16px; padding: 16px; border-radius: 8px; border-left: 4px solid #e0e0e0; }
+.result-group h3 { font-size: 15px; font-weight: 600; margin-bottom: 10px; }
+.result-item { padding: 10px 12px; margin-bottom: 8px; background: #fafafa; border-radius: 6px; font-size: 13px; }
+.result-item:last-child { margin-bottom: 0; }
+.result-item .citation { font-weight: 600; font-family: "SF Mono", "Menlo", "Monaco", monospace; }
+.result-item .meta { color: #888; font-size: 12px; margin-top: 2px; }
+.result-item .warn { color: #b06000; font-size: 12px; margin-top: 4px; }
+.result-item .suggest { color: #1a73e8; font-size: 12px; }
+
+.rg-error { border-left-color: #d93025; background: #fef7f7; }
+.rg-error h3 { color: #d93025; }
+.rg-broad { border-left-color: #e8710a; background: #fefaf5; }
+.rg-broad h3 { color: #e8710a; }
+.rg-external { border-left-color: #f9ab00; background: #fffdf5; }
+.rg-external h3 { color: #b06000; }
+.rg-miss { border-left-color: #999; background: #fafafa; }
+.rg-miss h3 { color: #666; }
+.rg-related { border-left-color: #1a73e8; background: #f8faff; }
+.rg-related h3 { color: #1a73e8; }
+.rg-ok { border-left-color: #188038; background: #f6fef6; }
+.rg-ok h3 { color: #188038; }
+.rg-coverage { border-left-color: #c0c0c0; background: #fafafa; }
+.rg-coverage h3 { color: #888; }
+
+.status-bar { background: #fff; border-top: 1px solid #e0e0e0; padding: 10px 24px; font-size: 12px; color: #888; display: flex; gap: 20px; flex-wrap: wrap; justify-content: space-between; }
+.status-bar span { white-space: nowrap; }
+.status-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; }
+.status-dot.ok { background: #188038; }
+.status-dot.loading { background: #f9ab00; animation: pulse 1s infinite; }
+.status-dot.error { background: #d93025; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+.progress-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,.85); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; }
+.progress-bar-wrap { width: 320px; height: 8px; background: #e0e0e0; border-radius: 4px; overflow: hidden; margin-top: 16px; }
+.progress-bar-fill { height: 100%; background: #1a73e8; border-radius: 4px; transition: width .3s; }
+.progress-text { font-size: 14px; color: #555; margin-top: 8px; }
+
+.hidden { display: none !important; }
+.spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid #e0e0e0; border-top-color: #1a73e8; border-radius: 50%; animation: spin .6s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.counts { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+.count-chip { font-size: 12px; padding: 3px 10px; border-radius: 12px; font-weight: 500; }
+.count-chip.err { background: #fce8e6; color: #d93025; }
+.count-chip.broad { background: #fef0e0; color: #e8710a; }
+.count-chip.miss { background: #f0f0f0; color: #666; }
+.count-chip.ok { background: #e6f4ea; color: #188038; }
+
+summary { cursor: pointer; font-size: 13px; font-weight: 500; padding: 6px 0; color: #555; }
+summary:hover { color: #1a73e8; }
+details { margin-bottom: 8px; }
+
+@media (max-width: 768px) {
+  main { padding: 12px; }
+  header { padding: 12px 16px; }
+  .tabs { flex-wrap: wrap; }
+  .tab-btn { flex: unset; font-size: 13px; padding: 8px 12px; }
+}
+</style>
+</head>
+<body>
+
+<div id="progress" class="progress-overlay">
+  <div style="font-size: 18px; font-weight: 600;">加载数据包</div>
+  <div class="progress-bar-wrap"><div id="progress-bar" class="progress-bar-fill" style="width:0%"></div></div>
+  <div id="progress-text" class="progress-text">正在连接...</div>
+</div>
+
+<header>
+  <div>
+    <h1>Delaware Law Validator</h1>
+    <div style="font-size:12px;color:#888;margin-top:2px;">本地优先的特拉华法律检索与引用校验工具</div>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+    <span class="badge" id="db-version">未加载</span>
+    <span class="badge" id="db-status" style="background:#fef7e0;color:#b06000;">等待数据包</span>
+  </div>
+</header>
+
+<main>
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="lookup">引用查证</button>
+    <button class="tab-btn" data-tab="search">关键词检索</button>
+    <button class="tab-btn" data-tab="text">文本验证</button>
+    <button class="tab-btn" data-tab="file">文件审查</button>
+  </div>
+
+  <!-- Tab 1: 引用查证 -->
+  <div class="tab-panel active" id="panel-lookup">
+    <div class="card">
+      <h2>精确查证 Delaware 法律引用</h2>
+      <div class="row">
+        <div style="flex:3">
+          <label for="lookup-input">输入引用</label>
+          <input type="text" id="lookup-input" placeholder="例如：6 Del. C. § 17-407 / Court of Chancery Rule 12(b)(6) / D.R.E. 403">
+        </div>
+        <div style="flex:0 0 auto; display:flex; align-items:flex-end;">
+          <button class="btn btn-primary" id="btn-lookup" style="height:42px;">查证</button>
+        </div>
+      </div>
+    </div>
+    <div id="lookup-results"></div>
+  </div>
+
+  <!-- Tab 2: 关键词检索 -->
+  <div class="tab-panel" id="panel-search">
+    <div class="card">
+      <h2>关键词搜索 Delaware 法律条文</h2>
+      <div class="row">
+        <div style="flex:3">
+          <label for="search-input">搜索关键词</label>
+          <input type="text" id="search-input" placeholder="例如：limited partnership distribution / appraisal rights">
+        </div>
+        <div style="flex:0 0 auto; display:flex;align-items:flex-end;">
+          <button class="btn btn-primary" id="btn-search" style="height:42px;">搜索</button>
+        </div>
+      </div>
+    </div>
+    <div id="search-results"></div>
+  </div>
+
+  <!-- Tab 3: 文本验证 -->
+  <div class="tab-panel" id="panel-text">
+    <div class="card">
+      <h2>贴入文本，自动抽取引用并逐条验证</h2>
+      <label for="text-input">贴入合同条款 / 备忘录 / 法律意见书片段</label>
+      <textarea id="text-input" rows="10" placeholder="贴入包含 Delaware 法律引用的文本..."></textarea>
+      <div style="margin-top:12px">
+        <button class="btn btn-primary" id="btn-text-validate">验证所有引用</button>
+      </div>
+    </div>
+    <div id="text-results"></div>
+  </div>
+
+  <!-- Tab 4: 文件审查 -->
+  <div class="tab-panel" id="panel-file">
+    <div class="card">
+      <h2>上传 .docx / .md 文件，输出完整校验报告</h2>
+      <div class="upload-zone" id="upload-zone">
+        <div class="icon">&#x1F4C4;</div>
+        <p>拖拽 .docx / .md 文件到这里，或点击上传</p>
+        <input type="file" id="file-input" accept=".docx,.md" style="display:none">
+      </div>
+      <div class="file-info" id="file-info"></div>
+      <div style="margin-top:12px">
+        <button class="btn btn-primary hidden" id="btn-file-review">开始审查</button>
+      </div>
+    </div>
+    <div id="file-results"></div>
+  </div>
+</main>
+
+<footer class="status-bar">
+  <span><span class="status-dot" id="dot"></span><span id="status-text">初始化中...</span></span>
+  <span>覆盖范围: Delaware Constitution · Delaware Code Title 1-31 · Selected Court Rules</span>
+  <span id="cache-info">缓存: --</span>
+  <span>本工具仅做引用校验，不提供法律意见</span>
+</footer>
+
+<!-- Admin Code 配置面板 (固定右下) -->
+<div style="position:fixed;bottom:48px;right:16px;z-index:100;">
+  <details style="background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:12px;width:300px;box-shadow:0 2px 8px rgba(0,0,0,.1);">
+    <summary style="font-size:13px;">&#x2699; Admin Code API 设置</summary>
+    <div style="margin-top:8px;">
+      <label for="admin-api-base" style="margin-top:8px;">API 基础地址</label>
+      <input type="url" id="admin-api-base" value="https://regulations.delaware.gov/api/" style="margin-bottom:8px;">
+      <label for="cors-proxy">CORS 代理 (如需要)</label>
+      <input type="url" id="cors-proxy" placeholder="留空则直连，如被 CORS 拦截则填入代理地址">
+      <div style="margin-top:8px;display:flex;gap:8px;">
+        <button class="btn btn-secondary" id="btn-admin-test" style="font-size:12px;padding:6px 12px;">测试连接</button>
+        <span id="admin-test-result" style="font-size:11px;color:#888;align-self:center;"></span>
+      </div>
+    </div>
+  </details>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sql.js@1.10.3/dist/sql-wasm.js"></script>
+
+<script>
+// ===== 全局状态 =====
+let db = null;
+let dbReady = false;
+const DATA_VERSION = 'delaware-law-data-v0.1.0';
+const RELEASE_URL = 'https://github.com/riesen433-cmyk/delaware-law-validator/releases/download/v0.1.0/delaware-law-data-v0.1.0.zip';
+const DB_FILENAME = 'data/delaware_law_data_v0.1.0.sqlite';
+const MANIFEST_FILENAME = 'data/manifest.json';
+const COVERAGE_FILENAME = 'data/coverage-report.json';
+let manifestData = null;
+let coverageData = null;
+const IDB_NAME = 'delaware-law-validator';
+const IDB_VERSION = 1;
+const IDB_STORE = 'datapack';
+
+// ===== IndexedDB 缓存 =====
+function idbOpen() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(IDB_NAME, IDB_VERSION);
+    req.onupgradeneeded = (e) => { e.target.result.createObjectStore(IDB_STORE); };
+    req.onsuccess = (e) => resolve(e.target.result);
+    req.onerror = (e) => reject(e.target.error);
+  });
+}
+
+function idbGet(key) {
+  return idbOpen().then(db => new Promise((resolve, reject) => {
+    const tx = db.transaction(IDB_STORE, 'readonly');
+    const req = tx.objectStore(IDB_STORE).get(key);
+    req.onsuccess = () => { db.close(); resolve(req.result); };
+    req.onerror = (e) => { db.close(); reject(e.target.error); };
+  }));
+}
+
+function idbPut(key, value) {
+  return idbOpen().then(db => new Promise((resolve, reject) => {
+    const tx = db.transaction(IDB_STORE, 'readwrite');
+    const req = tx.objectStore(IDB_STORE).put(value, key);
+    req.onsuccess = () => { db.close(); resolve(); };
+    req.onerror = (e) => { db.close(); reject(e.target.error); };
+  }));
+}
+
+// ===== 进度条 =====
+function setProgress(pct, text) {
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('progress-text').textContent = text;
+}
+
+function hideProgress() {
+  document.getElementById('progress').classList.add('hidden');
+}
+
+// ===== 状态栏 =====
+function setStatus(state, text) {
+  const dot = document.getElementById('dot');
+  dot.className = 'status-dot ' + state;
+  document.getElementById('status-text').textContent = text;
+}
+
+// ===== 加载数据包 =====
+async function loadDatabase() {
+  setStatus('loading', '检查缓存...');
+  setProgress(5, '检查浏览器缓存...');
+
+  // 先检查 IndexedDB 缓存
+  const cachedBytes = await idbGet('sqlite_db');
+  if (cachedBytes) {
+    setProgress(40, '从缓存加载数据库...');
+    const SQL = await initSqlJs({ locateFile: f => `https://cdn.jsdelivr.net/npm/sql.js@1.10.3/dist/${f}` });
+    db = new SQL.Database(new Uint8Array(cachedBytes));
+    setProgress(60, '加载缓存元数据...');
+    await loadMetadataFromCache();
+    setProgress(100, '数据库已就绪 (来自缓存)');
+    dbReady = true;
+    document.getElementById('db-version').textContent = DATA_VERSION;
+    document.getElementById('db-status').textContent = '就绪';
+    document.getElementById('db-status').style.background = '#e6f4ea';
+    document.getElementById('db-status').style.color = '#188038';
+    document.getElementById('cache-info').textContent = '缓存: 本地 IndexedDB';
+    setStatus('ok', '就绪 (缓存)');
+    setTimeout(hideProgress, 600);
+    return;
+  }
+
+  // 从 GitHub Releases 下载
+  setProgress(10, '正在下载数据包 (约35MB)...');
+  setStatus('loading', '下载数据包...');
+  let response;
+  try {
+    response = await fetch(RELEASE_URL);
+    if (!response.ok) throw new Error('HTTP ' + response.status);
+  } catch (e) {
+    setProgress(0, '下载失败');
+    setStatus('error', '下载失败: ' + e.message);
+    document.getElementById('progress-text').textContent = '下载失败: ' + e.message + '。请检查网络连接后刷新页面。';
+    return;
+  }
+
+  const contentLength = response.headers.get('content-length');
+  const total = contentLength ? parseInt(contentLength) : 35000000;
+  let loaded = 0;
+  const reader = response.body.getReader();
+  const chunks = [];
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    chunks.push(value);
+    loaded += value.length;
+    const pct = 10 + Math.round((loaded / total) * 50);
+    setProgress(pct, `下载中... ${(loaded / 1048576).toFixed(1)} MB / ${(total / 1048576).toFixed(1)} MB`);
+  }
+  const zipBytes = new Uint8Array(await new Blob(chunks).arrayBuffer());
+
+  // 解压
+  setProgress(65, '正在解压...');
+  const zip = await JSZip.loadAsync(zipBytes);
+
+  // 提取 SQLite 数据库
+  const dbFile = zip.file(DB_FILENAME);
+  if (!dbFile) {
+    setProgress(0, '错误');
+    setStatus('error', '数据包中未找到数据库文件');
+    return;
+  }
+  setProgress(72, '解压数据库文件...');
+  const dbBytes = await dbFile.async('uint8array');
+
+  // 提取 manifest 和 coverage
+  try {
+    const mf = zip.file(MANIFEST_FILENAME);
+    const cf = zip.file(COVERAGE_FILENAME);
+    if (mf) {
+      manifestData = JSON.parse(await mf.async('text'));
+      await idbPut('manifest', manifestData);
+    }
+    if (cf) {
+      coverageData = JSON.parse(await cf.async('text'));
+      await idbPut('coverage', coverageData);
+    }
+  } catch (_) {}
+
+  // 加载 sql.js
+  setProgress(80, '加载 SQLite 引擎...');
+  const SQL = await initSqlJs({ locateFile: f => `https://cdn.jsdelivr.net/npm/sql.js@1.10.3/dist/${f}` });
+  db = new SQL.Database(dbBytes);
+
+  // 缓存到 IndexedDB
+  setProgress(93, '缓存到本地...');
+  await idbPut('sqlite_db', dbBytes.buffer);
+  if (manifestData) await idbPut('manifest', manifestData);
+  if (coverageData) await idbPut('coverage', coverageData);
+
+  setProgress(100, '数据库已就绪');
+  dbReady = true;
+  document.getElementById('db-version').textContent = DATA_VERSION;
+  document.getElementById('db-status').textContent = '就绪';
+  document.getElementById('db-status').style.background = '#e6f4ea';
+  document.getElementById('db-status').style.color = '#188038';
+  document.getElementById('cache-info').textContent = '缓存: 本地 IndexedDB';
+  setStatus('ok', '就绪');
+  setTimeout(hideProgress, 600);
+}
+
+async function loadMetadataFromCache() {
+  try {
+    manifestData = await idbGet('manifest');
+    coverageData = await idbGet('coverage');
+  } catch (_) {}
+}
+
+// ===== 引用解析 (移植自 parser.py / database.py) =====
+function parseCitation(raw) {
+  // Delaware Code citation: 6 Del. C. § 17-407
+  const codeMatch = raw.match(/(\d+)\s+Del\.?\s*C\.?\s*§+\s*([A-Za-z0-9][A-Za-z0-9.\-]*)((?:\([A-Za-z0-9]+\))*)/i);
+  if (codeMatch) {
+    return {
+      raw, titleNumber: parseInt(codeMatch[1]),
+      sectionNumber: codeMatch[2].replace(/\.$/, ''),
+      subsection: codeMatch[3] || null,
+      materialType: 'statute'
+    };
+  }
+  // Constitution citation
+  const constMatch = raw.match(/Del\.?\s*Const\.?.*?§+\s*([A-Za-z0-9][A-Za-z0-9.\-]*)((?:\([A-Za-z0-9]+\))*)/i);
+  if (constMatch) {
+    return {
+      raw, titleNumber: null,
+      sectionNumber: constMatch[1].replace(/\.$/, ''),
+      subsection: constMatch[2] || null,
+      materialType: 'constitution'
+    };
+  }
+  // Bare section
+  const sectionMatch = raw.match(/(?:§+\s*|Section\s+)([A-Za-z0-9][A-Za-z0-9.\-]*)((?:\([A-Za-z0-9]+\))*)/i);
+  if (sectionMatch) {
+    return {
+      raw, titleNumber: null,
+      sectionNumber: sectionMatch[1].replace(/\.$/, ''),
+      subsection: sectionMatch[2] || null,
+      materialType: null
+    };
+  }
+  return { raw, titleNumber: null, sectionNumber: null, subsection: null, materialType: null };
+}
+
+function parseChapter(raw) {
+  let match = raw.match(/Title\s+(\d+)\s*,?\s*(?:Chapter|Ch\.?)\s*([0-9][A-Za-z0-9.-]*)/i);
+  if (match) return { raw, titleNumber: parseInt(match[1]), chapterNumber: match[2].replace(/\.$/, '') };
+  match = raw.match(/(?:Chapter|Ch\.?)\s*([0-9][A-Za-z0-9.-]*)\s+of\s+Title\s+(\d+)/i);
+  if (match) return { raw, titleNumber: parseInt(match[2]), chapterNumber: match[1].replace(/\.$/, '') };
+  match = raw.match(/(\d+)\s+Del\.?\s*C\.?\s*(?:ch\.?|chapter)\s+([0-9][A-Za-z0-9.-]*)/i);
+  if (match) return { raw, titleNumber: parseInt(match[1]), chapterNumber: match[2].replace(/\.$/, '') };
+  match = raw.match(/(?:Chapter|Ch\.?)\s*([0-9][A-Za-z0-9.-]*)/i);
+  if (match) return { raw, titleNumber: null, chapterNumber: match[1].replace(/\.$/, '') };
+  return { raw, titleNumber: null, chapterNumber: null };
+}
+
+function extractCitations(text) {
+  const results = [];
+  const seen = new Set();
+  // Delaware Code citations
+  const codeRe = /\b(\d+)\s+Del\.?\s*C\.?\s*§+\s*[A-Za-z0-9][A-Za-z0-9.\-]*(?:\s*\([A-Za-z0-9]+\))*/gi;
+  let m;
+  while ((m = codeRe.exec(text)) !== null) {
+    const key = m[0].toLowerCase().replace(/\s+/g, ' ');
+    if (!seen.has(key)) { seen.add(key); results.push({ raw: m[0], type: 'section' }); }
+  }
+  // Sections named explicitly
+  const secRe = /§+\s*[A-Za-z0-9][A-Za-z0-9.\-]*(?:\s*\([A-Za-z0-9]+\))*/gi;
+  while ((m = secRe.exec(text)) !== null) {
+    const key = m[0].toLowerCase().replace(/\s+/g, ' ');
+    if (!seen.has(key)) { seen.add(key); results.push({ raw: m[0], type: 'section' }); }
+  }
+
+  // Chapter references
+  const chRe = /Title\s+\d+\s*,?\s*(?:Chapter|Ch\.?)\s*[0-9][A-Za-z0-9.-]*|(?:Chapter|Ch\.?)\s*[0-9][A-Za-z0-9.-]*\s+of\s+Title\s+\d+|\d+\s+Del\.?\s*C\.?\s*(?:ch\.?|chapter)\s+[0-9][A-Za-z0-9.-]*/gi;
+  while ((m = chRe.exec(text)) !== null) {
+    const key = m[0].toLowerCase().replace(/\s+/g, ' ');
+    if (!seen.has(key)) { seen.add(key); results.push({ raw: m[0], type: 'chapter' }); }
+  }
+
+  // Title mentions
+  const titleRe = /\b(Title\s+\d{1,2})\b/gi;
+  while ((m = titleRe.exec(text)) !== null) {
+    const key = m[0].toLowerCase().replace(/\s+/g, ' ');
+    if (!seen.has(key)) { seen.add(key); results.push({ raw: m[0], type: 'title' }); }
+  }
+  return results;
+}
+
+function extractCitationsFromText(text) {
+  // More aggressive extraction for validate workflow
+  const citations = [];
+  const seen = new Set();
+  // Full Delaware Code § refs
+  const codeRe = /\b(\d+)\s+Del\.?\s*C\.?\s*§+\s*([A-Za-z0-9][A-Za-z0-9.\-]*(?:\s*\([A-Za-z0-9]+\))*)/gi;
+  let m;
+  while ((m = codeRe.exec(text)) !== null) {
+    const raw = m[0];
+    const key = raw.toLowerCase().replace(/\s+/g, ' ');
+    if (!seen.has(key)) { seen.add(key); citations.push({ raw, type: 'section' }); }
+  }
+  // Bare § refs
+  const secRe = /§+\s*([A-Za-z0-9][A-Za-z0-9.\-]*(?:\s*\([A-Za-z0-9]+\))*)/gi;
+  while ((m = secRe.exec(text)) !== null) {
+    const raw = m[0];
+    const key = raw.toLowerCase().replace(/\s+/g, ' ');
+    if (!seen.has(key)) { seen.add(key); citations.push({ raw, type: 'section' }); }
+  }
+  // Chapter mentions
+  const chRe = /(?:Title\s+(\d+)\s*,?\s*(?:Chapter|Ch\.?)\s*([0-9][A-Za-z0-9.-]*)|(?:Chapter|Ch\.?)\s*([0-9][A-Za-z0-9.-]*))/gi;
+  while ((m = chRe.exec(text)) !== null) {
+    const raw = m[0];
+    const key = raw.toLowerCase().replace(/\s+/g, ' ');
+    if (!seen.has(key)) { seen.add(key); citations.push({ raw, type: 'chapter' }); }
+  }
+  return citations;
+}
+
+// ===== 数据库查询 (sql.js prepare/bind/step API) =====
+function dbPrepare(sql, params) {
+  const stmt = db.prepare(sql);
+  if (params && params.length > 0) stmt.bind(params);
+  const results = [];
+  while (stmt.step()) {
+    results.push(stmt.getAsObject());
+  }
+  stmt.free();
+  return results;
+}
+
+function dbLookup(rawCitation) {
+  const parsed = parseCitation(rawCitation);
+  if (!parsed.sectionNumber) return [];
+
+  if (parsed.materialType === 'constitution') {
+    return dbPrepare(
+      "SELECT * FROM materials WHERE material_type = 'constitution' AND section_number = ? ORDER BY citation",
+      [parsed.sectionNumber]
+    );
+  }
+  if (parsed.titleNumber && parsed.sectionNumber) {
+    return dbPrepare(
+      "SELECT * FROM materials WHERE title_number = ? AND section_number = ? ORDER BY citation",
+      [parsed.titleNumber, parsed.sectionNumber]
+    );
+  }
+  if (parsed.sectionNumber) {
+    return dbPrepare(
+      "SELECT * FROM materials WHERE section_number = ? ORDER BY citation",
+      [parsed.sectionNumber]
+    );
+  }
+  return [];
+}
+
+function dbLookupChapter(rawChapter) {
+  const parsed = parseChapter(rawChapter);
+  if (!parsed.chapterNumber) return [];
+
+  if (parsed.titleNumber) {
+    return dbPrepare(
+      "SELECT * FROM chapters WHERE title_number = ? AND chapter_number = ? ORDER BY title_number, chapter_number",
+      [parsed.titleNumber, parsed.chapterNumber]
+    );
+  }
+  return dbPrepare(
+    "SELECT * FROM chapters WHERE chapter_number = ? ORDER BY title_number, chapter_number",
+    [parsed.chapterNumber]
+  );
+}
+
+function dbSearch(query, limit) {
+  limit = limit || 10;
+  const chapterResults = dbLookupChapter(query);
+  if (chapterResults.length === 1) {
+    const ch = chapterResults[0];
+    const rows = dbPrepare(
+      "SELECT * FROM materials WHERE source_doc_id = ? AND chapter LIKE ? ORDER BY start_line LIMIT ?",
+      [ch.source_doc_id, 'Chapter ' + ch.chapter_number + ':%', limit]
+    );
+    if (rows.length > 0) return rows;
+  }
+
+  const terms = (query.toLowerCase().match(/[a-z0-9][a-z0-9-]{1,}/g) || []);
+  const stop = new Set(['the','and','for','with','from','this','that','delaware']);
+  const filtered = terms.filter(function(t) { return !stop.has(t); }).slice(0, 8);
+
+  if (filtered.length > 0) {
+    try {
+      const ftsQuery = filtered.join(' ');
+      const rows = dbPrepare(
+        "SELECT m.*, bm25(materials_fts) AS rank FROM materials_fts JOIN materials m ON materials_fts.rowid = m.rowid WHERE materials_fts MATCH ? ORDER BY rank LIMIT ?",
+        [ftsQuery, limit]
+      );
+      if (rows.length > 0) return rows;
+    } catch(_) {}
+  }
+
+  const likeTerms = filtered.slice(0, 4);
+  if (likeTerms.length > 0) {
+    const clauses = likeTerms.map(function() { return '(LOWER(heading) LIKE ? OR LOWER(text) LIKE ?)'; });
+    const params = [];
+    likeTerms.forEach(function(t) { params.push('%' + t + '%'); params.push('%' + t + '%'); });
+    params.push(limit);
+    return dbPrepare("SELECT * FROM materials WHERE " + clauses.join(' AND ') + " LIMIT ?", params);
+  }
+
+  return [];
+}
+
+function dbExecRaw(sql, params) {
+  return dbPrepare(sql, params);
+}
+
+// ===== 引用校验逻辑 =====
+function validateCitation(item, textContext) {
+  const raw = item.raw;
+  const result = {
+    raw,
+    status: 'not_found', // found | not_found | overbroad | topic_mismatch
+    matches: [],
+    warnings: [],
+    suggestions: [],
+    isChapter: false,
+    isTitle: false
+  };
+
+  // Check for Title-only reference
+  const titleMatch = raw.match(/^Title\s+(\d{1,2})\s*$/i);
+  if (titleMatch) {
+    result.isTitle = true;
+    const tn = parseInt(titleMatch[1]);
+    const titleRows = dbPrepare('SELECT * FROM source_documents WHERE title_number = ?', [tn]);
+    if (titleRows.length > 0) {
+      const t = titleRows[0];
+      result.status = 'overbroad';
+      result.matches.push({
+        source_doc_id: t.source_doc_id,
+        title_name: t.title_name,
+        source_url: t.source_url
+      });
+      result.warnings.push('整部 Title 引用过宽；具体法律结论应落到具体 Chapter 或 Section。');
+      result.warnings.push('可以作为范围描述，但不宜作为具体法律依据。');
+    }
+    return result;
+  }
+
+  // Chapter references
+  const chRef = parseChapter(raw);
+  if (chRef.chapterNumber) {
+    result.isChapter = true;
+    const chapters = dbLookupChapter(raw);
+    if (chapters.length > 0) {
+      result.status = 'found';
+      result.matches = chapters.map(ch => ({
+        title_number: ch.title_number,
+        chapter_number: ch.chapter_number,
+        chapter_name: ch.chapter_name,
+        source_doc_id: ch.source_doc_id,
+        source_url: (() => {
+          try {
+            const r = dbPrepare('SELECT source_url FROM source_documents WHERE source_doc_id = ?', [ch.source_doc_id]);
+            if (r.length > 0 && r[0].source_url) return r[0].source_url;
+          } catch (_) {}
+          return 'https://delcode.delaware.gov/';
+        })()
+      }));
+      if (chapters.length === 1) {
+        result.warnings.push('这是章级引用；用于具体结论时，建议进一步定位到具体 Section。');
+      } else if (!chRef.titleNumber) {
+        result.warnings.push('该 Chapter 编号在多个 Title 中出现；请补充 Title 号。');
+      }
+    } else {
+      result.status = 'not_found';
+      result.warnings.push('本地数据库未检出该 Chapter 引用。');
+      result.warnings.push('不得据此认定该 Chapter 不存在；请回查官方来源或更新数据库。');
+    }
+    return result;
+  }
+
+  // Section citations
+  const dbResults = dbLookup(raw);
+  if (dbResults.length > 0) {
+    result.status = 'found';
+    result.matches = dbResults.map(r => ({
+      citation: r.citation,
+      heading: r.heading,
+      source_file: r.source_file,
+      source_url: r.source_url,
+      data_version: r.data_version,
+      text: (r.text || '').substring(0, 300)
+    }));
+    // Topic mismatch checks
+    runTopicChecks(result, raw, textContext);
+  } else {
+    result.status = 'not_found';
+    // Check if it might be a real citation pattern
+    if (/§+\s*\d/.test(raw) || /Del\.\s*C\./.test(raw)) {
+      result.warnings.push('本地数据库未检出该引用。');
+      result.warnings.push('不得据此认定该条文不存在；请回查官方来源或更新数据库。');
+    } else {
+      result.warnings.push('本地数据库未检出该引用。可能不是有效的 Delaware Code 引用。');
+    }
+  }
+  return result;
+}
+
+function runTopicChecks(result, raw, textContext) {
+  const rawLower = raw.toLowerCase();
+  const ctxLower = (textContext || '').toLowerCase();
+  const combined = rawLower + ' ' + ctxLower;
+
+  // § 17-406 vs § 17-407 (reliance)
+  if (/17-406/.test(rawLower) && combined.includes('reliance')) {
+    result.status = 'topic_mismatch';
+    result.warnings.push('主题可能不匹配：§ 17-406 是 GP 违反合伙协议的救济条款，不是专业信赖条款。');
+    result.suggestions.push('6 Del. C. § 17-407 — Reliance on reports and information by limited partners, liquidating trustees, and general partners');
+    result.suggestions.push('§ 17-407 涉及对 records、information、opinions、reports 的 good-faith reliance。');
+  }
+
+  // Underground utility in wrong chapter
+  if (combined.includes('underground') && combined.includes('utility') && (combined.includes('title 21') || combined.includes('chapter 12'))) {
+    result.status = 'topic_mismatch';
+    result.warnings.push('地下管线损害预防主题应定位到 Title 26, Chapter 8，而不是 Title 26 Chapter 12 或 Title 21。');
+    result.suggestions.push('26 Del. C. ch. 8 — Underground Utility Damage Prevention and Safety');
+    result.suggestions.push('26 Del. C. § 801 — Purpose; citation; construction');
+  }
+
+  // Federal FOIA drift
+  if (combined.includes('foia') && /federal|5\s*u\.?s\.?c\.?\s*552/.test(combined)) {
+    result.warnings.push('Delaware public body 的公共记录问题应先查 Delaware FOIA（29 Del. C. ch. 100），不能直接套用联邦 FOIA。');
+    result.suggestions.push('29 Del. C. § 10003 — Examination and copying of public records');
+  }
+
+  // Computer crime - single § 932 isn't enough
+  if (/§\s*932/.test(rawLower) && combined.includes('unauthorized')) {
+    result.warnings.push('§ 932 可作为 unauthorized access 起点，但不能单独证明所有未授权访问都自动构成犯罪；还要核对具体构成、损害金额、处罚和 venue。');
+    result.suggestions.push('11 Del. C. §§ 932-938 (offenses), § 939 (penalties), § 940 (venue)');
+  }
+
+  // Public works bond
+  if (combined.includes('bond') && combined.includes('public') && (combined.includes('title 18') || combined.includes('insurance'))) {
+    result.warnings.push('公共工程 bid/performance/payment bond 问题不应只归入 Title 18 保险法，应先查采购和公共工程合同规则。');
+    result.suggestions.push('29 Del. C. § 6927 — Bid and contract security');
+    result.suggestions.push('29 Del. C. § 6962 — Large public works contract procedures');
+  }
+}
+
+// ===== 全文验证 =====
+function validateText(text) {
+  const citations = extractCitationsFromText(text);
+  const results = {
+    citations: [],
+    chapters: [],
+    titles: [],
+    externalSignals: []
+  };
+
+  // Check for cross-jurisdiction signals
+  const sigPatterns = [
+    { re: /5\s+U\.?S\.?C\.?\s*§\s*\d+/gi, label: '5 U.S.C. § 552 (Federal FOIA)' },
+    { re: /New\s+York/gi, label: 'New York' },
+    { re: /California/gi, label: 'California' },
+    { re: /Nevada/gi, label: 'Nevada' },
+    { re: /HIPAA/gi, label: 'HIPAA (联邦法律)' },
+    { re: /FERPA/gi, label: 'FERPA (联邦法律)' },
+    { re: /Federal\s+Arbitration\s+Act/gi, label: 'Federal Arbitration Act' },
+    { re: /case\s+law|判例|opinion/i, label: 'Case law / opinions' },
+  ];
+  sigPatterns.forEach(p => {
+    if (p.re.test(text)) {
+      p.re.lastIndex = 0;
+      results.externalSignals.push(p.label);
+    }
+  });
+
+  // Process each citation
+  citations.forEach(c => {
+    const vr = validateCitation(c, text);
+    if (c.type === 'title' || vr.isTitle) {
+      results.titles.push(vr);
+    } else if (c.type === 'chapter' || vr.isChapter) {
+      results.chapters.push(vr);
+    } else {
+      results.citations.push(vr);
+    }
+  });
+
+  return results;
+}
+
+// ===== 组织七组输出 =====
+function organizeResults(validationResults) {
+  const groups = {
+    errors: [],      // 明显错误 (topic mismatch, wrong chapter)
+    overbroad: [],   // 引用太宽泛
+    external: [],    // 需要查外部材料
+    notFound: [],    // 本地数据库没查到
+    related: [],     // 可能影响结论的相关法律
+    confirmed: [],   // 已确认正确的引用
+    uncovered: []    // 本工具未覆盖的内容
+  };
+
+  validationResults.citations.forEach(vr => {
+    if (vr.status === 'topic_mismatch') {
+      groups.errors.push(vr);
+    } else if (vr.status === 'found') {
+      if (vr.warnings.length > 0) {
+        groups.errors.push(vr);
+      } else {
+        groups.confirmed.push(vr);
+      }
+    } else if (vr.status === 'not_found') {
+      groups.notFound.push(vr);
+    }
+  });
+
+  validationResults.chapters.forEach(vr => {
+    if (vr.status === 'found') {
+      groups.overbroad.push(vr);
+    } else {
+      groups.notFound.push(vr);
+    }
+  });
+
+  validationResults.titles.forEach(vr => {
+    groups.overbroad.push(vr);
+  });
+
+  if (validationResults.externalSignals.length > 0) {
+    groups.external = validationResults.externalSignals;
+  }
+
+  return groups;
+}
+
+function renderGroup(label, items, cssClass, isList = false) {
+  let html = `<div class="result-group ${cssClass}"><h3>${label} (${Array.isArray(items) ? items.length : 0})</h3>`;
+  if (isList) {
+    html += items.map(s => `<div class="result-item">${escHtml(s)}</div>`).join('');
+  } else {
+    items.forEach(item => {
+      html += '<div class="result-item">';
+      html += `<div class="citation">${escHtml(item.raw)}</div>`;
+      if (item.matches && item.matches.length > 0) {
+        item.matches.forEach(m => {
+          html += `<div class="meta">匹配: ${escHtml(m.citation || '')} — ${escHtml(m.heading || m.chapter_name || m.title_name || '')}`;
+          if (m.source_url) html += ` | <a href="${escHtml(m.source_url)}" target="_blank" rel="noopener">来源</a>`;
+          html += '</div>';
+        });
+      }
+      if (item.warnings && item.warnings.length > 0) {
+        item.warnings.forEach(w => { html += `<div class="warn">⚠ ${escHtml(w)}</div>`; });
+      }
+      if (item.suggestions && item.suggestions.length > 0) {
+        item.suggestions.forEach(s => { html += `<div class="suggest">→ ${escHtml(s)}</div>`; });
+      }
+      html += '</div>';
+    });
+  }
+  html += '</div>';
+  return html;
+}
+
+function renderCounts(groups) {
+  let html = '<div class="counts">';
+  if (groups.errors.length > 0) html += `<span class="count-chip err">错误: ${groups.errors.length}</span>`;
+  if (groups.overbroad.length > 0) html += `<span class="count-chip broad">宽泛引用: ${groups.overbroad.length}</span>`;
+  if (groups.notFound.length > 0) html += `<span class="count-chip miss">未查到: ${groups.notFound.length}</span>`;
+  if (groups.confirmed.length > 0) html += `<span class="count-chip ok">确认正确: ${groups.confirmed.length}</span>`;
+  html += '</div>';
+  return html;
+}
+
+function renderFullResults(groups) {
+  let html = renderCounts(groups);
+  if (groups.errors.length > 0) html += renderGroup('明显错误 / 主题不匹配', groups.errors, 'rg-error');
+  if (groups.overbroad.length > 0) html += renderGroup('引用太宽泛', groups.overbroad, 'rg-broad');
+  if (groups.external.length > 0) html += renderGroup('需要查外部材料', groups.external, 'rg-external', true);
+  if (groups.notFound.length > 0) html += renderGroup('本地数据库没查到', groups.notFound, 'rg-miss');
+  if (groups.related.length > 0) html += renderGroup('可能影响结论的相关法律', groups.related, 'rg-related');
+  if (groups.confirmed.length > 0) {
+    html += '<details><summary>已确认正确的引用 (' + groups.confirmed.length + ')</summary>';
+    html += renderGroup('已确认正确的引用', groups.confirmed, 'rg-ok').replace(/rg-ok/, 'rg-ok');
+    html += '</details>';
+  }
+  html += `<div class="result-group rg-coverage"><h3>本工具未覆盖的内容</h3>
+    <div class="result-item" style="font-size:12px;color:#888;">
+      数据包版本：${DATA_VERSION}<br>
+      覆盖范围：Delaware Constitution; Delaware Code Title 1-31; Selected Delaware Court Rules<br>
+      未覆盖：Delaware regulations; opinions/cases; secondary sources; paid legal databases<br><br>
+      <strong>提醒：本工具只做法律材料检索和引用校验，不提供法律意见；正式交付前仍需核对官方来源或律师复核。</strong>
+    </div></div>`;
+  return html;
+}
+
+function escHtml(s) {
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+// ===== Admin Code API =====
+async function adminCodeLookup(citation) {
+  const apiBase = document.getElementById('admin-api-base').value.replace(/\/$/, '') + '/';
+  const proxy = document.getElementById('cors-proxy').value.trim();
+
+  const parsed = (citation || '').match(/(\d{1,2})\s+(?:DE|Del\.?)\s+Admin\.?\s+Code\s+([A-Za-z0-9][A-Za-z0-9.-]*)/i);
+  if (!parsed) return { error: '无法解析 Admin Code 引用格式。预期格式：24 DE Admin. Code 3900' };
+
+  const titleNumber = parseInt(parsed[1]);
+  const regulationNumber = parsed[2];
+
+  try {
+    // Get title index first
+    const titleUrl = proxy ? proxy + encodeURIComponent(apiBase + 'AdminCode/title') : apiBase + 'AdminCode/title';
+    const titleBody = JSON.stringify({ regulationUrl: `/AdminCode/title${titleNumber}` });
+
+    const titleResp = await fetch(titleUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: titleBody,
+      mode: proxy ? 'cors' : 'cors'
+    });
+    if (!titleResp.ok) return { error: `API 返回 HTTP ${titleResp.status}` };
+    const titleData = await titleResp.json();
+
+    // Find matching regulation
+    let foundEntry = null;
+    function walk(units) {
+      for (const unit of units || []) {
+        const pubUrl = unit.publicSiteRegulationUniqueUrl;
+        if (pubUrl && unit.treeComponentTypeId === 3) {
+          const regNum = (unit.regulationNumber || '').toString().trim() || pubUrl.split('/').pop();
+          if (regNum === regulationNumber) {
+            foundEntry = unit;
+            return;
+          }
+        }
+        if (unit.units) walk(unit.units);
+      }
+    }
+    walk(titleData.regulatoryUnits || []);
+
+    if (!foundEntry) return { error: `在 Title ${titleNumber} 中未找到 regulation ${regulationNumber}` };
+
+    // Get regulation details (PDF URL)
+    const regUrl = proxy ? proxy + encodeURIComponent(apiBase + 'AdminCode/regulation') : apiBase + 'AdminCode/regulation';
+    const regBody = JSON.stringify({ regulationUrl: foundEntry.publicSiteRegulationUniqueUrl });
+    const regResp = await fetch(regUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: regBody,
+      mode: 'cors'
+    });
+    if (!regResp.ok) return { error: `Regulation API 返回 HTTP ${regResp.status}` };
+    const regData = await regResp.json();
+
+    return {
+      citation: `${titleNumber} DE Admin. Code ${regulationNumber}`,
+      title: (foundEntry.regulationName || foundEntry.regulationDisplay || '').trim(),
+      sourcePageUrl: `https://regulations.delaware.gov${foundEntry.publicSiteRegulationUniqueUrl}`,
+      pdfId: regData.pdfId || null,
+      apiPdfUrl: regData.pdfId
+        ? `https://regulations.delaware.gov/api/AdminCode/title${titleNumber}/${regulationNumber}/${regData.pdfId}`
+        : null,
+      status: 'index_found',
+      note: 'Admin Code 正文需通过 API 下载 PDF 获取（CLI 专属功能）。网页版仅提供索引确认和来源链接。'
+    };
+  } catch (e) {
+    return { error: `网络请求失败: ${e.message}` + (proxy ? '' : '。如遇 CORS 错误，请在右下角设置 CORS 代理地址。') };
+  }
+}
+
+// ===== UI 事件 =====
+
+// Tab 切换
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+// 引用查证
+document.getElementById('btn-lookup').addEventListener('click', async () => {
+  if (!dbReady) return;
+  const input = document.getElementById('lookup-input').value.trim();
+  if (!input) return;
+
+  const container = document.getElementById('lookup-results');
+  container.innerHTML = '<div class="card"><div class="spinner"></div> 查证中...</div>';
+
+  // Try Admin Code pattern first
+  if (/\d{1,2}\s+(?:DE|Del\.?)\s+Admin\.?\s+Code/i.test(input)) {
+    const result = await adminCodeLookup(input);
+    if (result.error) {
+      container.innerHTML = `<div class="card"><div class="warn">${escHtml(result.error)}</div></div>`;
+    } else {
+      let html = `<div class="card"><h2>Admin Code 查询结果</h2>`;
+      html += `<div class="result-item"><div class="citation">${escHtml(result.citation)}</div>`;
+      html += `<div class="meta">${escHtml(result.title || '')}</div>`;
+      html += `<div class="meta">来源: <a href="${escHtml(result.sourcePageUrl)}" target="_blank" rel="noopener">${escHtml(result.sourcePageUrl)}</a></div>`;
+      if (result.apiPdfUrl) html += `<div class="meta">PDF: <a href="${escHtml(result.apiPdfUrl)}" target="_blank" rel="noopener">下载</a></div>`;
+      html += `<div class="warn">${escHtml(result.note || '')}</div>`;
+      html += '</div></div>';
+      container.innerHTML = html;
+    }
+    return;
+  }
+
+  // Database lookup
+  const vr = validateCitation({ raw: input, type: 'section' }, '');
+  let html = '<div class="card"><h2>查证结果</h2>';
+  if (vr.status === 'found' && vr.warnings.length === 0) {
+    html += '<div style="color:#188038;font-weight:600;">✓ 已验证存在</div>';
+    vr.matches.forEach(m => {
+      html += `<div class="result-item"><div class="citation">${escHtml(m.citation)}</div>`;
+      html += `<div class="meta">${escHtml(m.heading)} | <a href="${escHtml(m.source_url)}" target="_blank" rel="noopener">来源</a></div>`;
+      html += '</div>';
+    });
+  } else if (vr.status === 'not_found') {
+    html += '<div style="color:#d93025;font-weight:600;">✗ 本地数据库未检出</div>';
+    if (vr.warnings.length > 0) html += `<div class="warn">${escHtml(vr.warnings[0])}</div>`;
+  } else if (vr.status === 'topic_mismatch') {
+    html += '<div style="color:#e8710a;font-weight:600;">⚠ 主题可能不匹配</div>';
+    vr.warnings.forEach(w => { html += `<div class="warn">${escHtml(w)}</div>`; });
+    vr.suggestions.forEach(s => { html += `<div class="suggest">→ ${escHtml(s)}</div>`; });
+  }
+  html += '</div>';
+  container.innerHTML = html;
+});
+
+// 回车触发查证
+document.getElementById('lookup-input').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') document.getElementById('btn-lookup').click();
+});
+
+// 关键词检索
+document.getElementById('btn-search').addEventListener('click', () => {
+  if (!dbReady) return;
+  const input = document.getElementById('search-input').value.trim();
+  if (!input) return;
+
+  const container = document.getElementById('search-results');
+  container.innerHTML = '<div class="card"><div class="spinner"></div> 搜索中...</div>';
+
+  const results = dbSearch(input, 15);
+  let html = `<div class="card"><h2>搜索结果: "${escHtml(input)}" (${results.length} 条)</h2>`;
+  if (results.length > 0) {
+    results.forEach(r => {
+      html += `<div class="result-item"><div class="citation">${escHtml(r.citation || '')}</div>`;
+      html += `<div class="meta">${escHtml(r.heading || '')} | <a href="${escHtml(r.source_url || 'https://delcode.delaware.gov/')}" target="_blank" rel="noopener">来源</a></div>`;
+      html += `<div style="font-size:12px;color:#888;margin-top:4px;">${escHtml((r.text || '').substring(0, 200))}...</div>`;
+      html += '</div>';
+    });
+  } else {
+    html += '<div style="color:#888;">未找到匹配结果。尝试更具体的关键词。</div>';
+  }
+  html += `<div style="font-size:12px;color:#999;margin-top:8px;">数据包: ${DATA_VERSION} | 覆盖范围: Delaware Constitution; Delaware Code Title 1-31; Selected Court Rules</div>`;
+  html += '</div>';
+  container.innerHTML = html;
+});
+
+document.getElementById('search-input').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') document.getElementById('btn-search').click();
+});
+
+// 文本验证
+document.getElementById('btn-text-validate').addEventListener('click', () => {
+  if (!dbReady) return;
+  const text = document.getElementById('text-input').value.trim();
+  if (!text) return;
+
+  const container = document.getElementById('text-results');
+  container.innerHTML = '<div class="card"><div class="spinner"></div> 正在抽取引用并逐条验证...</div>';
+
+  setTimeout(() => {
+    const vr = validateText(text);
+    const groups = organizeResults(vr);
+    container.innerHTML = `
+      <div class="card">
+        <h2>验证报告</h2>
+        <div style="margin-bottom:12px;">
+          <span style="font-size:13px;color:#888;">识别到引用: ${vr.citations.length + vr.chapters.length + vr.titles.length} 条 | Section: ${vr.citations.length} | Chapter: ${vr.chapters.length} | Title: ${vr.titles.length}</span>
+        </div>
+        ${renderFullResults(groups)}
+      </div>`;
+  }, 100);
+});
+
+// 文件上传
+const uploadZone = document.getElementById('upload-zone');
+const fileInput = document.getElementById('file-input');
+const fileInfo = document.getElementById('file-info');
+const btnFileReview = document.getElementById('btn-file-review');
+let uploadedFile = null;
+
+uploadZone.addEventListener('click', () => fileInput.click());
+uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+uploadZone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  uploadZone.classList.remove('dragover');
+  handleFile(e.dataTransfer.files[0]);
+});
+fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+
+function handleFile(file) {
+  if (!file) return;
+  if (!file.name.endsWith('.docx') && !file.name.endsWith('.md')) {
+    alert('仅支持 .docx 和 .md 文件');
+    return;
+  }
+  uploadedFile = file;
+  fileInfo.style.display = 'block';
+  fileInfo.innerHTML = `<strong>${escHtml(file.name)}</strong> (${(file.size / 1024).toFixed(1)} KB)`;
+  btnFileReview.classList.remove('hidden');
+}
+
+btnFileReview.addEventListener('click', async () => {
+  if (!dbReady || !uploadedFile) return;
+  const container = document.getElementById('file-results');
+  container.innerHTML = '<div class="card"><div class="spinner"></div> 正在解析文件...</div>';
+
+  try {
+    let text;
+    if (uploadedFile.name.endsWith('.docx')) {
+      const arrayBuffer = await uploadedFile.arrayBuffer();
+      const result = await mammoth.extractRawText({ arrayBuffer });
+      text = result.value;
+    } else {
+      text = await uploadedFile.text();
+    }
+
+    container.innerHTML = '<div class="card"><div class="spinner"></div> 文件已解析，正在抽取引用并逐条验证...</div>';
+
+    setTimeout(() => {
+      const vr = validateText(text);
+      const groups = organizeResults(vr);
+      const totalCitations = vr.citations.length + vr.chapters.length + vr.titles.length;
+      container.innerHTML = `
+        <div class="card">
+          <h2>审查报告: ${escHtml(uploadedFile.name)}</h2>
+          <div style="margin-bottom:12px;">
+            <span style="font-size:13px;color:#888;">文件长度: ${text.length.toLocaleString()} 字符 | 识别到引用: ${totalCitations} 条 | Section: ${vr.citations.length} | Chapter: ${vr.chapters.length} | Title: ${vr.titles.length}</span>
+          </div>
+          ${vr.externalSignals.length > 0 ? `<div class="warn">文本中可能混入 Delaware 以外或联邦法律引用，当前数据库不能验证这些材料。</div>` : ''}
+          ${renderFullResults(groups)}
+        </div>`;
+    }, 200);
+  } catch (e) {
+    container.innerHTML = `<div class="card"><div style="color:#d93025;">文件解析失败: ${escHtml(e.message)}</div></div>`;
+  }
+});
+
+// Admin Code 测试连接
+document.getElementById('btn-admin-test').addEventListener('click', async () => {
+  const result = document.getElementById('admin-test-result');
+  result.textContent = '测试中...';
+  const apiBase = document.getElementById('admin-api-base').value.replace(/\/$/, '') + '/';
+  const proxy = document.getElementById('cors-proxy').value.trim();
+  const url = proxy ? proxy + encodeURIComponent(apiBase + 'AdminCode/titles') : apiBase + 'AdminCode/titles';
+  try {
+    const resp = await fetch(url, { mode: 'cors' });
+    if (resp.ok) {
+      result.textContent = '✓ 连接成功';
+      result.style.color = '#188038';
+    } else {
+      result.textContent = '✗ HTTP ' + resp.status;
+      result.style.color = '#d93025';
+    }
+  } catch (e) {
+    result.textContent = '✗ ' + (e.message.includes('CORS') ? 'CORS 拦截，请填写代理地址' : e.message);
+    result.style.color = '#d93025';
+  }
+});
+
+// ===== 初始化 =====
+async function init() {
+  try {
+    await loadDatabase();
+  } catch (e) {
+    console.error('Init failed:', e);
+    setStatus('error', '初始化失败');
+    document.getElementById('progress-text').textContent = '初始化失败: ' + e.message + '。请刷新页面重试。';
+  }
+}
+
+init();
+</script>
+
+</body>
+</html>
