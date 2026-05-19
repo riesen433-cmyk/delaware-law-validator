@@ -6,14 +6,6 @@ build/
 dist/
 *.egg-info/
 
-# Keep the local data pack out of ordinary Git commits.
-# Publish full data packs through GitHub Releases instead.
-data/*.sqlite
-data/*.sqlite.sha256
-data/raw_md/
-data/raw_court_rules/
-data/semantic/
-data/admin_code/
 release/*.zip
 adversarial_tests/results/
 adversarial_tests/generated/
