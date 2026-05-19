@@ -1,0 +1,184 @@
+[
+  {
+    "id": "round_001_case_001",
+    "title": "Correct DRULPA reliance citation",
+    "category": "basic_validation",
+    "mode": "validate",
+    "text": "The general partner may rely in good faith upon information, opinions, reports, or statements presented by accountants, attorneys, investment bankers, or other persons as provided in 6 Del. C. § 17-407.",
+    "expected": {
+      "citations_detected": ["6 Del. C. § 17-407"],
+      "should_pass": [
+        {"citation": "6 Del. C. § 17-407", "reason": "DRULPA reliance on reports and information."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_001_case_002",
+    "title": "Correct LLC fiduciary waiver",
+    "category": "basic_validation",
+    "mode": "validate",
+    "text": "The Delaware LLC agreement waives fiduciary duties to the fullest extent permitted by 6 Del. C. § 18-1101, except that the implied contractual covenant of good faith and fair dealing may not be eliminated.",
+    "expected": {
+      "citations_detected": ["6 Del. C. § 18-1101"],
+      "should_pass": [
+        {"citation": "6 Del. C. § 18-1101", "reason": "LLC Act fiduciary waiver provision."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_001_case_003",
+    "title": "Correct DGCL appraisal rights",
+    "category": "basic_validation",
+    "mode": "validate",
+    "text": "Any stockholder of a Delaware corporation may exercise appraisal rights as provided in 8 Del. C. § 262.",
+    "expected": {
+      "citations_detected": ["8 Del. C. § 262"],
+      "should_pass": [
+        {"citation": "8 Del. C. § 262", "reason": "DGCL appraisal rights provision."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_001_case_004",
+    "title": "Correct UCC warranty disclaimer",
+    "category": "basic_validation",
+    "mode": "validate",
+    "text": "The seller disclaims the implied warranty of merchantability and fitness for a particular purpose pursuant to 6 Del. C. § 2-316.",
+    "expected": {
+      "citations_detected": ["6 Del. C. § 2-316"],
+      "should_pass": [
+        {"citation": "6 Del. C. § 2-316", "reason": "UCC Article 2 warranty exclusion."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_001_case_005",
+    "title": "Correct Delaware FOIA chapter",
+    "category": "basic_validation",
+    "mode": "validate",
+    "text": "Public records requests to a Delaware public body shall be processed under Delaware FOIA, 29 Del. C. ch. 100.",
+    "expected": {
+      "citations_detected": ["29 Del. C. ch. 100"],
+      "should_pass": [
+        {"citation": "29 Del. C. ch. 100", "reason": "Delaware Freedom of Information Act."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_001_case_006",
+    "title": "Correct trust fiduciary duties",
+    "category": "basic_validation",
+    "mode": "validate",
+    "text": "Trustee shall administer any Delaware trust in accordance with the fiduciary duties set forth in 12 Del. C. § 3302.",
+    "expected": {
+      "citations_detected": ["12 Del. C. § 3302"],
+      "should_pass": [
+        {"citation": "12 Del. C. § 3302", "reason": "Trustee fiduciary duties and degree of care."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_001_case_007",
+    "title": "Correct will execution requirements",
+    "category": "basic_validation",
+    "mode": "validate",
+    "text": "A last will and testament shall satisfy the requisites and execution formalities under 12 Del. C. § 202.",
+    "expected": {
+      "citations_detected": ["12 Del. C. § 202"],
+      "should_pass": [
+        {"citation": "12 Del. C. § 202", "reason": "Requisites and execution of will."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_001_case_008",
+    "title": "Correct intestate succession",
+    "category": "basic_validation",
+    "mode": "validate",
+    "text": "If a decedent dies without a valid will, the intestate estate shall be distributed according to 12 Del. C. § 501.",
+    "expected": {
+      "citations_detected": ["12 Del. C. § 501"],
+      "should_pass": [
+        {"citation": "12 Del. C. § 501", "reason": "Intestate succession provisions."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_001_case_009",
+    "title": "Correct spousal elective share",
+    "category": "basic_validation",
+    "mode": "validate",
+    "text": "A surviving spouse may claim an elective share of the decedent's estate under 12 Del. C. § 901.",
+    "expected": {
+      "citations_detected": ["12 Del. C. § 901"],
+      "should_pass": [
+        {"citation": "12 Del. C. § 901", "reason": "Right to elective share by surviving spouse."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_001_case_010",
+    "title": "Correct advance health-care directives",
+    "category": "basic_validation",
+    "mode": "validate",
+    "text": "An individual may execute an advance health-care directive pursuant to 16 Del. C. § 2501.",
+    "expected": {
+      "citations_detected": ["16 Del. C. § 2501"],
+      "should_pass": [
+        {"citation": "16 Del. C. § 2501", "reason": "Delaware Advance Health-Care Directive Act."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_001_case_011",
+    "title": "Correct digital assets fiduciary access",
+    "category": "basic_validation",
+    "mode": "validate",
+    "text": "A fiduciary may access and manage digital assets of a decedent as provided under 12 Del. C. § 5001.",
+    "expected": {
+      "citations_detected": ["12 Del. C. § 5001"],
+      "should_pass": [
+        {"citation": "12 Del. C. § 5001", "reason": "Fiduciary Access to Digital Assets Act."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_001_case_012",
+    "title": "Correct charitable cy pres",
+    "category": "basic_validation",
+    "mode": "validate",
+    "text": "If a charitable trust purpose becomes impossible or impracticable, the court may apply cy pres under 12 Del. C. § 3541.",
+    "expected": {
+      "citations_detected": ["12 Del. C. § 3541"],
+      "should_pass": [
+        {"citation": "12 Del. C. § 3541", "reason": "Cy pres rule for charitable trusts."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_001_case_013",
+    "title": "Correct guardianship of disabled persons",
+    "category": "basic_validation",
+    "mode": "validate",
+    "text": "The court may appoint a guardian for a person with disabilities under 12 Del. C. § 3901.",
+    "expected": {
+      "citations_detected": ["12 Del. C. § 3901"],
+      "should_pass": [
+        {"citation": "12 Del. C. § 3901", "reason": "Appointment of guardians for persons with disabilities."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  }
+]

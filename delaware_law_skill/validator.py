@@ -5,6 +5,7 @@ import re
 from typing import Any
 
 from .database import DelawareLawDatabase, parse_chapter_reference
+from .registry import CROSS_TITLE_NUMBER_TRAPS
 
 
 FULL_DELCODE_RE = re.compile(
@@ -14,6 +15,14 @@ FULL_DELCODE_RE = re.compile(
 SECTION_ONLY_RE = re.compile(
     r"(?:§+\s*|Section\s+)[A-Za-z0-9][A-Za-z0-9.\-]*(?:\([A-Za-z0-9]+\))*"
     r"(?:\s+of\s+the\s+Delaware\s+(?:Act|Code|DRULPA|General Corporation Law|LLC Act))?",
+    re.IGNORECASE,
+)
+TITLE_SECTION_RE = re.compile(
+    r"\bTitle\s+(?P<title>\d+)\s*,?\s*Section\s+(?P<section>[A-Za-z0-9][A-Za-z0-9.\-]*(?:\([A-Za-z0-9]+\))*)\b",
+    re.IGNORECASE,
+)
+SECTION_OF_TITLE_RE = re.compile(
+    r"\bSection\s+(?P<section>[A-Za-z0-9][A-Za-z0-9.\-]*(?:\([A-Za-z0-9]+\))*)\s+of\s+Title\s+(?P<title>\d+)\b",
     re.IGNORECASE,
 )
 CHAPTER_REF_RE = re.compile(
@@ -40,11 +49,20 @@ BROAD_TITLE_RE = re.compile(
     re.IGNORECASE,
 )
 NON_DELAWARE_RE = re.compile(
-    r"\b(?:\d+\s+U\.S\.C\.?\s*§+\s*[A-Za-z0-9.-]+|\d+\s+C\.F\.R\.?\s*§+\s*[A-Za-z0-9.-]+|New York|N\.Y\.|California|Cal\.|Nevada|Nev\.|HIPAA|FERPA|DEA|FDA|Medicare|Medicaid)\b",
+    r"\b(?:\d+\s+U\.S\.C\.?\s*§+\s*[A-Za-z0-9.-]+|\d+\s+C\.F\.R\.?\s*(?:§+\s*|Part\s+)[A-Za-z0-9.-]+|New York|N\.Y\.|California|Cal\.|Nevada|Nev\.|HIPAA|FERPA|DEA|FDA|Medicare|Medicaid)\b",
     re.IGNORECASE,
 )
 UNCOVERED_RE = re.compile(
     r"\b(?:Del\. Ch\.|Del\. Supr\.|A\.\d+d|A\.3d|opinion|case law|判例)\b",
+    re.IGNORECASE,
+)
+ADMIN_CODE_RE = re.compile(
+    r"\b\d+\s+(?:DE|Del\.?)\s+Admin\.?\s*Code\s*§?\s*[A-Za-z0-9.-]+",
+    re.IGNORECASE,
+)
+BILLS_RE = re.compile(
+    r"\b(?:Senate\s+Bill|House\s+Bill|S\.\s*B\.|H\.\s*B\.)\s*\d+"
+    r"|\b\d+(?:st|nd|rd|th)\s+General\s+Assembly\b",
     re.IGNORECASE,
 )
 
@@ -145,11 +163,39 @@ FEDERAL_BOUNDARY_TERMS = {
     "medicare",
     "medicaid",
 }
+FEDERAL_TAX_ERISA_TERMS = {
+    "estate tax", "gift tax", "generation-skipping transfer tax", "gst tax",
+    "income tax", "internal revenue code", "irc §", "26 u.s.c",
+    "erisa", "employee retirement income security act",
+    "ira", "401(k)", "retirement plan", "employee benefit plan",
+}
 GOOD_SAMARITAN_TERMS = {
     "good samaritan",
     "emergency care immunity",
     "volunteer medical immunity",
     "overdose immunity",
+    "emergency care at the scene",
+    "immune from civil liability",
+    "renders emergency",
+}
+TRUST_ESTATES_TERMS = {
+    "trust", "trustee", "fiduciary", "decedent", "estate", "probate",
+    "will", "testament", "testamentary", "intestate", "settlor",
+    "personal representative", "letters testamentary",
+}
+WRONG_TITLE_WILLS_TERMS = {
+    "will", "probate", "executor", "testamentary", "decedents",
+}
+WRONG_TITLE_HEALTHCARE_TERMS = {
+    "advance health-care", "health-care directive", "living will",
+    "medical power of attorney", "health care agent",
+}
+WRONG_TITLE_GUARDIANSHIP_TERMS = {
+    "minor guardian", "guardian of a minor", "minor child",
+}
+WRONG_TITLE_ANATOMICAL_TERMS = {
+    "anatomical gift", "organ donation", "body", "tissues", "organs",
+    "transplantation", "deceased donor",
 }
 TELEHEALTH_TERMS = {
     "telehealth",
@@ -219,16 +265,16 @@ UCC_CONTEXT_TERMS = {
 }
 UCC_SECURED_TRANSACTION_TERMS = {
     "security interest",
-    "perfection",
-    "perfected",
+    "perfection", "perfected", "perfect",
     "financing statement",
     "collateral",
     "priority",
     "control",
+    "secured transaction",
 }
 WARRANTY_TERMS = {
-    "warranty disclaimer",
-    "disclaimer",
+    "warranty", "warranties",
+    "disclaimer", "disclaim",
     "merchantability",
     "implied warranty",
     "warranty of fitness",
@@ -298,17 +344,29 @@ def validate_text(db: DelawareLawDatabase, text: str) -> dict[str, Any]:
         if query.subsection and not _subsection_exists(rows[0]["text"], query.subsection):
             result["warnings"].append(f"找到主条文，但没有明显找到分款 {query.subsection}。")
 
-        _apply_topic_rules(db, query.section_number, query.subsection, citation.context, result)
+        _apply_topic_rules(db, query.section_number, query.subsection, citation.context, result, query.title_number)
         results.append(result)
 
     court_rule_results = [_validate_court_rule_reference(db, rule_ref) for rule_ref in court_rule_refs]
     outside = [match.group(0) for match in NON_DELAWARE_RE.finditer(text)]
     uncovered = sorted(set(match.group(0) for match in UNCOVERED_RE.finditer(text)))
+    admin_code_signals_list = [match.group(0) for match in ADMIN_CODE_RE.finditer(text)]
+    bill_signals_list = [match.group(0) for match in BILLS_RE.finditer(text)]
     coverage_warnings: list[str] = []
     if outside:
         coverage_warnings.append("文本中可能混入 Delaware 以外或联邦法律引用，当前数据库不能验证这些材料。")
     if uncovered:
         coverage_warnings.append("文本中提到判例或意见类材料；当前数据包暂不覆盖这些内容。")
+    if admin_code_signals_list:
+        coverage_warnings.append(
+            "文本中包含 Delaware Administrative Code 引用，请通过 admin-refresh-index --title N 刷新索引"
+            "并通过 admin-lookup / admin-search 按需抓取官方 PDF。"
+        )
+    if bill_signals_list:
+        coverage_warnings.append(
+            "文本中包含法案/议案引用（Bill / General Assembly）；"
+            "当前数据包不包含 session laws 或 pending legislation，请勿将其作为现行法律引用。"
+        )
 
     chapter_results = [_validate_chapter_reference(db, chapter) for chapter in chapter_refs]
     database_misses = _collect_database_misses(results, chapter_results, broad_title_refs, court_rule_results)
@@ -330,6 +388,8 @@ def validate_text(db: DelawareLawDatabase, text: str) -> dict[str, Any]:
         "rag_candidates": [],
         "outside_delaware_signals": outside,
         "uncovered_material_signals": uncovered,
+        "admin_code_signals": admin_code_signals_list,
+        "bill_signals": bill_signals_list,
         "coverage_warnings": coverage_warnings,
     }
 
@@ -348,6 +408,24 @@ def _extract_citations(text: str) -> list[ExtractedCitation]:
         if _is_ordinary_document_section(value):
             continue
         spans.append((match.start(), match.end(), value))
+
+    # "Title N, Section X" → normalize to "N Del. C. § X"
+    for match in TITLE_SECTION_RE.finditer(text):
+        if any(_overlaps(match.start(), match.end(), start, end) for start, end, _ in spans):
+            continue
+        title = match.group("title")
+        section = match.group("section")
+        normalized = f"{title} Del. C. § {section}"
+        spans.append((match.start(), match.end(), normalized))
+
+    # "Section X of Title N" → normalize to "N Del. C. § X"
+    for match in SECTION_OF_TITLE_RE.finditer(text):
+        if any(_overlaps(match.start(), match.end(), start, end) for start, end, _ in spans):
+            continue
+        title = match.group("title")
+        section = match.group("section")
+        normalized = f"{title} Del. C. § {section}"
+        spans.append((match.start(), match.end(), normalized))
 
     spans.sort(key=lambda item: item[0])
     return [
@@ -481,6 +559,18 @@ def _is_part_of_chapter_reference(text: str, start: int, end: int) -> bool:
     return bool(re.match(r"\s*,?\s*(?:Chapter|Ch\.?)\s*[0-9]", after, re.IGNORECASE))
 
 
+def _chapter_has_sections(db: DelawareLawDatabase, title_number: int | None, chapter_number: str) -> bool:
+    """Check if any sections exist for a given title+chapter prefix, even if the chapter itself isn't in the chapters table."""
+    if not title_number or not chapter_number:
+        return False
+    pattern = f"{title_number}delc%{chapter_number}-%"
+    rows = db.conn.execute(
+        "SELECT COUNT(*) as cnt FROM materials WHERE normalized_citation LIKE ?",
+        (pattern,),
+    ).fetchone()
+    return rows["cnt"] > 0 if rows else False
+
+
 def _validate_chapter_reference(db: DelawareLawDatabase, citation: ExtractedCitation) -> dict[str, Any]:
     query, rows = db.lookup_chapter(citation.text)
     result: dict[str, Any] = {
@@ -496,6 +586,14 @@ def _validate_chapter_reference(db: DelawareLawDatabase, citation: ExtractedCita
         result["message"] = "无法识别为当前工具支持的 Delaware Chapter 引用格式。"
         return result
     if not rows:
+        # Smart fallback: check if sections exist for this title+chapter
+        # (handles UCC Articles and other non-chapter organizational units)
+        if _chapter_has_sections(db, query.title_number, query.chapter_number):
+            result["status"] = "found"
+            result["message"] = "当前数据包中找到对应条文（非标准 Chapter 结构）。"
+            result["warnings"].append("该引用指向的可能是 Subtitle/Article 等非 Chapter 组织单位。")
+            return result
+
         result["message"] = "本地数据库未检出该 Chapter 引用。"
         result["warnings"].append("不得据此认定该 Chapter 不存在；请回查官方来源或更新数据库。")
         if query.title_number == 6 and query.chapter_number.upper() == "12C":
@@ -521,7 +619,7 @@ def _validate_chapter_reference(db: DelawareLawDatabase, citation: ExtractedCita
     if len(rows) > 1:
         result["warnings"].append("该 Chapter 编号在多个 Title 中出现；请补充 Title 号。")
     else:
-        result["warnings"].append("这是章级引用；用于具体结论时，建议进一步定位到具体 Section。")
+        result["warnings"].append("章级引用用于具体结论时，应定位到具体 Section。")
     return result
 
 
@@ -636,6 +734,7 @@ def _build_topic_reviews(db: DelawareLawDatabase, text: str) -> list[dict[str, A
             )
         )
 
+    reviews.extend(_build_trust_estates_topic_reviews(db, text))
     reviews.extend(_build_ucc_topic_reviews(db, text))
     reviews.extend(_build_health_topic_reviews(db, text))
 
@@ -782,6 +881,78 @@ def _profession_suggestions(db: DelawareLawDatabase, lowered_context: str) -> li
         if _contains_any(lowered_context, terms):
             citations.append((citation, reason))
     return _dedupe_suggestions(_authority_suggestions(db, citations))
+
+
+def _build_trust_estates_topic_reviews(db: DelawareLawDatabase, text: str) -> list[dict[str, Any]]:
+    """Topic reviews for Trust & Estates (Title 12), Guardianship (Title 13), Health (Title 16), and federal tax/ERISA boundaries."""
+    lowered = text.lower()
+    reviews: list[dict[str, Any]] = []
+
+    # Wrong-title: Title 25 (Property) for wills/probate → should be Title 12
+    if re.search(r"\bTitle\s+25\b|25\s+Del\.?\s*C\.?", text, re.IGNORECASE) and _contains_any(lowered, WRONG_TITLE_WILLS_TERMS):
+        reviews.append(_topic_review(
+            "错误引用", "wrong_title_25_not_12_for_wills",
+            "遗嘱认证 (wills/probate) 应属于 Title 12 (Decedents' Estates and Fiduciary Relations)，而非 Title 25 (Property)。",
+            _authority_suggestions(db, [
+                ("12 Del. C. ch. 2", "Wills and probate provisions。"),
+                ("12 Del. C. § 202", "Requisites and execution of will。"),
+            ]),
+        ))
+
+    # Wrong-title: Title 12 (Decedents' Estates) for health-care directives → should be Title 16
+    if re.search(r"\bTitle\s+12\b|12\s+Del\.?\s*C\.?", text, re.IGNORECASE) and _contains_any(lowered, WRONG_TITLE_HEALTHCARE_TERMS):
+        reviews.append(_topic_review(
+            "错误引用", "wrong_title_12_not_16_for_healthcare",
+            "预先医疗指示 (advance health-care directives) 应属于 Title 16 (Health and Safety)，而非 Title 12 (Decedents' Estates)。",
+            _authority_suggestions(db, [
+                ("16 Del. C. ch. 25", "Advance Health-Care Directive Act。"),
+                ("16 Del. C. § 2501", "Short title — Advance Health-Care Directives。"),
+            ]),
+        ))
+
+    # Wrong-title: Title 12 for minor guardianship → should be Title 13
+    if re.search(r"\bTitle\s+12\b|12\s+Del\.?\s*C\.?", text, re.IGNORECASE) and _contains_any(lowered, WRONG_TITLE_GUARDIANSHIP_TERMS):
+        reviews.append(_topic_review(
+            "错误引用", "wrong_title_12_not_13_for_minor_guardianship",
+            "未成年人监护 (minor guardianship) 应属于 Title 13 (Domestic Relations)，而非 Title 12 (Decedents' Estates)。",
+            _authority_suggestions(db, [
+                ("13 Del. C. ch. 23", "Guardianship of minors。"),
+            ]),
+        ))
+
+    # Wrong-title: Title 25 for anatomical gifts → should be Title 16
+    if re.search(r"\bTitle\s+25\b|25\s+Del\.?\s*C\.?", text, re.IGNORECASE) and _contains_any(lowered, WRONG_TITLE_ANATOMICAL_TERMS):
+        reviews.append(_topic_review(
+            "错误引用", "wrong_title_25_not_16_for_anatomical_gifts",
+            "遗体器官捐赠 (anatomical gifts) 应属于 Title 16 (Health and Safety) Chapter 27，而非 Title 25 (Property)。",
+            _authority_suggestions(db, [
+                ("16 Del. C. ch. 27", "Anatomical Gifts and Studies。"),
+                ("16 Del. C. § 2712", "Making, amending, revoking, and refusing anatomical gift。"),
+            ]),
+        ))
+
+    # Federal tax boundary
+    if _contains_any(lowered, FEDERAL_TAX_ERISA_TERMS):
+        reviews.append(_topic_review(
+            "需要查外部材料", "federal_tax_erisa_boundary",
+            "文本涉及联邦遗产税/赠与税/GST 税/所得税或 ERISA 事项；Delaware 信托法不能单独决定这些联邦法律问题，需查阅 federal tax law 或 ERISA 规则。",
+            [],
+            coverage={"not_covered": "federal estate/gift/GST/income tax; ERISA; Internal Revenue Code"},
+        ))
+
+    # Probate court rules / Register of Wills boundary
+    probate_court_signals = {"register of wills", "probate form", "court rule", "chancery rule",
+                             "court of chancery", "probate court", "orphans' court",
+                             "fiduciary accounting", "letters testamentary"}
+    if _contains_any(lowered, probate_court_signals) and _contains_any(lowered, TRUST_ESTATES_TERMS):
+        reviews.append(_topic_review(
+            "需要查外部材料", "probate_court_rules_boundary",
+            "遗嘱认证程序 (probate) 通常涉及 Register of Wills、Chancery Court rules、probate forms 等非法典材料；当前数据包不覆盖这些内容。",
+            [],
+            coverage={"not_covered": "probate court rules; Register of Wills practice; probate forms"},
+        ))
+
+    return reviews
 
 
 def _build_ucc_topic_reviews(db: DelawareLawDatabase, text: str) -> list[dict[str, Any]]:
@@ -1037,6 +1208,7 @@ def _apply_topic_rules(
     subsection: str | None,
     context: str,
     result: dict[str, Any],
+    title_number: int | None = None,
 ) -> None:
     context_lower = context.lower()
     if section_number == "17-406" and _contains_any(context_lower, RELIANCE_TERMS):
@@ -1053,17 +1225,22 @@ def _apply_topic_rules(
                 }
             )
 
-    if section_number == "17-607" and subsection == "(b)" and _contains_any(context_lower, SOLVENCY_TERMS):
-        result["warnings"].append(
-            "主题可能不匹配：§ 17-607(b) 是有限合伙人收到违法分配后的知情返还责任，不是资产负债比率测试。"
-        )
-        result["suggestions"].append(
-            {
-                "citation": "6 Del. C. § 17-607(a)",
-                "heading": "Limitations on distribution",
-                "reason": "分配后的资产/负债限制在 § 17-607(a)。",
-            }
-        )
+    if section_number == "17-607" and _contains_any(context_lower, SOLVENCY_TERMS):
+        if subsection == "(b)":
+            result["warnings"].append(
+                "主题可能不匹配：§ 17-607(b) 是有限合伙人收到违法分配后的知情返还责任，不是资产负债比率测试。"
+            )
+            result["suggestions"].append(
+                {
+                    "citation": "6 Del. C. § 17-607(a)",
+                    "heading": "Limitations on distribution",
+                    "reason": "分配后的资产/负债限制在 § 17-607(a)。",
+                }
+            )
+        else:
+            result["warnings"].append(
+                "主题可能不匹配：§ 17-607 在资产/负债测试语境中引用时，应明确 § 17-607(a)。§ 17-607(b) 是关于有限合伙人返还责任的不同条文。"
+            )
 
     if section_number == "3920" and _contains_any(context_lower, TELEHEALTH_TERMS) and _looks_like_general_telehealth_context(context_lower):
         result["warnings"].append(
@@ -1077,6 +1254,98 @@ def _apply_topic_rules(
             ],
         ):
             result["suggestions"].append(suggestion)
+
+    # § 17-1101 is LP (DRULPA), not LLC
+    if section_number == "17-1101" and _contains_any(context_lower, {"llc", "limited liability company", "dllca", "member", "manager", "fiduciary waiver"}):
+        result["warnings"].append(
+            "主题可能不匹配：§ 17-1101 是 DRULPA（LP）条文，不适用于 LLC。LLC fiduciary waiver 应查 Title 6 Chapter 18（DLLCA）。"
+        )
+        suggestion = _first_lookup(db, "6 Del. C. § 18-1101")
+        if suggestion:
+            result["suggestions"].append({
+                "citation": suggestion["citation"],
+                "heading": suggestion["heading"],
+                "reason": "LLC Act 的 construction and application 条文。",
+            })
+
+    # UCC Article 9 sections in warranty context
+    if re.match(r"9-\d+", section_number) and _contains_any(context_lower, WARRANTY_TERMS):
+        result["warnings"].append(
+            "主题可能不匹配：Article 9 涉及 secured transactions，不涉及 warranty disclaimer。Warranty disclaimer 应查 Article 2（如 § 2-316）。"
+        )
+        result["suggestions"].append({
+            "citation": "6 Del. C. § 2-316",
+            "heading": "Exclusion or modification of warranties",
+            "reason": "UCC Article 2 warranty disclaimer 条文。",
+        })
+
+    # UCC Article 2 sections in perfection/secured transaction context
+    if re.match(r"2-\d+", section_number) and _contains_any(context_lower, UCC_SECURED_TRANSACTION_TERMS):
+        result["warnings"].append(
+            "主题可能不匹配：Article 2 涉及 sale of goods，不涉及 security interest/perfection。Perfection 应查 Article 9。"
+        )
+        result["suggestions"].append({
+            "citation": "6 Del. C. § 9-310",
+            "heading": "When filing required to perfect security interest",
+            "reason": "UCC Article 9 perfection 条文。",
+        })
+
+    # § 2-714 is buyer's damages for accepted goods, not exclusion of consequential damages
+    if section_number == "2-714" and _contains_any(context_lower, {"consequential", "exclusion", "exclude", "limitation of damages", "limitation of liability"}):
+        result["warnings"].append(
+            "主题可能不匹配：§ 2-714 是买方就已接受货物的损害赔偿计算条文，不是排除间接损害（consequential damages）的规定。排除间接损害应查 § 2-719(3)。"
+        )
+        result["suggestions"].append({
+            "citation": "6 Del. C. § 2-719",
+            "heading": "Contractual modification or limitation of remedy",
+            "reason": "§ 2-719(3) 允许合同限制或排除间接损害赔偿。",
+        })
+
+    # ── Registry-backed cross-title traps ──────────────────────────────
+    full_section = f"{section_number}"
+    if subsection:
+        full_section += subsection
+    for trap in CROSS_TITLE_NUMBER_TRAPS:
+        trap_section = trap.get("wrong_section")
+        trap_subsection = trap.get("subsection")
+        trap_title = trap.get("wrong_title")
+        trap_terms = trap.get("context_terms", set())
+
+        if trap_section is None:
+            continue  # Chapter/title-level trap, not section-level
+
+        # Match section number
+        if trap_section != section_number:
+            continue
+        # Match subsection if specified
+        if trap_subsection and trap_subsection != subsection:
+            continue
+        # Check title if specified in trap: only fire when the cited title matches the wrong title
+        # If no title context available (Section X of the Delaware Code format), skip — ambiguous
+        if trap_title is not None:
+            if title_number is None:
+                continue  # Title context lost (format variant); can't confirm wrong title
+            if title_number != trap_title:
+                continue  # Trap targets specific title; cited title is different → skip
+        # Match context terms
+        if not _contains_any(context_lower, trap_terms):
+            continue
+
+        result["warnings"].append(f"主题可能不匹配：{trap['reason']}")
+        for cit, heading in trap.get("suggestions", []):
+            suggestion = _first_lookup(db, cit)
+            if suggestion:
+                result["suggestions"].append({
+                    "citation": suggestion["citation"],
+                    "heading": suggestion["heading"],
+                    "reason": heading.rstrip("。") + "。",
+                })
+            else:
+                result["suggestions"].append({
+                    "citation": cit,
+                    "heading": heading,
+                    "reason": trap["reason"],
+                })
 
 
 def _contains_any(value: str, terms: set[str]) -> bool:

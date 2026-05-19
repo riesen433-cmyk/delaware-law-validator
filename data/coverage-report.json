@@ -8,14 +8,14 @@
     "paid legal databases"
   ],
   "source_count": 42,
-  "material_count": 23310,
+  "material_count": 22829,
   "chapter_count": 1291,
   "sources": [
     {
       "doc_id": "constitution",
       "title_name": "Delaware Constitution",
       "material_type": "constitution",
-      "material_count": 206,
+      "material_count": 205,
       "chapter_count": 0,
       "current_through": "July 1, 2025",
       "source_url": "https://delcode.delaware.gov/constitution/constitution.pdf"
@@ -33,7 +33,7 @@
       "doc_id": "title2",
       "title_name": "Transportation",
       "material_type": "statute",
-      "material_count": 208,
+      "material_count": 205,
       "chapter_count": 15,
       "current_through": "April 28, 2026 / 85 Del. Laws, c. 251",
       "source_url": "https://delcode.delaware.gov/title2/Title2.pdf"
@@ -42,7 +42,7 @@
       "doc_id": "title3",
       "title_name": "Agriculture",
       "material_type": "statute",
-      "material_count": 711,
+      "material_count": 704,
       "chapter_count": 54,
       "current_through": "April 28, 2026 / 85 Del. Laws, c. 251",
       "source_url": "https://delcode.delaware.gov/title3/Title3.pdf"
@@ -51,7 +51,7 @@
       "doc_id": "title4",
       "title_name": "Alcoholic Liquors and Marijuana",
       "material_type": "statute",
-      "material_count": 213,
+      "material_count": 204,
       "chapter_count": 10,
       "current_through": "April 28, 2026 / 85 Del. Laws, c. 251",
       "source_url": "https://delcode.delaware.gov/title4/Title4.pdf"
@@ -60,7 +60,7 @@
       "doc_id": "title5",
       "title_name": "Banking",
       "material_type": "statute",
-      "material_count": 649,
+      "material_count": 636,
       "chapter_count": 30,
       "current_through": "April 28, 2026 / 85 Del. Laws, c. 251",
       "source_url": "https://delcode.delaware.gov/title5/Title5.pdf"
@@ -69,7 +69,7 @@
       "doc_id": "title6",
       "title_name": "Commerce and Trade",
       "material_type": "statute",
-      "material_count": 1752,
+      "material_count": 1647,
       "chapter_count": 75,
       "current_through": "April 28, 2026 / 85 Del. Laws, c. 251",
       "source_url": "https://delcode.delaware.gov/title6/Title6.pdf"
@@ -78,7 +78,7 @@
       "doc_id": "title7",
       "title_name": "Conservation",
       "material_type": "statute",
-      "material_count": 1095,
+      "material_count": 1081,
       "chapter_count": 70,
       "current_through": "April 28, 2026 / 85 Del. Laws, c. 251",
       "source_url": "https://delcode.delaware.gov/title7/Title7.pdf"
@@ -87,7 +87,7 @@
       "doc_id": "title8",
       "title_name": "Corporations",
       "material_type": "statute",
-      "material_count": 240,
+      "material_count": 236,
       "chapter_count": 3,
       "current_through": "April 28, 2026 / 85 Del. Laws, c. 251",
       "source_url": "https://delcode.delaware.gov/title8/Title8.pdf"
@@ -96,7 +96,7 @@
       "doc_id": "title9",
       "title_name": "Counties",
       "material_type": "statute",
-      "material_count": 1302,
+      "material_count": 1291,
       "chapter_count": 64,
       "current_through": "April 28, 2026 / 85 Del. Laws, c. 251",
       "source_url": "https://delcode.delaware.gov/title9/Title9.pdf"
@@ -105,7 +105,7 @@
       "doc_id": "title10",
       "title_name": "Courts and Judicial Procedure",
       "material_type": "statute",
-      "material_count": 1144,
+      "material_count": 1109,
       "chapter_count": 63,
       "current_through": "April 28, 2026 / 85 Del. Laws, c. 251",
       "source_url": "https://delcode.delaware.gov/title10/Title10.pdf"
@@ -114,7 +114,7 @@
       "doc_id": "title11",
       "title_name": "Crimes and Criminal Procedure",
       "material_type": "statute",
-      "material_count": 1266,
+      "material_count": 1251,
       "chapter_count": 52,
       "current_through": "April 28, 2026 / 85 Del. Laws, c. 251",
       "source_url": "https://delcode.delaware.gov/title11/Title11.pdf"
@@ -123,7 +123,7 @@
       "doc_id": "title12",
       "title_name": "Decedents’ Estates and Fiduciary Relations",
       "material_type": "statute",
-      "material_count": 731,
+      "material_count": 690,
       "chapter_count": 36,
       "current_through": "April 28, 2026 / 85 Del. Laws, c. 251",
       "source_url": "https://delcode.delaware.gov/title12/Title12.pdf"
@@ -132,7 +132,7 @@
       "doc_id": "title13",
       "title_name": "Domestic Relations",
       "material_type": "statute",
-      "material_count": 533,
+      "material_count": 523,
       "chapter_count": 21,
       "current_through": "April 28, 2026 / 85 Del. Laws, c. 251",
       "source_url": "https://delcode.delaware.gov/title13/Title13.pdf"
@@ -141,7 +141,7 @@
       "doc_id": "title14",
       "title_name": "Education",
       "material_type": "statute",
-      "material_count": 1078,
+      "material_count": 1069,
       "chapter_count": 85,
       "current_through": "April 28, 2026 / 85 Del. Laws, c. 251",
       "source_url": "https://delcode.delaware.gov/title14/Title14.pdf"
@@ -150,7 +150,7 @@
       "doc_id": "title15",
       "title_name": "Elections",
       "material_type": "statute",
-      "material_count": 609,
+      "material_count": 599,
       "chapter_count": 38,
       "current_through": "April 28, 2026 / 85 Del. Laws, c. 251",
       "source_url": "https://delcode.delaware.gov/title15/Title15.pdf"
@@ -159,7 +159,7 @@
       "doc_id": "title16",
       "title_name": "Health and Safety",
       "material_type": "statute",
-      "material_count": 1686,
+      "material_count": 1669,
       "chapter_count": 143,
       "current_through": "April 28, 2026 / 85 Del. Laws, c. 251",
       "source_url": "https://delcode.delaware.gov/title16/Title16.pdf"
@@ -168,7 +168,7 @@
       "doc_id": "title17",
       "title_name": "Highways",
       "material_type": "statute",
-      "material_count": 273,
+      "material_count": 271,
       "chapter_count": 19,
       "current_through": "April 28, 2026 / 85 Del. Laws, c. 251",
       "source_url": "https://delcode.delaware.gov/title17/Title17.pdf"
@@ -177,7 +177,7 @@
       "doc_id": "title18",
       "title_name": "Insurance Code",
       "material_type": "statute",
-      "material_count": 1621,
+      "material_count": 1615,
       "chapter_count": 83,
       "current_through": "April 28, 2026 / 85 Del. Laws, c. 251",
       "source_url": "https://delcode.delaware.gov/title18/Title18.pdf"
@@ -186,7 +186,7 @@
       "doc_id": "title19",
       "title_name": "Labor",
       "material_type": "statute",
-      "material_count": 448,
+      "material_count": 428,
       "chapter_count": 26,
       "current_through": "April 28, 2026 / 85 Del. Laws, c. 251",
       "source_url": "https://delcode.delaware.gov/title19/Title19.pdf"
@@ -195,7 +195,7 @@
       "doc_id": "title20",
       "title_name": "Military and Civil Defense",
       "material_type": "statute",
-      "material_count": 135,
+      "material_count": 131,
       "chapter_count": 12,
       "current_through": "April 28, 2026 / 85 Del. Laws, c. 251",
       "source_url": "https://delcode.delaware.gov/title20/Title20.pdf"
@@ -204,7 +204,7 @@
       "doc_id": "title21",
       "title_name": "Motor Vehicles",
       "material_type": "statute",
-      "material_count": 794,
+      "material_count": 773,
       "chapter_count": 42,
       "current_through": "April 28, 2026 / 85 Del. Laws, c. 251",
       "source_url": "https://delcode.delaware.gov/title21/Title21.pdf"
@@ -213,7 +213,7 @@
       "doc_id": "title22",
       "title_name": "Municipalities",
       "material_type": "statute",
-      "material_count": 182,
+      "material_count": 179,
       "chapter_count": 15,
       "current_through": "April 28, 2026 / 85 Del. Laws, c. 251",
       "source_url": "https://delcode.delaware.gov/title22/Title22.pdf"
@@ -222,7 +222,7 @@
       "doc_id": "title23",
       "title_name": "Navigation and Waters",
       "material_type": "statute",
-      "material_count": 114,
+      "material_count": 107,
       "chapter_count": 10,
       "current_through": "April 28, 2026 / 85 Del. Laws, c. 251",
       "source_url": "https://delcode.delaware.gov/title23/Title23.pdf"
@@ -231,7 +231,7 @@
       "doc_id": "title24",
       "title_name": "Professions and Occupations",
       "material_type": "statute",
-      "material_count": 1336,
+      "material_count": 1325,
       "chapter_count": 56,
       "current_through": "April 28, 2026 / 85 Del. Laws, c. 251",
       "source_url": "https://delcode.delaware.gov/title24/Title24.pdf"
@@ -240,7 +240,7 @@
       "doc_id": "title25",
       "title_name": "Property",
       "material_type": "statute",
-      "material_count": 676,
+      "material_count": 641,
       "chapter_count": 44,
       "current_through": "April 28, 2026 / 85 Del. Laws, c. 251",
       "source_url": "https://delcode.delaware.gov/title25/Title25.pdf"
@@ -249,7 +249,7 @@
       "doc_id": "title26",
       "title_name": "Public Utilities",
       "material_type": "statute",
-      "material_count": 208,
+      "material_count": 201,
       "chapter_count": 11,
       "current_through": "April 28, 2026 / 85 Del. Laws, c. 251",
       "source_url": "https://delcode.delaware.gov/title26/Title26.pdf"
@@ -267,7 +267,7 @@
       "doc_id": "title28",
       "title_name": "Sports and Amusements",
       "material_type": "statute",
-      "material_count": 203,
+      "material_count": 188,
       "chapter_count": 11,
       "current_through": "April 28, 2026 / 85 Del. Laws, c. 251",
       "source_url": "https://delcode.delaware.gov/title28/Title28.pdf"
@@ -276,7 +276,7 @@
       "doc_id": "title29",
       "title_name": "State Government",
       "material_type": "statute",
-      "material_count": 1828,
+      "material_count": 1801,
       "chapter_count": 117,
       "current_through": "April 28, 2026 / 85 Del. Laws, c. 251",
       "source_url": "https://delcode.delaware.gov/title29/Title29.pdf"
@@ -285,7 +285,7 @@
       "doc_id": "title30",
       "title_name": "State Taxes",
       "material_type": "statute",
-      "material_count": 590,
+      "material_count": 573,
       "chapter_count": 40,
       "current_through": "April 28, 2026 / 85 Del. Laws, c. 251",
       "source_url": "https://delcode.delaware.gov/title30/Title30.pdf"
@@ -294,7 +294,7 @@
       "doc_id": "title31",
       "title_name": "Welfare",
       "material_type": "statute",
-      "material_count": 483,
+      "material_count": 481,
       "chapter_count": 34,
       "current_through": "April 28, 2026 / 85 Del. Laws, c. 251",
       "source_url": "https://delcode.delaware.gov/title31/Title31.pdf"

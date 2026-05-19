@@ -8,13 +8,13 @@ import zipfile
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = PROJECT_ROOT / "data"
 RELEASE_DIR = PROJECT_ROOT / "release"
-PACKAGE_NAME = "delaware-law-data-v0.1.0.zip"
+PACKAGE_NAME = "delaware-law-data-v1.0.0.zip"
 
 
 def main() -> int:
     required = [
-        DATA_DIR / "delaware_law_data_v0.1.0.sqlite",
-        DATA_DIR / "delaware_law_data_v0.1.0.sqlite.sha256",
+        DATA_DIR / "delaware_law_data_v1.0.0.sqlite",
+        DATA_DIR / "delaware_law_data_v1.0.0.sqlite.sha256",
         DATA_DIR / "manifest.json",
         DATA_DIR / "coverage-report.json",
     ]

@@ -1,10 +1,10 @@
 {
   "data_version": "delaware-law-data-v0.1.0",
-  "generated_at_utc": "2026-05-12T08:08:50.067600+00:00",
-  "source_directory": "/Users/riesenhuang/Desktop/zxpro/特拉华法律汇总/Delaware code （recored）",
-  "court_rules_source_directory": "/Users/riesenhuang/Desktop/zxpro/特拉华法律汇总/court rules md",
+  "generated_at_utc": "2026-05-15T04:20:29.523162+00:00",
+  "source_directory": "C:\\Users\\z'x'p'ro\\.claude\\skills\\delaware-law-validator\\delaware-law-validator\\data\\raw_md",
+  "court_rules_source_directory": "C:\\Users\\z'x'p'ro\\.claude\\skills\\delaware-law-validator\\delaware-law-validator\\data\\raw_court_rules",
   "database_file": "delaware_law_data_v0.1.0.sqlite",
-  "database_sha256": "b3ecfa850f9e7aae0b1b20bd631faf3ff78764ce206a1397130cb51e0f57d3b0",
+  "database_sha256": "25607b28029a6f1145561a91156cf205e4c0bad0374fe98c8de15cf522b73578",
   "jurisdiction": "Delaware",
   "coverage": {
     "included": [
@@ -530,7 +530,7 @@
   ],
   "counts": {
     "source_files": 42,
-    "materials": 23310,
+    "materials": 22829,
     "chapters": 1291
   }
 }

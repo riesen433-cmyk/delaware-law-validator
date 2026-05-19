@@ -1,0 +1,172 @@
+[
+  {
+    "id": "round_004_case_001",
+    "title": "Decanting cites invade-principal section",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "The Trustee may decant any Delaware trust by distributing all trust property to a second trust with different terms, without the consent of any beneficiary, under 12 Del. C. § 3528.",
+    "expected": {
+      "citations_detected": ["12 Del. C. § 3528"],
+      "should_error": [
+        {"citation": "12 Del. C. § 3528", "reason": "§ 3528 is about trustee's authority to invade principal or income, not unlimited decanting authority."}
+      ],
+      "should_warn": [
+        {"type": "topic_mismatch", "contains_any": ["invade", "decant", "主题可能不匹配"], "reason": "Decanting should reference § 3525 or § 3526, not § 3528 (invade principal)."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_004_case_002",
+    "title": "Cy pres cites marital deduction section",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "If a charitable trust's original purpose becomes impossible or impracticable, the Trustee shall apply the trust property to another charitable purpose under the cy pres doctrine as provided in 12 Del. C. § 3549.",
+    "expected": {
+      "citations_detected": ["12 Del. C. § 3549"],
+      "should_error": [
+        {"citation": "12 Del. C. § 3549", "reason": "§ 3549 is about marital deduction gift compliance with IRC, not cy pres doctrine."}
+      ],
+      "should_warn": [
+        {"type": "topic_mismatch", "contains_any": ["3541", "cy pres", "charitable", "marital", "主题可能不匹配"], "reason": "Cy pres for charitable trusts should cite § 3541, not § 3549 (marital deduction)."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_004_case_003",
+    "title": "Unclaimed property cites definitions section",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "The Trustee shall report and remit all unclaimed trust property to the State Escheator in accordance with the reporting requirements of 12 Del. C. § 1130.",
+    "expected": {
+      "citations_detected": ["12 Del. C. § 1130"],
+      "should_error": [
+        {"citation": "12 Del. C. § 1130", "reason": "§ 1130 is Definitions, not unclaimed property reporting requirements."}
+      ],
+      "should_warn": [
+        {"type": "topic_mismatch", "contains_any": ["unclaimed", "escheat", "definitions", "主题可能不匹配"], "reason": "Unclaimed property reporting should reference specific escheat provisions, not § 1130 (Definitions)."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_004_case_004",
+    "title": "Full guardianship cites parent-consent section",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "The court shall appoint a guardian with full authority over all aspects of a minor's personal and financial affairs as the exclusive basis for all Delaware minor guardianship matters under 13 Del. C. § 2321.",
+    "expected": {
+      "citations_detected": ["13 Del. C. § 2321"],
+      "should_error": [
+        {"citation": "13 Del. C. § 2321", "reason": "§ 2321 is about consent by parent to adoption, not a comprehensive minor guardianship framework."}
+      ],
+      "should_warn": [
+        {"type": "topic_mismatch", "contains_any": ["adoption", "consent", "主题可能不匹配", "minor guardianship"], "reason": "Minor guardianship should reference Title 13 Chapter 23 comprehensively, not § 2321 alone (which is about adoption consent)."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_004_case_005",
+    "title": "Spousal elective share cites personal property section",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "The surviving spouse shall receive an elective share equal to one-third of the decedent's estate as computed under 12 Del. C. § 1901.",
+    "expected": {
+      "citations_detected": ["12 Del. C. § 1901"],
+      "should_error": [
+        {"citation": "12 Del. C. § 1901", "reason": "§ 1901 is about personal property constituting assets of estate, not spousal elective share computation."}
+      ],
+      "should_warn": [
+        {"type": "topic_mismatch", "contains_any": ["901", "elective share", "personal property", "主题可能不匹配"], "reason": "Spousal elective share should cite § 901, not § 1901 (personal property of estate)."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_004_case_006",
+    "title": "Trust modification cites directed trust adviser section",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "The settlor may modify or revoke any irrevocable trust by written instrument delivered to the Trustee, as authorized by 12 Del. C. § 3313.",
+    "expected": {
+      "citations_detected": ["12 Del. C. § 3313"],
+      "should_error": [
+        {"citation": "12 Del. C. § 3313", "reason": "§ 3313 is about investment advisers for directed trusts, not trust modification or revocation by settlor."}
+      ],
+      "should_warn": [
+        {"type": "topic_mismatch", "contains_any": ["adviser", "modif", "revoc", "主题可能不匹配"], "reason": "Trust modification/revocation should reference specific modification provisions, not § 3313 (directed trust advisers)."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_004_case_007",
+    "title": "Power of attorney cites trust administration section",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "The agent under a durable personal power of attorney may make gifts and change beneficiary designations as permitted by 12 Del. C. § 3302.",
+    "expected": {
+      "citations_detected": ["12 Del. C. § 3302"],
+      "should_error": [
+        {"citation": "12 Del. C. § 3302", "reason": "§ 3302 is about degree of care for trustees, not powers of an agent under a durable power of attorney."}
+      ],
+      "should_warn": [
+        {"type": "topic_mismatch", "contains_any": ["49A", "power of attorney", "degree of care", "主题可能不匹配"], "reason": "Durable personal power of attorney should reference Chapter 49A, not § 3302 (trustee degree of care)."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_004_case_008",
+    "title": "Guardianship of disabled person cites wrong subtitle",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "The court shall appoint a guardian with full authority over the person and property of an adult with intellectual disabilities under 12 Del. C. § 501.",
+    "expected": {
+      "citations_detected": ["12 Del. C. § 501"],
+      "should_error": [
+        {"citation": "12 Del. C. § 501", "reason": "§ 501 is about intestate succession, not adult guardianship for persons with disabilities."}
+      ],
+      "should_warn": [
+        {"type": "topic_mismatch", "contains_any": ["3901", "guardian", "intestate", "主题可能不匹配"], "reason": "Adult disability guardianship should cite § 3901, not § 501 (intestate succession)."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_004_case_009",
+    "title": "Anatomical gifts cites general health chapter",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "An individual may make an anatomical gift of all or part of the individual's body for transplantation, therapy, research, or education under 16 Del. C. § 2501.",
+    "expected": {
+      "citations_detected": ["16 Del. C. § 2501"],
+      "should_error": [
+        {"citation": "16 Del. C. § 2501", "reason": "§ 2501 is the short title of the Advance Health-Care Directive Act, not anatomical gifts."}
+      ],
+      "should_warn": [
+        {"type": "topic_mismatch", "contains_any": ["anatomical", "2712", "2501", "health-care directive", "主题可能不匹配"], "reason": "Anatomical gifts should reference Chapter 27 (§ 2712 et seq.), not § 2501 (advance health-care directives)."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_004_case_010",
+    "title": "Estate administration cites intestacy section",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "The personal representative shall administer the decedent's probate estate by collecting assets, paying debts, and distributing the remainder to beneficiaries as provided in 12 Del. C. § 501.",
+    "expected": {
+      "citations_detected": ["12 Del. C. § 501"],
+      "should_error": [
+        {"citation": "12 Del. C. § 501", "reason": "§ 501 is about intestate estate distribution when no will exists, not general estate administration procedures."}
+      ],
+      "should_warn": [
+        {"type": "topic_mismatch", "contains_any": ["1501", "1502", "administration", "intestate", "主题可能不匹配"], "reason": "Estate administration should reference Chapter 15 (§ 1501 et seq.), not § 501 (intestate succession)."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  }
+]

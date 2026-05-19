@@ -1,0 +1,617 @@
+[
+  {
+    "id": "r104_01",
+    "title": "NON-CODE: Federal estate tax boundary (IRC 2036-2038)",
+    "category": "non_code_material",
+    "mode": "validate",
+    "text": "All estate tax inclusion rules for grantor trusts are contained in 12 Del. C. ch. 35 and need no reference to the Internal Revenue Code.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. ch. 35"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "non_code_material",
+          "contains_any": [
+            "federal",
+            "IRC",
+            "Internal Revenue",
+            "estate tax",
+            "gift tax",
+            "2036",
+            "2038",
+            "outside",
+            "beyond"
+          ],
+          "reason": "Delaware Code does not contain federal estate tax rules. IRC Sections 2036-2038 (grantor trust inclusion) are federal law outside local database coverage."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r104_02",
+    "title": "NON-CODE: Federal gift tax exclusion",
+    "category": "non_code_material",
+    "mode": "validate",
+    "text": "The annual gift tax exclusion amount and lifetime exemption are governed by 12 Del. C. 3501 and Delaware law alone.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3501"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "non_code_material",
+          "contains_any": [
+            "federal",
+            "gift tax",
+            "IRS",
+            "IRC",
+            "exclusion",
+            "outside",
+            "beyond"
+          ],
+          "reason": "Gift tax exclusions are federal law (IRC Section 2503). Delaware Code provisions alone cannot determine federal gift tax consequences."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r104_03",
+    "title": "NON-CODE: ERISA and retirement plan beneficiaries",
+    "category": "non_code_material",
+    "mode": "validate",
+    "text": "The designation of trust beneficiaries for 401(k) and IRA accounts is governed exclusively by 12 Del. C. 3302.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3302"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "non_code_material",
+          "contains_any": [
+            "ERISA",
+            "IRA",
+            "401",
+            "retirement",
+            "federal",
+            "outside",
+            "plan"
+          ],
+          "reason": "Retirement plan beneficiary designations are governed by ERISA and the Internal Revenue Code (federal law), not Delaware Code alone."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r104_04",
+    "title": "NON-CODE: HIPAA and health information privacy",
+    "category": "non_code_material",
+    "mode": "validate",
+    "text": "The trustee access to protected health information of the settlor is governed entirely by 12 Del. C. 3322.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3322"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "non_code_material",
+          "contains_any": [
+            "HIPAA",
+            "health information",
+            "privacy",
+            "federal",
+            "outside",
+            "protected health"
+          ],
+          "reason": "Access to protected health information is governed by HIPAA (federal law), not Delaware Code alone. HIPAA compliance is outside local database coverage."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r104_05",
+    "title": "NON-CODE: Probate court rules and forms",
+    "category": "non_code_material",
+    "mode": "validate",
+    "text": "The Delaware Code alone contains all procedural rules and forms necessary for probate administration.",
+    "expected": {
+      "citations_detected": [
+        "Delaware Code"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "non_code_material",
+          "contains_any": [
+            "court rules",
+            "probate",
+            "forms",
+            "procedure",
+            "Register of Wills",
+            "Chancery",
+            "outside",
+            "not in Code"
+          ],
+          "reason": "Probate procedure requires Court of Chancery Rules and Register of Wills forms/practice, which are not within the Delaware Code database."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r104_06",
+    "title": "NON-CODE: Guardianship court procedure",
+    "category": "non_code_material",
+    "mode": "validate",
+    "text": "All guardianship hearing procedures, evidentiary standards, and reporting forms are found in 12 Del. C. 3901 through 12 Del. C. 3922.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3901"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "non_code_material",
+          "contains_any": [
+            "court rules",
+            "guardianship",
+            "procedure",
+            "hearing",
+            "forms",
+            "Chancery",
+            "outside"
+          ],
+          "reason": "Guardianship court procedure requires Court of Chancery Rules and local practice materials, not just the Delaware Code sections."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r104_07",
+    "title": "NON-CODE: Federal generation-skipping transfer tax",
+    "category": "non_code_material",
+    "mode": "validate",
+    "text": "Generation-skipping transfer tax allocation and exemption is governed by 12 Del. C. 3541 and Delaware trust law.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3541"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "non_code_material",
+          "contains_any": [
+            "GST",
+            "generation-skipping",
+            "federal",
+            "IRC",
+            "tax",
+            "outside",
+            "beyond"
+          ],
+          "reason": "Generation-skipping transfer tax is federal law (IRC Chapter 13). Delaware Code does not contain GST tax rules."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r104_08",
+    "title": "NON-CODE: IRS Form 706 and federal estate tax return",
+    "category": "non_code_material",
+    "mode": "validate",
+    "text": "The requirements for filing a federal estate tax return are set forth in Title 12 of the Delaware Code.",
+    "expected": {
+      "citations_detected": [
+        "Title 12"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "non_code_material",
+          "contains_any": [
+            "IRS",
+            "Form 706",
+            "federal",
+            "estate tax",
+            "return",
+            "outside",
+            "beyond"
+          ],
+          "reason": "Federal estate tax return (IRS Form 706) requirements are federal law, not Delaware Code. Title 12 covers Delaware estate administration."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r104_09",
+    "title": "NON-CODE: Register of Wills practice and procedures",
+    "category": "non_code_material",
+    "mode": "validate",
+    "text": "All procedures for admitting a will to probate and qualifying a personal representative are fully set forth in 12 Del. C. 1501 through 12 Del. C. 1510.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 1501"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "non_code_material",
+          "contains_any": [
+            "Register of Wills",
+            "probate",
+            "practice",
+            "forms",
+            "court",
+            "outside",
+            "procedure"
+          ],
+          "reason": "Will probate requires Register of Wills practice rules and Court of Chancery procedures, not just Delaware Code sections."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r104_10",
+    "title": "NON-CODE: IRS charitable remainder trust rules",
+    "category": "non_code_material",
+    "mode": "validate",
+    "text": "The requirements for a valid charitable remainder annuity trust are fully set forth in 12 Del. C. 3549.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3549"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "non_code_material",
+          "contains_any": [
+            "IRS",
+            "charitable remainder",
+            "CRAT",
+            "CRUT",
+            "federal",
+            "IRC 664",
+            "outside"
+          ],
+          "reason": "Charitable remainder trust requirements are primarily federal tax law (IRC Section 664). 12 Del. C. 3549 references IRC compliance but does not contain the federal rules."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r104_11",
+    "title": "NON-CODE: Case law for trust modification standards",
+    "category": "non_code_material",
+    "mode": "validate",
+    "text": "All standards for judicial modification of irrevocable trusts are fully codified in 12 Del. C. 3528.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3528"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "non_code_material",
+          "contains_any": [
+            "case law",
+            "opinion",
+            "judicial",
+            "modification",
+            "court",
+            "outside",
+            "not codified"
+          ],
+          "reason": "Trust modification standards also depend on Delaware Court of Chancery case law and opinions, which are outside the local database coverage."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r104_12",
+    "title": "NON-CODE: IRS qualified domestic trust (QDOT) requirements",
+    "category": "non_code_material",
+    "mode": "validate",
+    "text": "The requirements for a qualified domestic trust for a non-citizen surviving spouse are set forth in 12 Del. C. 901.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 901"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "non_code_material",
+          "contains_any": [
+            "QDOT",
+            "qualified domestic",
+            "federal",
+            "IRS",
+            "non-citizen",
+            "outside"
+          ],
+          "reason": "QDOT requirements are primarily federal tax law (IRC Section 2056A), not Delaware Code. 12 Del. C. 901 covers the elective share."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r104_13",
+    "title": "NON-CODE: IRS special needs trust rules",
+    "category": "non_code_material",
+    "mode": "validate",
+    "text": "All requirements for a valid special needs trust protecting government benefits are codified in 12 Del. C. 3901.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3901"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "non_code_material",
+          "contains_any": [
+            "special needs",
+            "Medicaid",
+            "SSI",
+            "Social Security",
+            "federal",
+            "government benefits",
+            "outside"
+          ],
+          "reason": "Special needs trust requirements for Medicaid/SSI protection are primarily federal law (42 U.S.C. 1396p). Delaware Code alone does not determine benefit eligibility."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r104_14",
+    "title": "NON-CODE: Court of Chancery mediation rules",
+    "category": "non_code_material",
+    "mode": "validate",
+    "text": "All mediation procedures for trust and estate disputes are set forth in 12 Del. C. ch. 35.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. ch. 35"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "non_code_material",
+          "contains_any": [
+            "mediation",
+            "court rules",
+            "Chancery",
+            "procedure",
+            "outside",
+            "not in Code"
+          ],
+          "reason": "Mediation procedures for trust disputes are governed by Court of Chancery Rules and local ADR procedures, not the Delaware Code alone."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r104_15",
+    "title": "NON-CODE: SEC and securities law for trust investments",
+    "category": "non_code_material",
+    "mode": "validate",
+    "text": "The investment powers and restrictions for Delaware trustees are exclusively governed by 12 Del. C. 3302.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3302"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "non_code_material",
+          "contains_any": [
+            "SEC",
+            "securities",
+            "federal",
+            "Investment Advisers Act",
+            "outside",
+            "regulation"
+          ],
+          "reason": "Trust investment activities may also be subject to federal securities laws, SEC regulations, and the Investment Advisers Act, which are outside the Delaware Code database."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r104_16",
+    "title": "NON-CODE: IRS grantor trust income tax rules",
+    "category": "non_code_material",
+    "mode": "validate",
+    "text": "The income tax treatment of grantor trusts is fully governed by 12 Del. C. 3528.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3528"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "non_code_material",
+          "contains_any": [
+            "grantor trust",
+            "income tax",
+            "IRC",
+            "671",
+            "679",
+            "federal",
+            "outside"
+          ],
+          "reason": "Grantor trust income tax rules are federal law (IRC Sections 671-679). 12 Del. C. 3528 governs trust invasion, not tax treatment."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r104_17",
+    "title": "NON-CODE: Attorney ethics and professional conduct rules",
+    "category": "non_code_material",
+    "mode": "validate",
+    "text": "The ethical obligations of attorneys serving as trustees or estate counsel are codified in Title 12 of the Delaware Code.",
+    "expected": {
+      "citations_detected": [
+        "Title 12"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "non_code_material",
+          "contains_any": [
+            "ethics",
+            "professional conduct",
+            "attorney",
+            "court rules",
+            "Delaware Lawyers Rules",
+            "outside"
+          ],
+          "reason": "Attorney ethics and professional conduct are governed by the Delaware Lawyers Rules of Professional Conduct and court rules, not Title 12 of the Delaware Code."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r104_18",
+    "title": "NON-CODE: FINRA and broker-dealer regulations for trust accounts",
+    "category": "non_code_material",
+    "mode": "validate",
+    "text": "All rules governing brokerage accounts held by trustees are found in 12 Del. C. 3313.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3313"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "non_code_material",
+          "contains_any": [
+            "FINRA",
+            "broker",
+            "securities",
+            "federal",
+            "regulation",
+            "outside"
+          ],
+          "reason": "Brokerage account rules involve FINRA regulations and federal securities laws, which are outside the Delaware Code database."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r104_19",
+    "title": "NON-CODE: IRS private foundation rules for charitable trusts",
+    "category": "non_code_material",
+    "mode": "validate",
+    "text": "All requirements for a charitable trust to qualify as a private foundation are set forth in 12 Del. C. 3541.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3541"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "non_code_material",
+          "contains_any": [
+            "private foundation",
+            "IRS",
+            "4940",
+            "federal",
+            "tax-exempt",
+            "outside"
+          ],
+          "reason": "Private foundation qualification and excise tax rules are federal law (IRC Sections 4940-4948). 12 Del. C. 3541 is the cy pres rule."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r104_20",
+    "title": "NON-CODE: Uniform Prudent Investor Act vs Delaware rule",
+    "category": "non_code_material",
+    "mode": "validate",
+    "text": "The Uniform Prudent Investor Act as adopted in Delaware is fully self-contained in 12 Del. C. 3302.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3302"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "non_code_material",
+          "contains_any": [
+            "Uniform Prudent Investor",
+            "UPIA",
+            "Restatement",
+            "uniform law",
+            "commentary",
+            "outside"
+          ],
+          "reason": "The Delaware Prudent Investor Rule under 12 Del. C. 3302 may be interpreted with reference to the Uniform Prudent Investor Act commentary and Restatement of Trusts, which are outside the local database."
+        }
+      ]
+    }
+  }
+]

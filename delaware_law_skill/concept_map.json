@@ -1,0 +1,404 @@
+[
+  {
+    "terms": [
+      "trustee",
+      "fiduciary",
+      "prudent"
+    ],
+    "sub_terms": [
+      "duty",
+      "care",
+      "standard",
+      "skill",
+      "caution"
+    ],
+    "citations": [
+      "12 Del. C. § 3302"
+    ]
+  },
+  {
+    "terms": [
+      "directed trust",
+      "adviser",
+      "trust protector",
+      "cotrustee"
+    ],
+    "sub_terms": [],
+    "citations": [
+      "12 Del. C. § 3313"
+    ]
+  },
+  {
+    "terms": [
+      "will",
+      "testament",
+      "testator",
+      "codicil"
+    ],
+    "sub_terms": [
+      "execut",
+      "sign",
+      "witness",
+      "formalit",
+      "requisite"
+    ],
+    "citations": [
+      "12 Del. C. § 202"
+    ]
+  },
+  {
+    "terms": [
+      "intestate",
+      "intestacy",
+      "died without",
+      "no will"
+    ],
+    "sub_terms": [],
+    "citations": [
+      "12 Del. C. § 501"
+    ]
+  },
+  {
+    "terms": [
+      "elective share",
+      "spousal share",
+      "surviving spouse",
+      "widow"
+    ],
+    "sub_terms": [],
+    "citations": [
+      "12 Del. C. § 901"
+    ]
+  },
+  {
+    "terms": [
+      "letters testamentary",
+      "personal representative",
+      "estate administrator"
+    ],
+    "sub_terms": [],
+    "citations": [
+      "12 Del. C. § 1501"
+    ]
+  },
+  {
+    "terms": [
+      "digital asset",
+      "crypto",
+      "blockchain"
+    ],
+    "sub_terms": [
+      "fiduciary",
+      "trust",
+      "estate",
+      "death",
+      "decedent"
+    ],
+    "citations": [
+      "12 Del. C. § 5001"
+    ]
+  },
+  {
+    "terms": [
+      "cy pres",
+      "charitable trust",
+      "charitable purpose"
+    ],
+    "sub_terms": [],
+    "citations": [
+      "12 Del. C. § 3541"
+    ]
+  },
+  {
+    "terms": [
+      "power of attorney",
+      "poa",
+      "attorney-in-fact"
+    ],
+    "sub_terms": [],
+    "citations": [
+      "12 Del. C. § 49A-101"
+    ]
+  },
+  {
+    "terms": [
+      "guardian"
+    ],
+    "sub_terms": [
+      "minor",
+      "child",
+      "adult",
+      "disabled",
+      "incapacitated"
+    ],
+    "citations": [
+      "12 Del. C. § 3901",
+      "13 Del. C. § 2321"
+    ]
+  },
+  {
+    "terms": [
+      "advance directive",
+      "living will",
+      "health care proxy"
+    ],
+    "sub_terms": [],
+    "citations": [
+      "16 Del. C. § 2501"
+    ]
+  },
+  {
+    "terms": [
+      "anatomical gift",
+      "organ donat",
+      "body donat",
+      "human tissue"
+    ],
+    "sub_terms": [],
+    "citations": [
+      "16 Del. C. § 2712"
+    ]
+  },
+  {
+    "terms": [
+      "death certif",
+      "vital statistics",
+      "burial permit"
+    ],
+    "sub_terms": [],
+    "citations": [
+      "16 Del. C. § 3101"
+    ]
+  },
+  {
+    "terms": [
+      "funeral",
+      "cremation",
+      "embalm",
+      "pre-need"
+    ],
+    "sub_terms": [],
+    "citations": [
+      "16 Del. C. § 3101"
+    ]
+  },
+  {
+    "terms": [
+      "probate"
+    ],
+    "sub_terms": [],
+    "citations": [
+      "12 Del. C. § 1501",
+      "12 Del. C. § 1901"
+    ]
+  },
+  {
+    "terms": [
+      "trustee"
+    ],
+    "sub_terms": [
+      "compensat",
+      "fee"
+    ],
+    "citations": [
+      "12 Del. C. § 3335"
+    ]
+  },
+  {
+    "terms": [
+      "trustee"
+    ],
+    "sub_terms": [
+      "remov",
+      "resign"
+    ],
+    "citations": [
+      "12 Del. C. § 3327"
+    ]
+  },
+  {
+    "terms": [
+      "trust"
+    ],
+    "sub_terms": [
+      "distribut"
+    ],
+    "citations": [
+      "12 Del. C. § 3315"
+    ]
+  },
+  {
+    "terms": [
+      "irrevocable",
+      "noncharitable purpose"
+    ],
+    "sub_terms": [],
+    "citations": [
+      "12 Del. C. § 3556"
+    ]
+  },
+  {
+    "terms": [
+      "revocable"
+    ],
+    "sub_terms": [
+      "trust",
+      "living"
+    ],
+    "citations": [
+      "12 Del. C. § 3343"
+    ]
+  },
+  {
+    "terms": [
+      "decant"
+    ],
+    "sub_terms": [],
+    "citations": [
+      "12 Del. C. § 3528"
+    ]
+  },
+  {
+    "terms": [
+      "spendthrift",
+      "asset protection"
+    ],
+    "sub_terms": [],
+    "citations": [
+      "12 Del. C. § 3536"
+    ]
+  },
+  {
+    "terms": [
+      "trust"
+    ],
+    "sub_terms": [
+      "account"
+    ],
+    "citations": [
+      "12 Del. C. § 3330"
+    ]
+  },
+  {
+    "terms": [
+      "trust"
+    ],
+    "sub_terms": [
+      "terminat"
+    ],
+    "citations": [
+      "12 Del. C. § 3341"
+    ]
+  },
+  {
+    "terms": [
+      "marital deduct",
+      "QTIP",
+      "qualified terminable"
+    ],
+    "sub_terms": [],
+    "citations": [
+      "12 Del. C. § 3549"
+    ]
+  },
+  {
+    "terms": [
+      "unclaimed property",
+      "escheat",
+      "abandoned",
+      "dormant"
+    ],
+    "sub_terms": [],
+    "citations": [
+      "12 Del. C. § 1130"
+    ]
+  },
+  {
+    "terms": [
+      "trust situs",
+      "delaware trust jurisdiction"
+    ],
+    "sub_terms": [],
+    "citations": [
+      "12 Del. C. § 3332"
+    ]
+  },
+  {
+    "terms": [
+      "reliance",
+      "rely",
+      "expert",
+      "professional",
+      "report",
+      "opinion",
+      "accountant"
+    ],
+    "sub_terms": [],
+    "citations": [
+      "8 Del. C. § 141(e)",
+      "6 Del. C. § 18-406",
+      "6 Del. C. § 17-407"
+    ]
+  },
+  {
+    "terms": [
+      "dividend",
+      "redemption",
+      "stock repurchase",
+      "share repurchase",
+      "capital distribution"
+    ],
+    "sub_terms": [],
+    "citations": [
+      "8 Del. C. § 170",
+      "8 Del. C. § 160",
+      "8 Del. C. § 173"
+    ]
+  },
+  {
+    "terms": [
+      "invention assignment",
+      "employee invention",
+      "assignment of inventions"
+    ],
+    "sub_terms": [],
+    "citations": [
+      "19 Del. C. § 805"
+    ]
+  },
+  {
+    "terms": [
+      "data breach",
+      "security breach",
+      "personal data",
+      "employee monitoring",
+      "video surveillance"
+    ],
+    "sub_terms": [],
+    "citations": [
+      "6 Del. C. § 12B-102"
+    ]
+  },
+  {
+    "terms": [
+      "champerty",
+      "litigation funding",
+      "litigation finance"
+    ],
+    "sub_terms": [],
+    "citations": []
+  },
+  {
+    "terms": [
+      "arbitration confirmation",
+      "vacatur",
+      "arbitration award enforcement",
+      "confirm award"
+    ],
+    "sub_terms": [],
+    "citations": [
+      "10 Del. C. § 5714",
+      "10 Del. C. § 5715"
+    ]
+  }
+]

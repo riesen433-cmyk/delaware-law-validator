@@ -1,0 +1,114 @@
+[
+  {
+    "id": "round_005_case_001",
+    "title": "Wills and probate under wrong Title 25",
+    "category": "wrong_title",
+    "mode": "validate",
+    "text": "The executor shall administer the decedent's probate estate and the will shall be admitted to probate under Title 25 of the Delaware Code governing wills and decedents' estates.",
+    "expected": {
+      "should_warn": [
+        {"type": "wrong_title", "contains_any": ["Title 12", "wills", "probate", "第12", "Wrong Title"], "reason": "Wills and probate administration belong under Title 12 (Decedents' Estates and Fiduciary Relations), not Title 25 (Property)."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_005_case_002",
+    "title": "Health-care directives under wrong Title 12",
+    "category": "wrong_title",
+    "mode": "validate",
+    "text": "All health-care directives, living wills, and medical powers of attorney shall be governed exclusively by Title 12 of the Delaware Code.",
+    "expected": {
+      "should_warn": [
+        {"type": "wrong_title", "contains_any": ["Title 16", "health", "advance health-care", "第16", "Wrong Title"], "reason": "Advance health-care directives belong under Title 16 (Health and Safety), not Title 12 (Decedents' Estates)."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_005_case_003",
+    "title": "Digital assets fiduciary access under wrong Title 6",
+    "category": "wrong_title",
+    "mode": "validate",
+    "text": "A trustee, personal representative, or agent under a power of attorney may access and manage digital assets of a decedent or principal as authorized by 6 Del. C. § 5001.",
+    "expected": {
+      "citations_detected": ["6 Del. C. § 5001"],
+      "should_error": [
+        {"citation": "6 Del. C. § 5001", "reason": "§ 5001 in Title 6 is Definitions for Commerce and Trade, not digital asset fiduciary access."}
+      ],
+      "should_warn": [
+        {"type": "wrong_title", "contains_any": ["Title 12", "digital", "fiduciary", "第12", "Wrong Title"], "reason": "Digital asset fiduciary access belongs under Title 12 Chapter 50, not Title 6."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_005_case_004",
+    "title": "Public works bonds under wrong Title 18",
+    "category": "wrong_title",
+    "mode": "validate",
+    "text": "The contractor shall provide a performance bond and payment bond for the public works project as required under Title 18 of the Delaware Code regarding insurance and suretyship.",
+    "expected": {
+      "should_warn": [
+        {"type": "wrong_title", "contains_any": ["29 Del. C.", "procurement", "public works", "bond"], "reason": "Public works bonds should reference Title 29 procurement rules, not Title 18 insurance."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_005_case_005",
+    "title": "Underground utility damage under wrong chapter",
+    "category": "wrong_title",
+    "mode": "validate",
+    "text": "Any person excavating near underground utility lines shall comply with the damage prevention requirements of Title 26, Chapter 12 of the Delaware Code.",
+    "expected": {
+      "should_warn": [
+        {"type": "wrong_title", "contains_any": ["Ch. 8", "Chapter 8", "underground utility", "801"], "reason": "Underground utility damage prevention belongs in Title 26 Chapter 8, not Chapter 12."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_005_case_006",
+    "title": "Minor guardianship under wrong Title 12",
+    "category": "wrong_title",
+    "mode": "validate",
+    "text": "The court shall appoint a guardian for any minor child whose parents are deceased or incapacitated under Title 12 of the Delaware Code.",
+    "expected": {
+      "should_warn": [
+        {"type": "wrong_title", "contains_any": ["Title 13", "minor", "guardian", "第13"], "reason": "Minor guardianship belongs under Title 13 (Domestic Relations), not Title 12 (Decedents' Estates)."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_005_case_007",
+    "title": "Anatomical gifts under general property law",
+    "category": "wrong_title",
+    "mode": "validate",
+    "text": "The disposition of human bodies, tissues, and organs for anatomical gift purposes shall be governed by the general property-law principles of Title 25 of the Delaware Code.",
+    "expected": {
+      "should_warn": [
+        {"type": "wrong_title", "contains_any": ["Title 16", "anatomical", "2712", "health", "第16"], "reason": "Anatomical gifts belong under Title 16 (Health and Safety) Chapter 27, not Title 25 (Property)."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_005_case_008",
+    "title": "Adult disability guardianship under wrong Title 13",
+    "category": "wrong_title",
+    "mode": "validate",
+    "text": "The court shall appoint a guardian with full authority over the person and property of an adult with intellectual disabilities under 13 Del. C. § 3901.",
+    "expected": {
+      "citations_detected": ["13 Del. C. § 3901"],
+      "should_error": [
+        {"citation": "13 Del. C. § 3901", "reason": "13 Del. C. § 3901 does not exist; adult disability guardianship is in Title 12 § 3901."}
+      ],
+      "should_warn": [
+        {"type": "wrong_title", "contains_any": ["12 Del. C", "3901", "guardian", "disabilities", "not_found"], "reason": "Adult disability guardianship is 12 Del. C. § 3901, not Title 13."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  }
+]

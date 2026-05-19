@@ -1,0 +1,12 @@
+{
+  "validator_cmd": "python -m delaware_law_skill.cli",
+  "default_mode": "validate",
+  "extra_args": ["--ai"],
+  "timeout_seconds": 120,
+  "case_glob": "cases/*.json",
+  "generated_case_glob": "generated/*.json",
+  "results_dir": "results",
+  "reports_dir": "reports",
+  "run_generated_cases": true,
+  "normalize_unicode": true
+}

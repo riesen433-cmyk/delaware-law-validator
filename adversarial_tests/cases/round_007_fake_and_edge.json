@@ -1,0 +1,113 @@
+[
+  {
+    "id": "round_007_case_001",
+    "title": "Fake DRULPA section",
+    "category": "fake_citation",
+    "mode": "validate",
+    "text": "The general partner may rely on financial statements under 6 Del. C. § 17-170.",
+    "expected": {
+      "citations_detected": ["6 Del. C. § 17-170"],
+      "should_error": [
+        {"citation": "6 Del. C. § 17-170", "reason": "§ 17-170 does not exist in the Delaware Code."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_007_case_002",
+    "title": "Fake will execution section",
+    "category": "fake_citation",
+    "mode": "validate",
+    "text": "A last will and testament shall be executed in compliance with 12 Del. C. § 2999.",
+    "expected": {
+      "citations_detected": ["12 Del. C. § 2999"],
+      "should_error": [
+        {"citation": "12 Del. C. § 2999", "reason": "§ 2999 does not exist in Title 12."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_007_case_003",
+    "title": "Fake directed trust section",
+    "category": "fake_citation",
+    "mode": "validate",
+    "text": "The directed trustee shall follow the investment direction of the trust adviser under 12 Del. C. § 1331.",
+    "expected": {
+      "citations_detected": ["12 Del. C. § 1331"],
+      "should_error": [
+        {"citation": "12 Del. C. § 1331", "reason": "§ 1331 does not exist in Title 12."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_007_case_004",
+    "title": "Fake power of attorney section",
+    "category": "fake_citation",
+    "mode": "validate",
+    "text": "The agent under a durable personal power of attorney may make gifts under 12 Del. C. § 49A-999.",
+    "expected": {
+      "citations_detected": ["12 Del. C. § 49A-999"],
+      "should_error": [
+        {"citation": "12 Del. C. § 49A-999", "reason": "§ 49A-999 does not exist in Chapter 49A."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_007_case_005",
+    "title": "Fake health-care section",
+    "category": "fake_citation",
+    "mode": "validate",
+    "text": "An advance health-care directive shall comply with 16 Del. C. § 31999.",
+    "expected": {
+      "citations_detected": ["16 Del. C. § 31999"],
+      "should_error": [
+        {"citation": "16 Del. C. § 31999", "reason": "§ 31999 does not exist in Title 16."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_007_case_006",
+    "title": "Fake decedents estates section",
+    "category": "fake_citation",
+    "mode": "validate",
+    "text": "The personal representative shall administer the estate under 12 Del. C. § 1199.",
+    "expected": {
+      "citations_detected": ["12 Del. C. § 1199"],
+      "should_error": [
+        {"citation": "12 Del. C. § 1199", "reason": "§ 1199 does not exist in Title 12."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_007_case_007",
+    "title": "Computer crime single section trap",
+    "category": "semantic_trap",
+    "mode": "validate",
+    "text": "Any unauthorized access to a computer system shall constitute a crime under 11 Del. C. § 932.",
+    "expected": {
+      "citations_detected": ["11 Del. C. § 932"],
+      "should_pass": [
+        {"citation": "11 Del. C. § 932", "reason": "§ 932 is valid unauthorized access provision."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_007_case_008",
+    "title": "Good Samaritan / emergency immunity detection",
+    "category": "semantic_trap",
+    "mode": "validate",
+    "text": "A physician who renders emergency care at the scene of an accident shall be immune from civil liability for any act or omission in rendering such care under Delaware law.",
+    "expected": {
+      "should_warn": [
+        {"type": "topic_review", "contains_any": ["good samaritan", "immunity", "Good Samaritan", "8135", "4769"], "reason": "Good Samaritan / emergency immunity topic should trigger review with relevant sections."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  }
+]

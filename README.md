@@ -18,41 +18,26 @@ The tool can say things like:
 
 The tool should not be used to say that a contract is legally sufficient, commercially appropriate, enforceable, or complete. It verifies legal materials; it does not make the final legal judgment.
 
-覆盖：
+第一版覆盖：
 
 - Delaware Constitution
 - Delaware Code Title 1-31
 - Selected Delaware Court Rules
 
-不覆盖：
+第一版不覆盖：
 
 - opinions / cases
 - Westlaw、Lexis、Bloomberg Law 等付费法律数据库
 
 Delaware Administrative Code 不打进主数据包。它通过官方站点建立轻量索引，并在需要某一条 regulation 正文时才按需抓取官方 PDF、抽取文字、缓存 30 天。
 
-## Quick Start
-
-Download the pre-built data pack from GitHub Releases and extract to the `data/` directory:
+## Build data pack
 
 ```bash
-curl -LO https://github.com/riesen433-cmyk/delaware-law-validator/releases/download/v0.1.0/delaware-law-data-v0.1.0.zip
-unzip delaware-law-data-v0.1.0.zip -d data/
-```
-
-Then verify it works:
-
-```bash
-python3 -m delaware_law_skill.cli lookup "6 Del. C. § 17-407"
-```
-
-## Build data pack (from local sources)
-
-```bash
-python3 -m delaware_law_skill.cli build --source "/Users/riesenhuang/Desktop/zxpro/特拉华法律汇总/md"
-python3 -m delaware_law_skill.cli build \
-  --source "/Users/riesenhuang/Desktop/zxpro/特拉华法律汇总/Delaware code （recored）" \
-  --court-rules-source "/Users/riesenhuang/Desktop/zxpro/特拉华法律汇总/court rules md"
+python -m delaware_law_skill.cli build --source "/path/to/delaware/markdown/files"
+python -m delaware_law_skill.cli build \
+  --source "/path/to/delaware/code" \
+  --court-rules-source "/path/to/court/rules/md"
 ```
 
 ## Use
@@ -81,59 +66,21 @@ python3 -m delaware_law_skill.cli admin-freshness 40
 Validate a document:
 
 ```bash
-python3 -m delaware_law_skill.cli review --file "/Users/riesenhuang/Desktop/zxpro/DELAWARE MULTI.docx"
-python3 -m delaware_law_skill.cli validate --file "/Users/riesenhuang/Desktop/zxpro/特拉华州/260511-最终修改清单.md"
-python3 -m delaware_law_skill.cli validate --file "/Users/riesenhuang/Desktop/zxpro/DELAWARE MULTI.docx"
-```
-
-## Optional RAG retrieval
-
-RAG is not needed for the default workflow. The default tool uses local rules, keyword search, exact lookup, and citation validation.
-
-If RAG is enabled later, the optional layer works in three steps:
-
-1. `BAAI/bge-m3` finds likely relevant sections.
-2. The tool retrieves those exact sections from the local SQLite data pack.
-3. `BAAI/bge-reranker-v2-m3` reranks the exact retrieved sections.
-
-Install free local model dependencies:
-
-```bash
-python3 -m pip install -e ".[semantic]"
-```
-
-Build the semantic index:
-
-```bash
-python3 -m delaware_law_skill.cli rag-build
-python3 -m delaware_law_skill.cli rag-status
-```
-
-Search with RAG-style retrieval:
-
-```bash
-python3 -m delaware_law_skill.cli rag-search "Delaware LP distribution solvency test"
-```
-
-The RAG-style layer is paused for now and should not be used unless explicitly re-enabled. It is only a locator and does not verify legal conclusions by itself. Citation validation still uses exact database lookup and rule checks.
-
-Document review normally uses fast local rules. Add `--rag` only when conceptual references need candidate-section help:
-
-```bash
-python3 -m delaware_law_skill.cli review --rag --file "/path/to/document.docx"
+python3 -m delaware_law_skill.cli review --file "/path/to/document.docx"
+python3 -m delaware_law_skill.cli validate --file "/path/to/document.md"
+python3 -m delaware_law_skill.cli validate --file "/path/to/document.docx"
 ```
 
 ## Data files
 
 Generated files live under `data/`:
 
-- `delaware_law_data_v0.1.0.sqlite`
+- `delaware_law_data_vX.Y.Z.sqlite`
 - `manifest.json`
 - `coverage-report.json`
-- `delaware_law_data_v0.1.0.sqlite.sha256`
+- `delaware_law_data_vX.Y.Z.sqlite.sha256`
 - `raw_md/`
 - `raw_court_rules/`
-- `semantic/` if the optional semantic index has been built
 - `admin_code/` if the online Delaware Administrative Code index/cache has been used
 
 GitHub repo should contain code and a small sample only. Full data packs should be published through GitHub Releases.
@@ -155,8 +102,3 @@ Delaware source layering:
 - Laws of Delaware: session laws
 - Bills & Resolutions: pending bills only, not current law
 - Delaware Register of Regulations: regulatory update checking only, not mixed into current Administrative Code unless final/effective status is separately verified
-
-## Contributors
-
-- [Riesen Huang](https://github.com/riesen433-cmyk)
-- [Claude Code](https://github.com/anthropics/claude-code)

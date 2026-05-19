@@ -1,0 +1,86 @@
+[
+  {
+    "id": "round_002_case_001",
+    "title": "DRULPA reliance - no spaces variant",
+    "category": "format_variant",
+    "mode": "validate",
+    "text": "The general partner may rely in good faith as provided in 6 Del.C. §17-407.",
+    "expected": {
+      "citations_detected": ["6 Del.C. §17-407", "6 Del. C. § 17-407"],
+      "should_pass": [
+        {"citation": "6 Del. C. § 17-407", "reason": "DRULPA reliance provision (format variant)."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_002_case_002",
+    "title": "DRULPA reliance - Section of Title variant",
+    "category": "format_variant",
+    "mode": "validate",
+    "text": "The general partner may rely in good faith as provided in Section 17-407 of Title 6 of the Delaware Code.",
+    "expected": {
+      "citations_detected": ["Section 17-407 of Title 6", "6 Del. C. § 17-407"],
+      "should_pass": [
+        {"citation": "6 Del. C. § 17-407", "reason": "DRULPA reliance (Section of Title variant)."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_002_case_003",
+    "title": "Warranty disclaimer - Chapter variant",
+    "category": "format_variant",
+    "mode": "validate",
+    "text": "The seller disclaims implied warranties under Chapter 2 of Title 6 of the Delaware Code.",
+    "expected": {
+      "citations_detected": ["Chapter 2 of Title 6", "6 Del. C. ch. 2"],
+      "should_pass": [
+        {"citation": "6 Del. C. ch. 2", "reason": "UCC Article 2 chapter (format variant)."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_002_case_004",
+    "title": "Delaware Code citation with trailing punctuation",
+    "category": "format_variant",
+    "mode": "validate",
+    "text": "The LLC agreement shall comply with 6 Del. C. § 18-1101.",
+    "expected": {
+      "citations_detected": ["6 Del. C. § 18-1101"],
+      "should_pass": [
+        {"citation": "6 Del. C. § 18-1101", "reason": "LLC Act fiduciary waiver."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_002_case_005",
+    "title": "Title N, Section X variant",
+    "category": "format_variant",
+    "mode": "validate",
+    "text": "Trustee shall administer any Delaware trust in accordance with Title 12, Section 3302.",
+    "expected": {
+      "citations_detected": ["Title 12, Section 3302", "12 Del. C. § 3302"],
+      "should_pass": [
+        {"citation": "12 Del. C. § 3302", "reason": "Trust fiduciary duties (Title-Section format variant)."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_002_case_006",
+    "title": "Section X of Title N variant",
+    "category": "format_variant",
+    "mode": "validate",
+    "text": "A last will and testament shall satisfy the formalities under Section 202 of Title 12.",
+    "expected": {
+      "citations_detected": ["Section 202 of Title 12", "12 Del. C. § 202"],
+      "should_pass": [
+        {"citation": "12 Del. C. § 202", "reason": "Will execution (Section-of-Title format variant)."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  }
+]

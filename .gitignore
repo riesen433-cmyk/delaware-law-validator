@@ -15,3 +15,7 @@ data/raw_court_rules/
 data/semantic/
 data/admin_code/
 release/*.zip
+adversarial_tests/results/
+adversarial_tests/generated/
+adversarial_tests/reports/
+docs/

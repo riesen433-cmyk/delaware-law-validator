@@ -8,7 +8,7 @@ import sys
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-DB_PATH = PROJECT_ROOT / "data" / "delaware_law_data_v0.1.0.sqlite"
+DB_PATH = PROJECT_ROOT / "data" / "delaware_law_data_v1.0.0.sqlite"
 MANIFEST_PATH = PROJECT_ROOT / "data" / "manifest.json"
 
 

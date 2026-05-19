@@ -1,0 +1,594 @@
+[
+  {
+    "id": "r102_01",
+    "title": "MISMATCH: 12 Del. C. 3528 cited as decanting authority",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "The trustee may decant all trust assets into a new trust under the unlimited decanting authority of 12 Del. C. 3528.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3528"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "topic_mismatch",
+          "contains_any": [
+            "3528",
+            "invade",
+            "decant",
+            "heading",
+            "mismatch",
+            "not decant"
+          ],
+          "reason": "Section 3528 heading is Trustee authority to invade principal or income, not decanting."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r102_02",
+    "title": "MISMATCH: 12 Del. C. 3549 cited as mandatory cy pres",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "All charitable remainder trusts shall include a mandatory cy pres provision as required by 12 Del. C. 3549.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3549"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "topic_mismatch",
+          "contains_any": [
+            "3549",
+            "marital",
+            "deduction",
+            "cy pres",
+            "heading",
+            "not cy pres"
+          ],
+          "reason": "Section 3549 heading is Marital deduction gift, not cy pres. Cy pres is at 12 Del. C. 3541."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r102_03",
+    "title": "MISMATCH: 12 Del. C. 1901 cited as spousal elective share",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "The surviving spouse shall compute the elective share amount under the valuation methodology in 12 Del. C. 1901.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 1901"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "topic_mismatch",
+          "contains_any": [
+            "1901",
+            "elective share",
+            "heading",
+            "assets",
+            "personal property",
+            "not elective"
+          ],
+          "reason": "Section 1901 heading is Personal property constituting assets of estate, not elective share. Elective share is at 12 Del. C. 901."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r102_04",
+    "title": "MISMATCH: 13 Del. C. 2321 cited as complete minor guardianship",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "All aspects of minor guardianship including custody, visitation, and support are governed by 13 Del. C. 2321.",
+    "expected": {
+      "citations_detected": [
+        "13 Del. C. 2321"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "topic_mismatch",
+          "contains_any": [
+            "2321",
+            "consent",
+            "parent",
+            "heading",
+            "guardianship",
+            "not full"
+          ],
+          "reason": "Section 2321 heading is Consent by parent (adoption context), not comprehensive minor guardianship statute."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r102_05",
+    "title": "MISMATCH: 12 Del. C. 1130 cited as unclaimed property reporting",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "The trustee shall file annual unclaimed property reports as mandated by 12 Del. C. 1130.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 1130"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "topic_mismatch",
+          "contains_any": [
+            "1130",
+            "definition",
+            "heading",
+            "unclaimed",
+            "not reporting"
+          ],
+          "reason": "Section 1130 heading is Definitions, not reporting requirements. It is only the definitions section for unclaimed property."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r102_06",
+    "title": "MISMATCH: 12 Del. C. 3528 invade principal vs trust modification",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "The trustee may modify any irrevocable trust under the modification power in 12 Del. C. 3528.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3528"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "topic_mismatch",
+          "contains_any": [
+            "3528",
+            "invade",
+            "modif",
+            "heading"
+          ],
+          "reason": "Section 3528 is about invasion of principal or income, not blanket trust modification or decanting."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r102_07",
+    "title": "MISMATCH: 6 Del. C. 5001 is not digital assets trust law",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "The trustee shall manage all digital assets of the trust in accordance with 6 Del. C. 5001.",
+    "expected": {
+      "citations_detected": [
+        "6 Del. C. 5001"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "topic_mismatch",
+          "contains_any": [
+            "5001",
+            "Title 6",
+            "Title 12",
+            "digital",
+            "wrong title"
+          ],
+          "reason": "6 Del. C. 5001 is in Title 6 (Commerce and Trade). Fiduciary digital assets access is 12 Del. C. 5001."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r102_08",
+    "title": "MISMATCH: 12 Del. C. 3302 cited as investment-only duty",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "The trustee owes a duty solely with respect to investment performance under 12 Del. C. 3302.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3302"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. 3302",
+          "reason": "Degree of care exists."
+        }
+      ],
+      "should_warn": [
+        {
+          "type": "topic_mismatch",
+          "contains_any": [
+            "3302",
+            "degree of care",
+            "investment",
+            "prudent",
+            "heading"
+          ],
+          "reason": "Section 3302 found but is general degree of care, not limited to investment performance."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r102_09",
+    "title": "MISMATCH: 12 Del. C. 3313 adviser vs trustee replacement",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "The trust protector may remove and replace the trustee at any time under 12 Del. C. 3313.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3313"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "topic_mismatch",
+          "contains_any": [
+            "3313",
+            "adviser",
+            "remov",
+            "replac",
+            "heading"
+          ],
+          "reason": "Section 3313 heading is Advisers, not trustee removal or replacement."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r102_10",
+    "title": "MISMATCH: 12 Del. C. 3541 cy pres vs broad equitable deviation",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "The trustee may change any charitable trust purpose using the equitable deviation authority of 12 Del. C. 3541.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3541"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "topic_mismatch",
+          "contains_any": [
+            "3541",
+            "cy pres",
+            "equitable",
+            "impossible",
+            "impracticable",
+            "heading"
+          ],
+          "reason": "Section 3541 is cy pres requiring impossibility or impracticability, not blanket equitable deviation."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r102_11",
+    "title": "MISMATCH: 12 Del. C. 202 will execution vs trust creation",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "The settlor shall create the inter vivos trust in accordance with the formalities required by 12 Del. C. 202.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 202"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "topic_mismatch",
+          "contains_any": [
+            "202",
+            "will",
+            "trust",
+            "execution",
+            "heading",
+            "requisites"
+          ],
+          "reason": "Section 202 governs Requisites and execution of will, not inter vivos trust creation."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r102_12",
+    "title": "MISMATCH: 12 Del. C. 1501 letters vs full probate procedure",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "All probate court procedures including creditor claims and accountings are governed by 12 Del. C. 1501.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 1501"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "topic_mismatch",
+          "contains_any": [
+            "1501",
+            "letters",
+            "necessity",
+            "heading",
+            "probate",
+            "not full"
+          ],
+          "reason": "Section 1501 only addresses Necessity for letters testamentary, not all probate procedure."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r102_13",
+    "title": "MISMATCH: 12 Del. C. 49A-101 short title vs complete POA law",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "All rules regarding durable powers of attorney are codified in 12 Del. C. 49A-101.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 49A-101"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "topic_mismatch",
+          "contains_any": [
+            "49A-101",
+            "short title",
+            "heading",
+            "not all"
+          ],
+          "reason": "Section 49A-101 is only the Short title of the Act. Substantive POA provisions are in subsequent sections of Chapter 49A."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r102_14",
+    "title": "MISMATCH: 12 Del. C. 3901 appointment vs full guardianship law",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "All guardianship proceedings including accountings and termination are governed by 12 Del. C. 3901.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3901"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "topic_mismatch",
+          "contains_any": [
+            "3901",
+            "appointment",
+            "heading",
+            "not all",
+            "guardianship"
+          ],
+          "reason": "Section 3901 addresses Appointment of guardians only, not comprehensive guardianship law."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r102_15",
+    "title": "MISMATCH: 12 Del. C. 901 elective share vs all spousal rights",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "All spousal rights including homestead allowance and exempt property are determined under 12 Del. C. 901.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 901"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "topic_mismatch",
+          "contains_any": [
+            "901",
+            "elective",
+            "heading",
+            "not all",
+            "spousal"
+          ],
+          "reason": "Section 901 governs Right to elective share only. Other spousal rights are in different sections."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r102_16",
+    "title": "MISMATCH: 12 Del. C. 501 intestate vs testate distribution",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "Distribution of assets under a duly executed will shall follow the formula in 12 Del. C. 501.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 501"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "topic_mismatch",
+          "contains_any": [
+            "501",
+            "intestate",
+            "heading",
+            "testate",
+            "will"
+          ],
+          "reason": "Section 501 heading is Intestate estate; applies only without a valid will. Testate distribution follows will terms."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r102_17",
+    "title": "MISMATCH: 16 Del. C. 3101 death registration vs funeral regulation",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "All funeral service pricing and embalming standards are regulated by 16 Del. C. 3101.",
+    "expected": {
+      "citations_detected": [
+        "16 Del. C. 3101"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "topic_mismatch",
+          "contains_any": [
+            "3101",
+            "death",
+            "heading",
+            "funeral",
+            "registration",
+            "not funeral"
+          ],
+          "reason": "Section 3101 governs death registration and vital statistics, not funeral industry regulation."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r102_18",
+    "title": "MISMATCH: 16 Del. C. 2501 advance directive vs all health-care consent",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "All health-care treatment consent including emergency surgery is governed by 16 Del. C. 2501.",
+    "expected": {
+      "citations_detected": [
+        "16 Del. C. 2501"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "topic_mismatch",
+          "contains_any": [
+            "2501",
+            "advance",
+            "heading",
+            "directive",
+            "not all"
+          ],
+          "reason": "Section 2501 is advance health-care directive provisions, not comprehensive health-care consent law."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r102_19",
+    "title": "OVERBROAD: Title 12 governs all trust decanting details",
+    "category": "overbroad",
+    "mode": "validate",
+    "text": "Title 12 of the Delaware Code governs all aspects of trust decanting including notice and tax consequences.",
+    "expected": {
+      "citations_detected": [
+        "Title 12"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "overbroad",
+          "contains_any": [
+            "overbroad",
+            "过宽",
+            "broad",
+            "specific",
+            "Chapter"
+          ],
+          "reason": "Title 12 reference is overbroad. Trust decanting requires specific Chapter and Section citations."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r102_20",
+    "title": "OVERBROAD: Title 24 cited for specific fiduciary licensing",
+    "category": "overbroad",
+    "mode": "validate",
+    "text": "All professional licensing requirements for trust officers are set forth in Title 24 of the Delaware Code.",
+    "expected": {
+      "citations_detected": [
+        "Title 24"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "overbroad",
+          "contains_any": [
+            "overbroad",
+            "过宽",
+            "broad",
+            "Chapter",
+            "specific"
+          ],
+          "reason": "Title 24 is overbroad. Professional licensing must be mapped to the specific profession chapter."
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,142 @@
+[
+  {
+    "id": "round_006_case_001",
+    "title": "Federal FOIA in Delaware public records context",
+    "category": "coverage_boundary",
+    "mode": "validate",
+    "text": "All requests for inspection of public records held by a Delaware public body shall be processed under the federal Freedom of Information Act, 5 U.S.C. § 552.",
+    "expected": {
+      "citations_detected": ["5 U.S.C. § 552"],
+      "should_error": [
+        {"citation": "5 U.S.C. § 552", "reason": "Federal FOIA should not be used for Delaware public records."}
+      ],
+      "coverage_warnings": [
+        {"citation": "5 U.S.C. § 552", "contains_any": ["federal", "not covered", "outside coverage", "coverage"]}
+      ],
+      "should_warn": [
+        {"type": "topic_mismatch", "contains_any": ["29 Del. C.", "ch. 100", "Delaware FOIA", "federal"], "reason": "Expected warning suggesting Delaware FOIA, 29 Del. C. ch. 100."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_006_case_002",
+    "title": "Federal regulation coverage boundary",
+    "category": "coverage_boundary",
+    "mode": "validate",
+    "text": "The medical device manufacturer shall comply with FDA quality system regulations under 21 C.F.R. Part 820.",
+    "expected": {
+      "citations_detected": ["21 C.F.R. Part 820"],
+      "coverage_warnings": [
+        {"citation": "21 C.F.R. Part 820", "contains_any": ["federal", "not covered", "outside coverage", "coverage"]}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_006_case_003",
+    "title": "Federal estate tax boundary in trust context",
+    "category": "coverage_boundary",
+    "mode": "validate",
+    "text": "Delaware trust law alone determines all estate-tax, gift-tax, GST-tax, income-tax, IRA, 401(k), and ERISA beneficiary consequences without any need for federal law analysis.",
+    "expected": {
+      "should_warn": [
+        {"type": "coverage_boundary", "contains_any": ["federal", "tax", "estate tax", "ERISA", "coverage"], "reason": "Federal tax law (estate/gift/GST/income) and ERISA are federal matters outside Delaware Code coverage."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_006_case_004",
+    "title": "Probate court rules needed beyond Code",
+    "category": "coverage_boundary",
+    "mode": "validate",
+    "text": "The personal representative shall file all accountings using the official probate forms prescribed by the Register of Wills and shall comply with all Court of Chancery rules governing fiduciary accountings.",
+    "expected": {
+      "should_warn": [
+        {"type": "coverage_boundary", "contains_any": ["court rule", "Register of Wills", "probate form", "Chancery", "court"], "reason": "Probate forms, Register of Wills practice, and court rules are non-Code materials outside the database."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_006_case_005",
+    "title": "Delaware bill / session law boundary",
+    "category": "coverage_boundary",
+    "mode": "validate",
+    "text": "The amendments to the Delaware trust code shall take effect as provided in Delaware Senate Bill 123 of the 152nd General Assembly.",
+    "expected": {
+      "coverage_warnings": [
+        {"citation": "Senate Bill 123", "contains_any": ["bill", "session law", "legislation", "not covered", "法案"]}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_006_case_006",
+    "title": "Title beyond coverage boundary",
+    "category": "coverage_boundary",
+    "mode": "validate",
+    "text": "The zoning variance shall be reviewed under 32 Del. C. § 101.",
+    "expected": {
+      "citations_detected": ["32 Del. C. § 101"],
+      "coverage_warnings": [
+        {"citation": "32 Del. C. § 101", "contains_any": ["超出", "coverage", "覆盖", "Title 32", "1-31"]}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_006_case_007",
+    "title": "Case law coverage boundary",
+    "category": "coverage_boundary",
+    "mode": "validate",
+    "text": "The directors' fiduciary duties shall be interpreted under Smith v. Van Gorkom, 488 A.2d 858 (Del. 1985), and In re Trados Inc. Shareholder Litigation, 73 A.3d 17 (Del. Ch. 2013).",
+    "expected": {
+      "coverage_warnings": [
+        {"citation": "case law", "contains_any": ["case", "opinion", "not covered", "uncovered", "判例", "覆盖", "未覆盖"]}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_006_case_008",
+    "title": "HIPAA and federal health law boundary in trust context",
+    "category": "coverage_boundary",
+    "mode": "validate",
+    "text": "The Trustee may obtain, use, and disclose protected health information of beneficiaries without regard to HIPAA, relying solely on Delaware trust law and fiduciary principles.",
+    "expected": {
+      "should_warn": [
+        {"type": "coverage_boundary", "contains_any": ["HIPAA", "federal", "health", "covered", "外部材料"], "reason": "HIPAA is a federal law outside Delaware Code coverage; trust law alone does not override HIPAA."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_006_case_009",
+    "title": "Admin Code half coverage signal",
+    "category": "coverage_boundary",
+    "mode": "validate",
+    "text": "A Delaware-licensed pharmacy shall comply with 24 Del. C. ch. 25 and 24 DE Admin. Code 2500.",
+    "expected": {
+      "citations_detected": ["24 Del. C. ch. 25", "24 DE Admin. Code 2500"],
+      "should_pass": [
+        {"citation": "24 Del. C. ch. 25", "reason": "Pharmacy chapter of Title 24."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_006_case_010",
+    "title": "ERISA preemption boundary in fiduciary context",
+    "category": "coverage_boundary",
+    "mode": "validate",
+    "text": "The Trustee of a trust that holds assets of an employee benefit plan subject to ERISA shall administer those assets solely under Delaware trust law, without regard to ERISA fiduciary standards.",
+    "expected": {
+      "should_warn": [
+        {"type": "coverage_boundary", "contains_any": ["ERISA", "federal", "covered", "employee benefit"], "reason": "ERISA imposes federal fiduciary standards that may preempt state trust law; outside Delaware Code coverage."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  }
+]

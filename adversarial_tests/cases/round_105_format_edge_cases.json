@@ -1,0 +1,466 @@
+[
+  {
+    "id": "r105_01",
+    "title": "FORMAT: No spaces - 12 Del.C. 3302",
+    "category": "format_variant",
+    "mode": "validate",
+    "text": "The trustee shall exercise the degree of care required by 12 Del.C. 3302.",
+    "expected": {
+      "citations_detected": [
+        "12 Del.C. 3302"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. 3302",
+          "reason": "No-space format variant should be recognized."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r105_02",
+    "title": "FORMAT: No periods - 12 Del C 202",
+    "category": "format_variant",
+    "mode": "validate",
+    "text": "The will must satisfy 12 Del C 202 execution requirements.",
+    "expected": {
+      "citations_detected": [
+        "12 Del C 202"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. 202",
+          "reason": "No-period format variant should be recognized."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r105_03",
+    "title": "FORMAT: Title N, Section X - Title 12, Section 3302",
+    "category": "format_variant",
+    "mode": "validate",
+    "text": "The trustee owes a duty of care under Title 12, Section 3302 of the Delaware Code.",
+    "expected": {
+      "citations_detected": [
+        "Title 12, Section 3302"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. 3302",
+          "reason": "Title-Section format variant should be recognized."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r105_04",
+    "title": "FORMAT: Section X of Title N - Section 1501 of Title 12",
+    "category": "format_variant",
+    "mode": "validate",
+    "text": "Letters testamentary are required under Section 1501 of Title 12 of the Delaware Code.",
+    "expected": {
+      "citations_detected": [
+        "Section 1501 of Title 12"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. 1501",
+          "reason": "Section-of-Title format variant should be recognized."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r105_05",
+    "title": "FORMAT: Chapter N of Title N - Chapter 33 of Title 12",
+    "category": "format_variant",
+    "mode": "validate",
+    "text": "Trust administration is governed by Chapter 33 of Title 12 of the Delaware Code.",
+    "expected": {
+      "citations_detected": [
+        "Chapter 33 of Title 12"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. ch. 33",
+          "reason": "Chapter-of-Title format variant should be recognized."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r105_06",
+    "title": "FORMAT: Section X of the Delaware Code - Section 901 of the Delaware Code",
+    "category": "format_variant",
+    "mode": "validate",
+    "text": "The spousal elective share is calculated under Section 901 of the Delaware Code.",
+    "expected": {
+      "citations_detected": [
+        "Section 901 of the Delaware Code"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. 901",
+          "reason": "Section-of-Code format variant should be recognized."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r105_07",
+    "title": "FORMAT: Multiple citations with different formats in one text",
+    "category": "format_variant",
+    "mode": "validate",
+    "text": "Trustee duties under 12 Del.C. 3302, wills under Section 202 of Title 12, and intestate succession per 12 Del. C. 501.",
+    "expected": {
+      "citations_detected": [
+        "12 Del.C. 3302",
+        "Section 202 of Title 12",
+        "12 Del. C. 501"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. 3302",
+          "reason": "No-space format."
+        },
+        {
+          "citation": "12 Del. C. 202",
+          "reason": "Section-of-Title format."
+        },
+        {
+          "citation": "12 Del. C. 501",
+          "reason": "Standard format."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r105_08",
+    "title": "FORMAT: Trailing punctuation - 12 Del. C. 3901.",
+    "category": "format_variant",
+    "mode": "validate",
+    "text": "The guardian shall be appointed under 12 Del. C. 3901.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3901"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. 3901",
+          "reason": "Citation with trailing period should be recognized."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r105_09",
+    "title": "FORMAT: Semicolon context - 12 Del. C. 5001;",
+    "category": "format_variant",
+    "mode": "validate",
+    "text": "The fiduciary may access digital assets under 12 Del. C. 5001; provided that the decedent consented.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 5001"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. 5001",
+          "reason": "Citation before semicolon should be recognized."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r105_10",
+    "title": "FORMAT: Parenthetical context - (12 Del. C. 3541)",
+    "category": "format_variant",
+    "mode": "validate",
+    "text": "If a charitable purpose becomes impossible, the court may apply cy pres (see 12 Del. C. 3541).",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3541"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. 3541",
+          "reason": "Citation in parentheses should be recognized."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r105_11",
+    "title": "FORMAT: Citation inside quotation marks",
+    "category": "format_variant",
+    "mode": "validate",
+    "text": "The agreement states: The trustee shall comply with 12 Del. C. 3302 in all respects.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3302"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. 3302",
+          "reason": "Citation inside quotation marks should be recognized."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r105_12",
+    "title": "FORMAT: Citation with subsection - 12 Del. C. 3528(b)",
+    "category": "format_variant",
+    "mode": "validate",
+    "text": "The trustee shall exercise the degree of care required by 12 Del. C. 3302(a) and shall consider portfolio strategy under 12 Del. C. 3302(b).",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3302(a)",
+        "12 Del. C. 3302(b)"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. 3302",
+          "reason": "Citation with subsection (a) should be recognized."
+        },
+        {
+          "citation": "12 Del. C. 3302",
+          "reason": "Citation with subsection (b) should be recognized."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r105_13",
+    "title": "EDGE: Case citation should NOT be extracted as statute",
+    "category": "edge_case",
+    "mode": "validate",
+    "text": "As the Court held in Smith v. Jones, 488 A.2d 858 (Del. 1985), the trustee owes a duty of loyalty.",
+    "expected": {
+      "citations_detected": [],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ]
+    }
+  },
+  {
+    "id": "r105_14",
+    "title": "EDGE: Statute citation alongside case citation",
+    "category": "edge_case",
+    "mode": "validate",
+    "text": "Under 12 Del. C. 3302 and the holding in Smith v. Jones, 488 A.2d 858 (Del. Ch. 2013), the trustee must act prudently.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3302"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. 3302",
+          "reason": "Statute should be extracted. Case citation should NOT be extracted as a statute."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r105_15",
+    "title": "EDGE: U.S.C. citation should be flagged as non-Delaware",
+    "category": "edge_case",
+    "mode": "validate",
+    "text": "The estate tax treatment is governed by 26 U.S.C. 2036 and 12 Del. C. 1901.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 1901"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. 1901",
+          "reason": "Delaware citation should be recognized."
+        }
+      ],
+      "should_warn": [
+        {
+          "type": "non_code_material",
+          "contains_any": [
+            "U.S.C.",
+            "federal",
+            "outside",
+            "non-Delaware"
+          ],
+          "reason": "26 U.S.C. is a federal citation and should be flagged as outside the Delaware database."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r105_16",
+    "title": "EDGE: Section of the Delaware Act format",
+    "category": "format_variant",
+    "mode": "validate",
+    "text": "The personal representative shall act as provided in Section 1501 of the Delaware Act.",
+    "expected": {
+      "citations_detected": [
+        "Section 1501 of the Delaware Act"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. 1501",
+          "reason": "Section of the Delaware Act format variant."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r105_17",
+    "title": "EDGE: Multiple subsections - 12 Del. C. 3302(a) and (b)",
+    "category": "format_variant",
+    "mode": "validate",
+    "text": "The trustee must comply with both 12 Del. C. 3302(a) concerning prudent person standard and 12 Del. C. 3302(b) concerning portfolio strategy.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3302(a)",
+        "12 Del. C. 3302(b)"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. 3302",
+          "reason": "Section 3302 with subsections."
+        },
+        {
+          "citation": "12 Del. C. 3302",
+          "reason": "Section 3302 second instance."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r105_18",
+    "title": "EDGE: Chapter abbreviation - 12 Del. C. ch. 33",
+    "category": "format_variant",
+    "mode": "validate",
+    "text": "Trust administration is governed by 12 Del. C. ch. 33.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. ch. 33"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. ch. 33",
+          "reason": "Chapter abbreviation format."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r105_19",
+    "title": "EDGE: Full Chapter spelled out - 12 Del. C. Chapter 33",
+    "category": "format_variant",
+    "mode": "validate",
+    "text": "All trust matters are governed by 12 Del. C. Chapter 33.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. Chapter 33"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. ch. 33",
+          "reason": "Full Chapter word format."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r105_20",
+    "title": "EDGE: Citation with extra whitespace",
+    "category": "format_variant",
+    "mode": "validate",
+    "text": "The trustee duties are set forth in 12  Del.  C.   3302 of the Delaware Code.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3302"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. 3302",
+          "reason": "Citation with extra whitespace should be normalized."
+        }
+      ]
+    }
+  }
+]

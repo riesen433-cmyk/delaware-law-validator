@@ -10,12 +10,9 @@ import xml.etree.ElementTree as ET
 
 from .builder import build_database
 from .config import (
-    BGE_EMBEDDING_MODEL,
-    BGE_RERANKER_MODEL,
     DATA_VERSION,
     DEFAULT_ADMIN_CODE_DB_PATH,
     DEFAULT_DB_PATH,
-    DEFAULT_SEMANTIC_INDEX_DIR,
 )
 from .admin_code import (
     check_admin_regulation_freshness,
@@ -26,7 +23,6 @@ from .admin_code import (
     search_admin_code,
 )
 from .database import DelawareLawDatabase
-from .semantic import SemanticError, build_semantic_index, semantic_index_status, semantic_search
 from .validator import validate_text
 
 
@@ -42,6 +38,7 @@ REVIEW_SECTIONS = [
 
 
 def main(argv: list[str] | None = None) -> int:
+    sys.stdout.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(
         prog="delaware-law",
         description="Local Delaware legal materials lookup, search, and citation validation.",
@@ -111,57 +108,6 @@ def main(argv: list[str] | None = None) -> int:
     admin_freshness_parser.add_argument("regulation_index_id", type=int)
     admin_freshness_parser.add_argument("--json", action="store_true", help="Print JSON output.")
 
-    semantic_build_parser = subparsers.add_parser(
-        "semantic-build",
-        help="Build the optional semantic index for broad topic retrieval.",
-    )
-    semantic_build_parser.add_argument("--index-dir", default=str(DEFAULT_SEMANTIC_INDEX_DIR))
-    semantic_build_parser.add_argument(
-        "--model",
-        default=BGE_EMBEDDING_MODEL,
-        help=f"Embedding model name. Default: {BGE_EMBEDDING_MODEL}",
-    )
-    semantic_build_parser.add_argument(
-        "--reranker-model",
-        default=BGE_RERANKER_MODEL,
-        help=f"Reranker model name recorded in the index. Default: {BGE_RERANKER_MODEL}",
-    )
-    semantic_build_parser.add_argument("--batch-size", type=int, default=16)
-    semantic_build_parser.add_argument("--limit", type=int, help="Index only the first N materials for testing.")
-    semantic_build_parser.add_argument("--quiet", action="store_true", help="Hide model progress bars.")
-    semantic_build_parser.add_argument("--json", action="store_true", help="Print JSON output.")
-
-    rag_build_parser = subparsers.add_parser(
-        "rag-build",
-        help="Build the RAG index used by rag-search.",
-    )
-    rag_build_parser.add_argument("--index-dir", default=str(DEFAULT_SEMANTIC_INDEX_DIR))
-    rag_build_parser.add_argument(
-        "--model",
-        default=BGE_EMBEDDING_MODEL,
-        help=f"Embedding model name. Default: {BGE_EMBEDDING_MODEL}",
-    )
-    rag_build_parser.add_argument(
-        "--reranker-model",
-        default=BGE_RERANKER_MODEL,
-        help=f"Reranker model name recorded in the index. Default: {BGE_RERANKER_MODEL}",
-    )
-    rag_build_parser.add_argument("--batch-size", type=int, default=16)
-    rag_build_parser.add_argument("--limit", type=int, help="Index only the first N materials for testing.")
-    rag_build_parser.add_argument("--quiet", action="store_true", help="Hide model progress bars.")
-    rag_build_parser.add_argument("--json", action="store_true", help="Print JSON output.")
-
-    _add_rag_search_parser(
-        subparsers,
-        "semantic-search",
-        "Find likely relevant sections with BGE, then retrieve exact database materials.",
-    )
-    _add_rag_search_parser(
-        subparsers,
-        "rag-search",
-        "RAG-style locator: first find likely sections, then retrieve exact database materials.",
-    )
-
     validate_parser = subparsers.add_parser("validate", help="Validate citations in text or a file.")
     validate_parser.add_argument("text", nargs="?", help="Text to validate. Omit when using --file.")
     validate_parser.add_argument("--file", help="Path to a text/markdown file to validate.")
@@ -170,16 +116,7 @@ def main(argv: list[str] | None = None) -> int:
     review_parser = subparsers.add_parser("review", help="Review a document and print a six-category citation report.")
     review_parser.add_argument("text", nargs="?", help="Text to review. Omit when using --file.")
     review_parser.add_argument("--file", help="Path to a text/markdown/docx file to review.")
-    review_parser.add_argument("--rag", action="store_true", help="Run RAG locator on recognized conceptual references.")
-    review_parser.add_argument("--rag-limit", type=int, default=3, help="Maximum RAG candidates per conceptual query.")
-    review_parser.add_argument("--rag-candidates", type=int, default=30, help="Rough candidates to pull before reranking.")
-    review_parser.add_argument("--index-dir", default=str(DEFAULT_SEMANTIC_INDEX_DIR), help="Path to the RAG index.")
-    review_parser.add_argument("--no-rerank", action="store_true", help="Skip reranking for review --rag.")
     review_parser.add_argument("--json", action="store_true", help="Print JSON output.")
-
-    rag_status_parser = subparsers.add_parser("rag-status", help="Check whether the local RAG index is ready.")
-    rag_status_parser.add_argument("--index-dir", default=str(DEFAULT_SEMANTIC_INDEX_DIR), help="Path to the RAG index.")
-    rag_status_parser.add_argument("--json", action="store_true", help="Print JSON output.")
 
     info_parser = subparsers.add_parser("info", help="Show data pack metadata.")
     info_parser.add_argument("--json", action="store_true", help="Print JSON output.")
@@ -220,77 +157,18 @@ def main(argv: list[str] | None = None) -> int:
             return _lookup(db, args.citation, args.json)
         if args.command == "search":
             return _search(db, args.query, args.limit, args.json)
-        if args.command in {"semantic-build", "rag-build"}:
-            return _semantic_build(
-                db,
-                Path(args.index_dir),
-                args.model,
-                args.reranker_model,
-                args.batch_size,
-                args.limit,
-                args.quiet,
-                args.json,
-            )
-        if args.command in {"semantic-search", "rag-search"}:
-            return _semantic_search(
-                db,
-                args.query,
-                args.limit,
-                args.candidates,
-                Path(args.index_dir),
-                args.model,
-                args.reranker_model,
-                not args.no_rerank,
-                args.json,
-            )
         if args.command == "validate":
             text = _load_validation_text(args.text, args.file)
             return _validate(db, text, args.json)
         if args.command == "review":
             text = _load_validation_text(args.text, args.file)
-            return _review(
-                db,
-                text,
-                args.json,
-                args.rag,
-                args.rag_limit,
-                args.rag_candidates,
-                Path(args.index_dir),
-                not args.no_rerank,
-            )
-        if args.command == "rag-status":
-            return _rag_status(db, Path(args.index_dir), args.json)
+            return _review(db, text, args.json)
         if args.command == "info":
             return _info(db, args.json)
     finally:
         db.close()
 
     return 1
-
-
-def _add_rag_search_parser(subparsers: argparse._SubParsersAction, command: str, help_text: str) -> None:
-    rag_parser = subparsers.add_parser(command, help=help_text)
-    rag_parser.add_argument("query", help='Example: "Delaware LP distribution solvency test"')
-    rag_parser.add_argument("-n", "--limit", type=int, default=10, help="Maximum final results.")
-    rag_parser.add_argument(
-        "--candidates",
-        type=int,
-        default=50,
-        help="Number of rough candidates to pull before exact retrieval and reranking.",
-    )
-    rag_parser.add_argument("--index-dir", default=str(DEFAULT_SEMANTIC_INDEX_DIR))
-    rag_parser.add_argument(
-        "--model",
-        default=None,
-        help=f"Embedding model name. Default: index setting or {BGE_EMBEDDING_MODEL}",
-    )
-    rag_parser.add_argument(
-        "--reranker-model",
-        default=BGE_RERANKER_MODEL,
-        help=f"Reranker model name. Default: {BGE_RERANKER_MODEL}",
-    )
-    rag_parser.add_argument("--no-rerank", action="store_true", help="Skip BGE reranker.")
-    rag_parser.add_argument("--json", action="store_true", help="Print JSON output.")
 
 
 def _lookup(db: DelawareLawDatabase, citation: str, as_json: bool) -> int:
@@ -399,7 +277,7 @@ def _search(db: DelawareLawDatabase, query: str, limit: int, as_json: bool) -> i
     print(f"数据包：{metadata.get('data_version', DATA_VERSION)}")
     print(f"覆盖范围：{metadata.get('coverage', 'Delaware Constitution; Delaware Code Title 1-31')}")
     if not rows:
-        print("结果：未找到。可尝试 rag-search 做主题定位；不得据此认定相关法律材料不存在。")
+        print("结果：未找到。不得据此认定相关法律材料不存在。")
         return 2
 
     for index, row in enumerate(rows, start=1):
@@ -410,135 +288,6 @@ def _search(db: DelawareLawDatabase, query: str, limit: int, as_json: bool) -> i
         print(f"官方来源：{row['source_url']}")
         print(f"摘录：{preview}...")
     _print_disclaimer()
-    return 0
-
-
-def _semantic_build(
-    db: DelawareLawDatabase,
-    index_dir: Path,
-    embedding_model: str,
-    reranker_model: str,
-    batch_size: int,
-    limit: int | None,
-    quiet: bool,
-    as_json: bool,
-) -> int:
-    try:
-        result = build_semantic_index(
-            db,
-            index_dir=index_dir,
-            embedding_model=embedding_model,
-            reranker_model=reranker_model,
-            batch_size=batch_size,
-            limit=limit,
-            show_progress=not quiet,
-        )
-    except SemanticError as exc:
-        print(f"语义索引未生成：{exc}", file=sys.stderr)
-        return 2
-
-    payload = result.__dict__
-    if as_json:
-        print(json.dumps(payload, ensure_ascii=False, indent=2))
-        return 0
-
-    print("语义索引已生成。")
-    print(f"索引目录：{result.index_dir}")
-    print(f"粗找模型：{result.embedding_model}")
-    print(f"复排模型：{result.reranker_model}")
-    print(f"材料数量：{result.material_count}")
-    print(f"向量维度：{result.embedding_dimension}")
-    print("流程：语义粗找 → 本地数据库精确取回 → 复排。")
-    return 0
-
-
-def _semantic_search(
-    db: DelawareLawDatabase,
-    query: str,
-    limit: int,
-    candidate_limit: int,
-    index_dir: Path,
-    embedding_model: str | None,
-    reranker_model: str,
-    rerank: bool,
-    as_json: bool,
-) -> int:
-    metadata = db.metadata()
-    try:
-        rows = semantic_search(
-            db,
-            query,
-            index_dir=index_dir,
-            embedding_model=embedding_model,
-            reranker_model=reranker_model,
-            limit=limit,
-            candidate_limit=candidate_limit,
-            rerank=rerank,
-        )
-    except SemanticError as exc:
-        print(f"语义检索不可用：{exc}", file=sys.stderr)
-        return 2
-
-    if as_json:
-        print(
-            json.dumps(
-                {
-                    "query": query,
-                    "pipeline": "semantic candidate retrieval -> exact SQLite material retrieval -> reranking",
-                    "data_version": metadata.get("data_version"),
-                    "coverage": metadata.get("coverage"),
-                    "rerank": rerank,
-                    "results": [row.to_dict() for row in rows],
-                },
-                ensure_ascii=False,
-                indent=2,
-            )
-        )
-        return 0 if rows else 2
-
-    print(f"语义检索：{query}")
-    print(f"数据包：{metadata.get('data_version', DATA_VERSION)}")
-    print(f"覆盖范围：{metadata.get('coverage', 'Delaware Constitution; Delaware Code Title 1-31')}")
-    print("流程：先用 BGE 模型找大概位置，再从本地数据库精确取回原文。")
-    print(f"复排：{'开启' if rerank else '关闭'}")
-    if not rows:
-        print("结果：未找到。")
-        return 2
-
-    for index, row in enumerate(rows, start=1):
-        score_label = "复排分" if row.rerank_score is not None else "语义分"
-        print()
-        print(f"[{index}] {row.citation} — {row.heading}")
-        print(f"精确取回：{'是' if row.exact_retrieved else '否'} | {score_label}：{row.final_score:.4f}")
-        print(f"来源文件：{row.source_file}")
-        print(f"官方来源：{row.source_url}")
-        print(f"摘录：{row.preview}...")
-    _print_disclaimer()
-    return 0
-
-
-def _rag_status(db: DelawareLawDatabase, index_dir: Path, as_json: bool) -> int:
-    status = semantic_index_status(db, index_dir)
-    payload = status.to_dict()
-    if as_json:
-        print(json.dumps(payload, ensure_ascii=False, indent=2))
-        return 0
-
-    print(f"RAG索引：{'可用' if status.ready else '不可用'}")
-    print(f"索引目录：{status.index_dir}")
-    print(f"数据包版本：{status.db_data_version}")
-    if status.data_version:
-        print(f"索引版本：{status.data_version}")
-    if status.embedding_model:
-        print(f"粗找模型：{status.embedding_model}")
-    if status.reranker_model:
-        print(f"复排模型：{status.reranker_model}")
-    if status.material_count is not None:
-        print(f"索引材料数：{status.material_count}")
-    for filename, exists in status.files.items():
-        print(f"{filename}: {'存在' if exists else '缺失'}")
-    for warning in status.warnings:
-        print(f"提醒：{warning}")
     return 0
 
 
@@ -667,32 +416,31 @@ def _validate(db: DelawareLawDatabase, text: str, as_json: bool) -> int:
         for signal in report["uncovered_material_signals"]:
             print(f"- {signal}")
 
+    if report.get("admin_code_signals"):
+        print()
+        print("Delaware Administrative Code 引用：")
+        for signal in report["admin_code_signals"]:
+            print(f"- {signal}")
+
+    if report.get("bill_signals"):
+        print()
+        print("立法文件引用（非现行法，本工具不覆盖）：")
+        for signal in report["bill_signals"]:
+            print(f"- {signal}")
+
     _print_disclaimer()
     return 0
+
 
 
 def _review(
     db: DelawareLawDatabase,
     text: str,
     as_json: bool,
-    use_rag: bool = False,
-    rag_limit: int = 3,
-    rag_candidates: int = 30,
-    index_dir: Path = DEFAULT_SEMANTIC_INDEX_DIR,
-    rerank: bool = True,
 ) -> int:
     report = validate_text(db, text)
     metadata = db.metadata()
     categorized = _categorize_review(report, metadata)
-    if use_rag:
-        categorized["rag_candidates"] = _rag_candidates_for_review(
-            db,
-            report,
-            index_dir=index_dir,
-            limit=rag_limit,
-            candidate_limit=rag_candidates,
-            rerank=rerank,
-        )
     if as_json:
         print(json.dumps(categorized, ensure_ascii=False, indent=2))
         return 0
@@ -712,18 +460,6 @@ def _review(
             for detail in item.get("details", []):
                 print(f"  {detail}")
         print()
-    if use_rag:
-        print("## RAG 候选定位")
-        candidates = categorized.get("rag_candidates", [])
-        if not candidates:
-            print("- 未发现需要 RAG 定位的概念性引用。")
-        for item in candidates:
-            print(f"- {item['query']}：{item['status']}")
-            if item.get("message"):
-                print(f"  {item['message']}")
-            for result in item.get("results", []):
-                print(f"  {result['citation']} — {result['heading']} | {result['source_url']}")
-        print()
     _print_disclaimer()
     return 0
 
@@ -735,8 +471,16 @@ def _categorize_review(report: dict[str, object], metadata: dict[str, str]) -> d
         warnings = item.get("warnings", [])
         matches = item.get("matches", [])
         has_topic_mismatch = any("主题可能不匹配" in warning for warning in warnings)
-        if item.get("status") == "not_found":
+        is_out_of_coverage = "超出当前数据包覆盖范围" in str(item.get("message", ""))
+        if item.get("status") == "not_found" and not is_out_of_coverage:
             sections["本地数据库没查到"].append(
+                {
+                    "summary": f"{item['input']}：{item['message']}",
+                    "details": _citation_details(item),
+                }
+            )
+        elif item.get("status") == "not_found" and is_out_of_coverage:
+            sections["本工具未覆盖的内容"].append(
                 {
                     "summary": f"{item['input']}：{item['message']}",
                     "details": _citation_details(item),
@@ -804,6 +548,14 @@ def _categorize_review(report: dict[str, object], metadata: dict[str, str]) -> d
             )
 
     for item in report.get("broad_references", []):
+        if item.get("status") == "out_of_coverage":
+            sections["本工具未覆盖的内容"].append(
+                {
+                    "summary": f"{item['input']}：{item['message']}",
+                    "details": _broad_details(item),
+                }
+            )
+            continue
         if item.get("status") == "not_found":
             sections["本地数据库没查到"].append(
                 {
@@ -859,7 +611,6 @@ def _categorize_review(report: dict[str, object], metadata: dict[str, str]) -> d
         "sections": sections,
         "database_misses": report.get("database_misses", []),
         "implicit_references": report.get("implicit_references", []),
-        "rag_candidates": report.get("rag_candidates", []),
     }
 
 
@@ -936,61 +687,6 @@ def _review_section_for_category(category: str) -> str:
         "本工具未覆盖的内容": "本工具未覆盖的内容",
     }
     return mapping.get(category, "需要查外部材料")
-
-
-def _rag_candidates_for_review(
-    db: DelawareLawDatabase,
-    report: dict[str, object],
-    index_dir: Path,
-    limit: int,
-    candidate_limit: int,
-    rerank: bool,
-) -> list[dict[str, object]]:
-    queries = _rag_queries_from_report(report)
-    results: list[dict[str, object]] = []
-    for query in queries:
-        try:
-            rows = semantic_search(
-                db,
-                query,
-                index_dir=index_dir,
-                limit=limit,
-                candidate_limit=candidate_limit,
-                rerank=rerank,
-            )
-        except SemanticError as exc:
-            results.append({"query": query, "status": "unavailable", "message": str(exc), "results": []})
-            break
-        results.append(
-            {
-                "query": query,
-                "status": "found" if rows else "not_found",
-                "message": "",
-                "results": [row.to_dict() for row in rows],
-            }
-        )
-    return results
-
-
-def _rag_queries_from_report(report: dict[str, object]) -> list[str]:
-    queries: list[str] = []
-    for item in report.get("implicit_references", []):
-        query = item.get("query")
-        if query:
-            queries.append(str(query))
-    for item in report.get("topic_reviews", []):
-        code = str(item.get("code", ""))
-        if code.startswith("ucc_"):
-            queries.append(str(item.get("message", "")))
-    seen: set[str] = set()
-    unique: list[str] = []
-    for query in queries:
-        key = query.lower()
-        if key in seen:
-            continue
-        seen.add(key)
-        unique.append(query)
-    return unique[:5]
 
 
 def _admin_refresh_index(admin_db_path: Path, title: str | None, as_json: bool) -> int:

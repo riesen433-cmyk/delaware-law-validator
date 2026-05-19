@@ -1,0 +1,604 @@
+[
+  {
+    "id": "r103_01",
+    "title": "WRONG TITLE: Title 25 for wills (should be Title 12)",
+    "category": "wrong_title",
+    "mode": "validate",
+    "text": "The execution and probate of wills in Delaware is governed by Title 25 of the Delaware Code.",
+    "expected": {
+      "citations_detected": [
+        "Title 25"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "wrong_title",
+          "contains_any": [
+            "25",
+            "wrong",
+            "Title 12",
+            "will",
+            "probate",
+            "not Title 25"
+          ],
+          "reason": "Title 25 is Property. Wills and probate are governed by Title 12 (Decedents Estates and Fiduciary Relations), not Title 25."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r103_02",
+    "title": "WRONG TITLE: Title 12 for health-care directives (should be Title 16)",
+    "category": "wrong_title",
+    "mode": "validate",
+    "text": "Advance health-care directives and living wills are governed by Title 12 of the Delaware Code.",
+    "expected": {
+      "citations_detected": [
+        "Title 12"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "wrong_title",
+          "contains_any": [
+            "12",
+            "Title 16",
+            "health",
+            "advance",
+            "not Title 12"
+          ],
+          "reason": "Advance health-care directives are in Title 16 (Health and Safety), not Title 12. Title 12 covers decedents estates."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r103_03",
+    "title": "WRONG TITLE: 6 Del. C. 5001 for digital asset fiduciary access (should be Title 12)",
+    "category": "wrong_title",
+    "mode": "validate",
+    "text": "The fiduciary access to digital assets of a decedent is governed by 6 Del. C. 5001.",
+    "expected": {
+      "citations_detected": [
+        "6 Del. C. 5001"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "wrong_title",
+          "contains_any": [
+            "6",
+            "5001",
+            "Title 12",
+            "digital",
+            "wrong",
+            "fiduciary",
+            "not Title 6"
+          ],
+          "reason": "Digital asset fiduciary access is governed by 12 Del. C. 5001 (Title 12), not 6 Del. C. 5001 (Title 6 Commerce and Trade)."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r103_04",
+    "title": "WRONG TITLE: Title 12 for anatomical gifts (should be Title 16)",
+    "category": "wrong_title",
+    "mode": "validate",
+    "text": "The making and revocation of anatomical gifts is governed by Title 12 of the Delaware Code.",
+    "expected": {
+      "citations_detected": [
+        "Title 12"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "wrong_title",
+          "contains_any": [
+            "12",
+            "Title 16",
+            "anatomical",
+            "gift",
+            "wrong",
+            "not Title 12"
+          ],
+          "reason": "Anatomical gifts are in Title 16 (Health and Safety), not Title 12."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r103_05",
+    "title": "WRONG TITLE: 13 Del. C. 3901 for adult disability guardianship",
+    "category": "wrong_title",
+    "mode": "validate",
+    "text": "The appointment of a guardian for an adult person with a disability is governed by 13 Del. C. 3901.",
+    "expected": {
+      "citations_detected": [
+        "13 Del. C. 3901"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "wrong_title",
+          "contains_any": [
+            "13",
+            "3901",
+            "Title 12",
+            "adult",
+            "guardian",
+            "wrong",
+            "not Title 13"
+          ],
+          "reason": "Adult disability guardianship is in 12 Del. C. 3901 (Title 12), not 13 Del. C. 3901. Title 13 is Domestic Relations."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r103_06",
+    "title": "WRONG TITLE: Title 18 insurance law for estate bonds",
+    "category": "wrong_title",
+    "mode": "validate",
+    "text": "Fiduciary bonds required of personal representatives and trustees are governed by Title 18 of the Delaware Code.",
+    "expected": {
+      "citations_detected": [
+        "Title 18"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "wrong_title",
+          "contains_any": [
+            "18",
+            "insurance",
+            "bond",
+            "fiduciary",
+            "wrong",
+            "Title 12"
+          ],
+          "reason": "Fiduciary bonds are in Title 12 (Decedents Estates), not Title 18 (Insurance Code). Title 18 governs insurance, not estate bonds."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r103_07",
+    "title": "WRONG TITLE: Title 10 for trust matters (should be Title 12)",
+    "category": "wrong_title",
+    "mode": "validate",
+    "text": "All matters concerning trust administration and trustee duties are governed by Title 10 of the Delaware Code.",
+    "expected": {
+      "citations_detected": [
+        "Title 10"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "wrong_title",
+          "contains_any": [
+            "10",
+            "trust",
+            "Title 12",
+            "wrong",
+            "courts",
+            "not Title 10"
+          ],
+          "reason": "Trust administration is in Title 12 (Decedents Estates and Fiduciary Relations), not Title 10 (Courts and Judicial Procedure)."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r103_08",
+    "title": "WRONG TITLE: Title 30 for estate tax (state tax vs estate law)",
+    "category": "wrong_title",
+    "mode": "validate",
+    "text": "The substantive law governing estate tax apportionment among beneficiaries is found in Title 30 of the Delaware Code.",
+    "expected": {
+      "citations_detected": [
+        "Title 30"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "wrong_title",
+          "contains_any": [
+            "30",
+            "tax",
+            "Title 12",
+            "estate",
+            "wrong",
+            "apportionment",
+            "not Title 30"
+          ],
+          "reason": "Estate tax apportionment is in Title 12 Chapter 19, not Title 30 (State Taxes). Title 30 is the tax imposition title."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r103_09",
+    "title": "WRONG TITLE: Title 4 for funeral trust matters",
+    "category": "wrong_title",
+    "mode": "validate",
+    "text": "Funeral trusts and pre-need funeral contracts are regulated by Title 4 of the Delaware Code.",
+    "expected": {
+      "citations_detected": [
+        "Title 4"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "wrong_title",
+          "contains_any": [
+            "4",
+            "funeral",
+            "Title 12",
+            "trust",
+            "wrong",
+            "not Title 4"
+          ],
+          "reason": "Funeral trusts are in Title 12 (Decedents Estates), not Title 4 (Alcoholic Liquors and Marijuana)."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r103_10",
+    "title": "WRONG TITLE: Title 19 Labor for fiduciary employment matters",
+    "category": "wrong_title",
+    "mode": "validate",
+    "text": "The employment status and compensation of trustees and personal representatives is governed by Title 19 of the Delaware Code.",
+    "expected": {
+      "citations_detected": [
+        "Title 19"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "wrong_title",
+          "contains_any": [
+            "19",
+            "fiduciary",
+            "Title 12",
+            "wrong",
+            "compensation",
+            "not Title 19"
+          ],
+          "reason": "Trustee and personal representative compensation is in Title 12, not Title 19 (Labor). Title 19 governs employer-employee relationships."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r103_11",
+    "title": "WRONG CHAPTER: 12 Del. C. ch. 33 for wills (should be ch. 2)",
+    "category": "wrong_title",
+    "mode": "validate",
+    "text": "The execution and witnessing of wills in Delaware is governed by 12 Del. C. ch. 33.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. ch. 33"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "wrong_title",
+          "contains_any": [
+            "33",
+            "Chapter 2",
+            "202",
+            "will",
+            "wrong chapter",
+            "not Chapter 33",
+            "Trust Administration"
+          ],
+          "reason": "Chapter 33 is Trust Administration. Wills are governed by Chapter 2 (12 Del. C. 202), not Chapter 33."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r103_12",
+    "title": "WRONG CHAPTER: 12 Del. C. ch. 49A for POA (correct chapter, verify)",
+    "category": "wrong_title",
+    "mode": "validate",
+    "text": "The trustee may delegate investment decisions under a power of attorney governed by 12 Del. C. ch. 33.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. ch. 33"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "wrong_title",
+          "contains_any": [
+            "33",
+            "power of attorney",
+            "49A",
+            "wrong chapter",
+            "not Chapter 33",
+            "Trust Administration"
+          ],
+          "reason": "Chapter 33 is Trust Administration. Powers of attorney are governed by Chapter 49A, not Chapter 33."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r103_13",
+    "title": "WRONG TITLE: Title 6 for estate administration fees",
+    "category": "wrong_title",
+    "mode": "validate",
+    "text": "Personal representative fee schedules and commission rates are established under Title 6 of the Delaware Code.",
+    "expected": {
+      "citations_detected": [
+        "Title 6"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "wrong_title",
+          "contains_any": [
+            "6",
+            "Title 12",
+            "fee",
+            "commission",
+            "personal representative",
+            "wrong",
+            "not Title 6"
+          ],
+          "reason": "Personal representative fees are in Title 12 (Decedents Estates), not Title 6 (Commerce and Trade)."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r103_14",
+    "title": "WRONG TITLE: Title 21 for testamentary trusts",
+    "category": "wrong_title",
+    "mode": "validate",
+    "text": "Testamentary trusts created under a valid will are governed by Title 21 of the Delaware Code.",
+    "expected": {
+      "citations_detected": [
+        "Title 21"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "wrong_title",
+          "contains_any": [
+            "21",
+            "testamentary",
+            "trust",
+            "Title 12",
+            "wrong",
+            "not Title 21"
+          ],
+          "reason": "Testamentary trusts are in Title 12, not Title 21 (Motor Vehicles)."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r103_15",
+    "title": "WRONG TITLE: Title 11 criminal code for breach of fiduciary duty",
+    "category": "wrong_title",
+    "mode": "validate",
+    "text": "Civil liability for breach of fiduciary duty by a trustee is exclusively governed by Title 11 of the Delaware Code.",
+    "expected": {
+      "citations_detected": [
+        "Title 11"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "wrong_title",
+          "contains_any": [
+            "11",
+            "fiduciary",
+            "civil",
+            "Title 12",
+            "wrong",
+            "not Title 11"
+          ],
+          "reason": "Civil fiduciary duties and remedies are in Title 12, not Title 11 (Crimes and Criminal Procedure). Title 11 covers criminal matters."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r103_16",
+    "title": "WRONG TITLE: Title 7 for charitable trust environmental purposes",
+    "category": "wrong_title",
+    "mode": "validate",
+    "text": "Charitable trusts established for environmental conservation purposes are governed by Title 7 of the Delaware Code.",
+    "expected": {
+      "citations_detected": [
+        "Title 7"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "wrong_title",
+          "contains_any": [
+            "7",
+            "charitable",
+            "trust",
+            "Title 12",
+            "wrong",
+            "not Title 7"
+          ],
+          "reason": "Charitable trusts, even for environmental purposes, are governed primarily by Title 12 (trust law) and Title 12 Chapter 35, not Title 7 (Conservation). Title 7 covers regulatory environmental law."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r103_17",
+    "title": "WRONG TITLE: Title 3 Agriculture for farm trust administration",
+    "category": "wrong_title",
+    "mode": "validate",
+    "text": "Trusts holding farmland and agricultural assets are administered under Title 3 of the Delaware Code.",
+    "expected": {
+      "citations_detected": [
+        "Title 3"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "wrong_title",
+          "contains_any": [
+            "3",
+            "trust",
+            "farm",
+            "Title 12",
+            "wrong",
+            "not Title 3"
+          ],
+          "reason": "Trust administration for any asset type is governed by Title 12 trust law, not Title 3 (Agriculture). Title 3 governs agricultural regulations."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r103_18",
+    "title": "WRONG FRAMEWORK: General property law cited for anatomical gifts",
+    "category": "wrong_title",
+    "mode": "validate",
+    "text": "The donation of human tissues and organs is governed by the general property law of Delaware.",
+    "expected": {
+      "citations_detected": [],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "topic_mismatch",
+          "contains_any": [
+            "anatomical",
+            "gift",
+            "Title 16",
+            "property",
+            "Health and Safety",
+            "2712"
+          ],
+          "reason": "Anatomical gifts are under Title 16 Chapter 27, not general property law."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r103_19",
+    "title": "WRONG TITLE: Title 22 Municipalities for probate venue",
+    "category": "wrong_title",
+    "mode": "validate",
+    "text": "The proper venue for probate proceedings and estate administration is determined by Title 22 of the Delaware Code.",
+    "expected": {
+      "citations_detected": [
+        "Title 22"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "wrong_title",
+          "contains_any": [
+            "22",
+            "probate",
+            "venue",
+            "Title 12",
+            "wrong",
+            "not Title 22"
+          ],
+          "reason": "Probate venue is in Title 12, not Title 22 (Municipalities). Title 22 governs municipal government."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r103_20",
+    "title": "WRONG TITLE: Title 26 Public Utilities for trust utility holdings",
+    "category": "wrong_title",
+    "mode": "validate",
+    "text": "Trusts holding public utility stocks and bonds are administered under Title 26 of the Delaware Code.",
+    "expected": {
+      "citations_detected": [
+        "Title 26"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_warn": [
+        {
+          "type": "wrong_title",
+          "contains_any": [
+            "26",
+            "trust",
+            "utility",
+            "Title 12",
+            "wrong",
+            "not Title 26"
+          ],
+          "reason": "Trust holding any asset type is administered under Title 12 trust law, not Title 26 (Public Utilities). Title 26 governs utility regulation."
+        }
+      ]
+    }
+  }
+]

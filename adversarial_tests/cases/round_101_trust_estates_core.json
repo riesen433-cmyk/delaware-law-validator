@@ -1,0 +1,442 @@
+[
+  {
+    "id": "r101_01",
+    "title": "12 Del. C. 3302 - Trustee degree of care",
+    "category": "basic_validation",
+    "mode": "validate",
+    "text": "The trustee shall exercise the degree of care required by 12 Del. C. 3302.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3302"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. 3302",
+          "reason": "Degree of care for Delaware trustees."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r101_02",
+    "title": "12 Del. C. 3313 - Directed trust adviser",
+    "category": "basic_validation",
+    "mode": "validate",
+    "text": "The investment trust adviser may direct the trustee under 12 Del. C. 3313.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3313"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. 3313",
+          "reason": "Advisers provision for directed trusts."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r101_03",
+    "title": "12 Del. C. 202 - Will execution",
+    "category": "basic_validation",
+    "mode": "validate",
+    "text": "The will must be signed by the testator and two witnesses as required by 12 Del. C. 202.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 202"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. 202",
+          "reason": "Requisites and execution of will."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r101_04",
+    "title": "12 Del. C. 501 - Intestate succession",
+    "category": "basic_validation",
+    "mode": "validate",
+    "text": "Distribution of an intestate estate shall follow 12 Del. C. 501.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 501"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. 501",
+          "reason": "Intestate estate provision."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r101_05",
+    "title": "12 Del. C. 901 - Spousal elective share",
+    "category": "basic_validation",
+    "mode": "validate",
+    "text": "The surviving spouse may claim an elective share under 12 Del. C. 901.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 901"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. 901",
+          "reason": "Right to elective share."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r101_06",
+    "title": "12 Del. C. 1501 - Letters testamentary",
+    "category": "basic_validation",
+    "mode": "validate",
+    "text": "No person may administer an estate without letters testamentary per 12 Del. C. 1501.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 1501"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. 1501",
+          "reason": "Necessity for letters testamentary."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r101_07",
+    "title": "12 Del. C. 5001 - Digital assets fiduciary access",
+    "category": "basic_validation",
+    "mode": "validate",
+    "text": "The fiduciary may access digital assets under 12 Del. C. 5001.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 5001"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. 5001",
+          "reason": "Fiduciary Access to Digital Assets Act."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r101_08",
+    "title": "12 Del. C. 3541 - Cy pres doctrine",
+    "category": "basic_validation",
+    "mode": "validate",
+    "text": "If a charitable purpose becomes impracticable, the court shall apply cy pres under 12 Del. C. 3541.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3541"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. 3541",
+          "reason": "Cy pres rule."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r101_09",
+    "title": "12 Del. C. 49A-101 - Durable power of attorney",
+    "category": "basic_validation",
+    "mode": "validate",
+    "text": "A durable personal power of attorney may be created under 12 Del. C. 49A-101.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 49A-101"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. 49A-101",
+          "reason": "Durable Personal Powers of Attorney Act."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r101_10",
+    "title": "12 Del. C. 3901 - Guardian for disabled persons",
+    "category": "basic_validation",
+    "mode": "validate",
+    "text": "The Court of Chancery shall appoint a guardian under 12 Del. C. 3901.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3901"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. 3901",
+          "reason": "Guardian appointment for persons with disabilities."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r101_11",
+    "title": "16 Del. C. 2501 - Advance health-care directives",
+    "category": "basic_validation",
+    "mode": "validate",
+    "text": "An individual may execute an advance health-care directive under 16 Del. C. 2501.",
+    "expected": {
+      "citations_detected": [
+        "16 Del. C. 2501"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "16 Del. C. 2501",
+          "reason": "Advance health-care directives."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r101_12",
+    "title": "16 Del. C. 3101 - Death registration",
+    "category": "basic_validation",
+    "mode": "validate",
+    "text": "Death certificates shall be filed per 16 Del. C. 3101.",
+    "expected": {
+      "citations_detected": [
+        "16 Del. C. 3101"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "16 Del. C. 3101",
+          "reason": "Death registration."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r101_13",
+    "title": "12 Del. C. 3549 - Marital deduction gift",
+    "category": "basic_validation",
+    "mode": "validate",
+    "text": "The trust shall include a marital deduction gift under 12 Del. C. 3549.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 3549"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. 3549",
+          "reason": "Marital deduction gift provision."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r101_14",
+    "title": "12 Del. C. 1901 - Estate assets inventory",
+    "category": "basic_validation",
+    "mode": "validate",
+    "text": "The personal representative shall inventory estate assets per 12 Del. C. 1901.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 1901"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "12 Del. C. 1901",
+          "reason": "Personal property constituting assets of estate."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r101_15",
+    "title": "13 Del. C. 2321 - Minor guardianship consent",
+    "category": "basic_validation",
+    "mode": "validate",
+    "text": "Consent by a parent for adoption is governed by 13 Del. C. 2321.",
+    "expected": {
+      "citations_detected": [
+        "13 Del. C. 2321"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_pass": [
+        {
+          "citation": "13 Del. C. 2321",
+          "reason": "Consent by parent."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r101_16",
+    "title": "FAKE - 12 Del. C. 1331",
+    "category": "fake_citation",
+    "mode": "validate",
+    "text": "The trust protector has all powers set forth in 12 Del. C. 1331.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 1331"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_error": [
+        {
+          "citation": "12 Del. C. 1331",
+          "reason": "Section 1331 does not exist in Title 12."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r101_17",
+    "title": "FAKE - 12 Del. C. 2999",
+    "category": "fake_citation",
+    "mode": "validate",
+    "text": "Holographic wills shall comply with 12 Del. C. 2999.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 2999"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_error": [
+        {
+          "citation": "12 Del. C. 2999",
+          "reason": "Section 2999 does not exist."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r101_18",
+    "title": "FAKE - 12 Del. C. 49A-999",
+    "category": "fake_citation",
+    "mode": "validate",
+    "text": "A power of attorney may authorize self-dealing under 12 Del. C. 49A-999.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 49A-999"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_error": [
+        {
+          "citation": "12 Del. C. 49A-999",
+          "reason": "Section 49A-999 does not exist."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r101_19",
+    "title": "FAKE - 16 Del. C. 31999",
+    "category": "fake_citation",
+    "mode": "validate",
+    "text": "Funeral homes shall retain embalming records under 16 Del. C. 31999.",
+    "expected": {
+      "citations_detected": [
+        "16 Del. C. 31999"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_error": [
+        {
+          "citation": "16 Del. C. 31999",
+          "reason": "Section 31999 does not exist."
+        }
+      ]
+    }
+  },
+  {
+    "id": "r101_20",
+    "title": "FAKE - 12 Del. C. 1199",
+    "category": "fake_citation",
+    "mode": "validate",
+    "text": "Escheat of abandoned trust funds is governed by 12 Del. C. 1199.",
+    "expected": {
+      "citations_detected": [
+        "12 Del. C. 1199"
+      ],
+      "must_not_contain": [
+        "Traceback",
+        "Unhandled exception"
+      ],
+      "should_error": [
+        {
+          "citation": "12 Del. C. 1199",
+          "reason": "Section 1199 does not exist in Title 12."
+        }
+      ]
+    }
+  }
+]

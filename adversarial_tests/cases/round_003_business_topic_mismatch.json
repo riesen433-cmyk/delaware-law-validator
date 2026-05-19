@@ -1,0 +1,138 @@
+[
+  {
+    "id": "round_003_case_001",
+    "title": "Wrong DRULPA reliance section",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "The general partner may rely on financial statements and legal opinions under 6 Del. C. § 17-406.",
+    "expected": {
+      "citations_detected": ["6 Del. C. § 17-406"],
+      "should_error": [
+        {"citation": "6 Del. C. § 17-406", "reason": "§ 17-406 is remedies for breach, not professional reliance provision."}
+      ],
+      "should_warn": [
+        {"type": "topic_mismatch", "contains_any": ["17-407", "主题可能不匹配", "topic mismatch"], "reason": "Expected warning suggesting § 17-407 for reliance."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_003_case_002",
+    "title": "LLC fiduciary waiver wrongly cites LP statute",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "The Delaware LLC agreement waives fiduciary duties to the fullest extent permitted by law, except that the implied contractual covenant may not be eliminated. The drafter cites 6 Del. C. § 17-1101.",
+    "expected": {
+      "citations_detected": ["6 Del. C. § 17-1101"],
+      "should_error": [
+        {"citation": "6 Del. C. § 17-1101", "reason": "§ 17-1101 is LP statute (DRULPA), not LLC Act."}
+      ],
+      "should_warn": [
+        {"type": "topic_mismatch", "contains_any": ["18-1101", "LLC", "主题可能不匹配", "suggest"], "reason": "Expected warning suggesting 6 Del. C. § 18-1101 for LLC Act."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_003_case_003",
+    "title": "Warranty disclaimer wrong Article 9",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "The seller disclaims all implied warranties in connection with the sale of goods pursuant to 6 Del. C. § 9-316.",
+    "expected": {
+      "citations_detected": ["6 Del. C. § 9-316"],
+      "should_error": [
+        {"citation": "6 Del. C. § 9-316", "reason": "§ 9-316 is UCC Article 9 perfection priority, not warranty disclaimer."}
+      ],
+      "should_warn": [
+        {"type": "topic_mismatch", "contains_any": ["2-316", "主题可能不匹配", "topic mismatch"], "reason": "Expected warning suggesting 6 Del. C. § 2-316 for warranty disclaimer."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_003_case_004",
+    "title": "UCC Article 2 perfection mismatch trap",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "The security interest in the goods shall be perfected by filing a financing statement under 6 Del. C. § 2-102.",
+    "expected": {
+      "citations_detected": ["6 Del. C. § 2-102"],
+      "should_error": [
+        {"citation": "6 Del. C. § 2-102", "reason": "§ 2-102 is UCC Article 2 scope, not perfection under Article 9."}
+      ],
+      "should_warn": [
+        {"type": "topic_mismatch", "contains_any": ["Article 9", "9-", "perfection", "主题可能不匹配"], "reason": "Security interest perfection should reference Article 9, not Article 2."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_003_case_005",
+    "title": "LP distribution wrong subsection",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "A limited partnership shall not make a distribution if after giving effect to the distribution, the partnership's total assets would be less than the sum of its total liabilities plus the amount needed to satisfy preferential rights. The drafter cites 6 Del. C. § 17-607(b).",
+    "expected": {
+      "citations_detected": ["6 Del. C. § 17-607(b)"],
+      "should_error": [
+        {"citation": "6 Del. C. § 17-607(b)", "reason": "§ 17-607(b) is LP partner liability for unlawful distribution, not the asset/liability test."}
+      ],
+      "should_warn": [
+        {"type": "topic_mismatch", "contains_any": ["17-607(a)", "主题可能不匹配", "solvency", "asset", "liability"], "reason": "Asset/liability ratio test is in § 17-607(a), not (b)."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_003_case_006",
+    "title": "Telehealth wrong profession chapter",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "All health-care providers may deliver services via telehealth as permitted by 24 Del. C. § 3920.",
+    "expected": {
+      "citations_detected": ["24 Del. C. § 3920"],
+      "should_error": [
+        {"citation": "24 Del. C. § 3920", "reason": "§ 3920 is social work telehealth, not general telehealth provision."}
+      ],
+      "should_warn": [
+        {"type": "topic_mismatch", "contains_any": ["6002", "主题可能不匹配", "social work", "general"], "reason": "General health-care telehealth should cite § 6002, not § 3920."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_003_case_007",
+    "title": "Social work wrong chapter",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "All licensed clinical social workers must comply with the ethical standards set forth in 24 Del. C. ch. 30.",
+    "expected": {
+      "citations_detected": ["24 Del. C. ch. 30"],
+      "should_error": [
+        {"citation": "24 Del. C. ch. 30", "reason": "Chapter 30 is mental health/chemical dependency, not social work."}
+      ],
+      "should_warn": [
+        {"type": "topic_mismatch", "contains_any": ["ch. 39", "Chapter 39", "social work", "主题可能不匹配"], "reason": "Social work should cite Chapter 39, not Chapter 30."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  },
+  {
+    "id": "round_003_case_008",
+    "title": "Consequential damages wrong exclusion section",
+    "category": "topic_mismatch",
+    "mode": "validate",
+    "text": "The parties agree to exclude all consequential damages arising from any breach of this agreement as permitted by 6 Del. C. § 2-714.",
+    "expected": {
+      "citations_detected": ["6 Del. C. § 2-714"],
+      "should_error": [
+        {"citation": "6 Del. C. § 2-714", "reason": "§ 2-714 is buyer's damages for accepted goods, not exclusion of consequential damages."}
+      ],
+      "should_warn": [
+        {"type": "topic_mismatch", "contains_any": ["2-719", "consequential", "exclusion", "主题可能不匹配"], "reason": "Exclusion of consequential damages should cite § 2-719(3), not § 2-714."}
+      ],
+      "must_not_contain": ["Traceback", "Unhandled exception"]
+    }
+  }
+]

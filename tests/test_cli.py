@@ -37,7 +37,7 @@ class DelawareLawCliTests(unittest.TestCase):
     def test_lookup_17_407(self) -> None:
         output = self.run_cli("lookup", "6 Del. C. § 17-407")
         self.assertIn("Reliance on reports and information", output)
-        self.assertIn("delaware-law-data-v0.1.0", output)
+        self.assertIn("delaware-law-data-v1.0.0", output)
 
     def test_parser_extracts_title_current_through(self) -> None:
         source, _, _ = parse_source_file(PROJECT_ROOT / "data" / "raw_md" / "title6.md", "test-version")
@@ -106,29 +106,6 @@ class DelawareLawCliTests(unittest.TestCase):
     def test_search_evidence_topic_maps_to_dre_403(self) -> None:
         output = self.run_cli("search", "probative value unfair prejudice", "-n", "3")
         self.assertIn("D.R.E. 403", output)
-
-    def test_semantic_commands_are_available(self) -> None:
-        build_help = self.run_cli("semantic-build", "--help")
-        rag_build_help = self.run_cli("rag-build", "--help")
-        search_help = self.run_cli("semantic-search", "--help")
-        rag_help = self.run_cli("rag-search", "--help")
-        status_help = self.run_cli("rag-status", "--help")
-        self.assertIn("BAAI/bge-m3", build_help)
-        self.assertIn("BAAI/bge-m3", rag_build_help)
-        self.assertIn("BAAI/bge-reranker-v2-m3", search_help)
-        self.assertIn("BAAI/bge-reranker-v2-m3", rag_help)
-        self.assertIn("RAG index", status_help)
-
-    def test_rag_search_missing_index_is_clear(self) -> None:
-        with tempfile.TemporaryDirectory() as temp_dir:
-            result = self.run_cli_raw(
-                "rag-search",
-                "Delaware LP distribution solvency test",
-                "--index-dir",
-                str(Path(temp_dir) / "missing-index"),
-            )
-            self.assertNotEqual(result.returncode, 0)
-            self.assertIn("Run rag-build first", result.stderr)
 
     def test_search_chapter_12c(self) -> None:
         output = self.run_cli("search", "Title 6, Chapter 12C", "-n", "5")
